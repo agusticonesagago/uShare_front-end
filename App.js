@@ -5,7 +5,7 @@ import {createAppContainer} from 'react-navigation';
 import AppNavigator from './routes.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 const AppIndex = createAppContainer(AppNavigator);
-
+//
 export default class App extends React.Component {
   render() {
     return (
