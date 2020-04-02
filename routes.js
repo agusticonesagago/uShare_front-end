@@ -3,11 +3,17 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
 import Perfil from './components/Perfil.js'
 import Actes from './components/Actes.js'
+import LoginView from './components/LoginView.js'
+import SignUpView from './components/SignUpView.js'
+
+
 
 const AppNavigator = createMaterialTopTabNavigator(
   {
     Perfil: Perfil,
-    Actes: Actes
+    Actes: Actes,
+    LoginView: LoginView,
+    SignUpView: SignUpView
   },
   {
     tabBarOptions:{
