@@ -5,3 +5,7 @@
 ```bash
 npm i react-native-vector-icons --save
 ```
+
+```bash
+npm install react-native-datepicker --save
+```
