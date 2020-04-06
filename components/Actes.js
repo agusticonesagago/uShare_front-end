@@ -3,6 +3,10 @@ import {StyleSheet, Text, View} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import {NavigationContainer} from '@react-navigation/native';
+
+import Drawer from './Drawer.js';
+
 export default class Actes extends React.Component {
   render() {
     return (

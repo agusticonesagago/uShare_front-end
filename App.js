@@ -4,22 +4,19 @@ import {createAppContainer} from 'react-navigation';
 
 import AppNavigator from './routes.js';
 import Icon from 'react-native-vector-icons/Ionicons';
+
+import Drawer from './components/Drawer.js';
+import {NavigationContainer} from '@react-navigation/native';
+
 const AppIndex = createAppContainer(AppNavigator);
+
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={{flex : 1}}>
-      <StatusBar
-        backgroundColor='black'
-        barStyle='light-content'
-      />
-        <View style={styles.header}>
-          <Icon name="ios-camera" size={28} color={"white"}/>
-          <Icon name="ios-menu" size={28} color={"white"}/>
-        </View>
-        <AppIndex/>
-      </View>
+      <NavigationContainer>
+        <Drawer/>
+      </NavigationContainer>
     );
   }
 }
