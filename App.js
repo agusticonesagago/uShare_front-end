@@ -7,17 +7,17 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Drawer from './components/Drawer.js';
 import DrawerFilters from './components/DrawerFilters.js';
+import DrawerFiltersPerson from './components/DrawerFiltersPerson.js';
 
 import {NavigationContainer} from '@react-navigation/native';
 
 const AppIndex = createAppContainer(AppNavigator);
 
-
 export default class App extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <DrawerFilters style={styles.DrawerFilters}/>
+        <DrawerFiltersPerson/>
       </NavigationContainer>
     );
   }
