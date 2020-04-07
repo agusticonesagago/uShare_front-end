@@ -6,6 +6,8 @@ import AppNavigator from './routes.js';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Drawer from './components/Drawer.js';
+import DrawerFilters from './components/DrawerFilters.js';
+
 import {NavigationContainer} from '@react-navigation/native';
 
 const AppIndex = createAppContainer(AppNavigator);
@@ -15,7 +17,7 @@ export default class App extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Drawer/>
+        <DrawerFilters style={styles.DrawerFilters}/>
       </NavigationContainer>
     );
   }
@@ -32,5 +34,5 @@ const styles = StyleSheet.create({
     backgroundColor:'#714170',
     paddingHorizontal: 10,
     paddingTop:5,
-  }
+  },
 });

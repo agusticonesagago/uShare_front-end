@@ -20,15 +20,21 @@
     "react": "16.11.0",
     "react-native": "0.62.0",
     "react-native-datepicker": "^1.7.2",
+    "react-native-dropdown-autocomplete-textinput": "^1.0.1",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-material-dropdown": "^0.11.1",
+    "react-native-modal-dropdown": "^0.7.0",
     "react-native-reanimated": "^1.7.1",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-screens": "^2.4.0",
+    "react-native-search-filter": "^0.1.5",
+    "react-native-searchable-dropdown": "^1.1.1",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.3.7",
     "react-navigation-drawer": "^2.4.11",
     "react-navigation-stack": "^2.3.11",
-    "react-navigation-tabs": "^2.8.10"
+    "react-navigation-tabs": "^2.8.10",
+    "react-select-search": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
