@@ -15,9 +15,12 @@ const AppIndex = createAppContainer(AppNavigator);
 
 export default class App extends React.Component {
   render() {
-    return (
+    return (/*
       <NavigationContainer>
         <DrawerFiltersPerson/>
+      </NavigationContainer>*/
+      <NavigationContainer>
+        <AppIndex/>
       </NavigationContainer>
     );
   }

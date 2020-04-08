@@ -27,7 +27,7 @@ export default class LoginView extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.logo}>
-          <Image source={require("../img/LogoConfederacio.png")} style={styles.image} rezideMode="center"></Image>
+          <Image source={require("../img/logoconfederacio.png")} style={styles.image} rezideMode="center"></Image>
         </View>
         
         <View style={styles.inputContainer}>

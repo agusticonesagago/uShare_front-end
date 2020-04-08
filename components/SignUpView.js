@@ -11,38 +11,113 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import DatePicker from 'react-native-datepicker'
 
+var movie = 'https://reactnative.dev/movies.json'; // Per veure si va: SI 
+
+var myPC = 'http://192.168.1.12:8080/api'; //NO posar localhost, posar la IP del PC
+var sardapp='https://sardapp.herokuapp.com/api'; // Per veure si va: SI
+
+var endpoint = sardapp;
+// TODO: Refactor codi de la API
+// TODO: Quan s'hagi decidit el ordre de les pantalles i eso, implementar el canvi de pantalla
+// TODO: Imatge
+// TODO: Preferencies --> Posarles en el registre, o demanar-les al fer login? Registre sembla millor
 export default class SignUp extends React.Component {
 
-  
+   
   constructor(props) {
     super(props);
     this.state = {
       // Usuari
-      email:    '',
-      password: '',
+      email:    null,
+      password: null,
 
       // Personal Info
-      nom:      '',
-      cognom:   '',
+      nom:      null,
+      cognom:   null,
       birthday: "2016-05-16",
-      description: '',
-      photo: '', // correct type?
+      description: null,
+      photo: null, // correct type?
 
       // Other info
       hasCar:      true, // Checkbox(yes or no)
-      mobileNumber: '', 
+      mobileNumber: null, 
 
       // Preferences(Actes)
       aplecs:   true, // Checkbox(bool)
       concerts: true, // Checkbox(bool)
       ballades: true,
       concursos: true,
+      cursets: true,
+      altres: true,
+
 
 
       // More...
     }
   }
 
+  /*
+   * Crida la API i registra el usuari a partir del this.state
+   */
+   async registerUser() {
+    try {
+      const response = await fetch(endpoint+'/users', 
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            altres: this.state.altres,
+            aplecs: this.state.aplecs,
+            ballades: this.state.ballades,
+            birthday: this.state.birthday,
+            comptarRepartir: true, // Default per ara
+            concerts: this.state.concerts,
+            concursos: this.state.concursos,
+            cursets: this.state.cursets,
+            description: this.state.description,
+            edat: true, // Default per ara
+            email: this.state.email,
+            experienciaBallades: true, // Default per ara
+            interesActes: true, // Default per ara
+            name: this.state.nom,
+            password: this.state.password,
+            proximitat: true, // Default per ara
+            qualitatActe: true, // Default per ara
+            surname: this.state.cognom,
+            vehicle: this.state.hasCar
+        }),
+      });
+      const json = await response.json();
+      console.log('\n');
+      console.log('\n');
+      console.log(json)
+      return json;
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  
+  async getUsers() {
+    try {
+      const response = await fetch(endpoint+'/users');
+      console.log('\n');
+
+      const json = await response.json();
+      console.log(json);
+
+      return json;
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  
 
   onChangeState = (key, val) => {
     this.setState({ [key]: val })
@@ -92,7 +167,7 @@ export default class SignUp extends React.Component {
                 }}
                 date={this.state.birthday}
                 mode="date"
-                placeholder="select date"
+                placeholder="Select date"
                 format="YYYY-MM-DD"
                 minDate="1900-01-01"
                 maxDate="2020-01-01"
@@ -196,10 +271,32 @@ export default class SignUp extends React.Component {
                 <Text style={styles.text}> Concursos </Text>    
               </View> 
 
+
+
+              <View style={styles.checkBox}>
+                <CheckBox
+                  title='Click Here '
+                  value={this.state.cursets}
+                  onValueChange={val => this.onChangeState('cursets', val)}
+                />
+                <Text style={styles.text}> Cursets </Text>    
+              </View> 
+
+              <View style={styles.checkBox}>
+                <CheckBox
+                  title='Click Here '
+                  value={this.state.altres}
+                  onValueChange={val => this.onChangeState('altres', val)}
+                />
+                <Text style={styles.text}> Altres </Text>    
+              </View> 
+
             </View>
 
 
-            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
+            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} 
+              onPress={() => this.registerUser()}>
+
               <Text style={styles.loginText}>Uneix-te!</Text>
             </TouchableHighlight>
           </View>
