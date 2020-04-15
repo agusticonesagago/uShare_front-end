@@ -4,13 +4,28 @@ import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class Perfil extends React.Component {
+  constructor(props) {
+        super(props)
+        this.state = {
+           textSobreMi: 'Sóc un noi jove que li encanta anar a actes sardanistes cada cap de setmana.',
+           textName:'Agustí Conesa',
+           textNumber:'676236998',
+           textMail:'agusticonesaeij@gmail.com',
+           textVehicle:true,
+           aplecs:   true,
+           concerts: true,
+           ballades: true,
+           concursos: true,
+           cursets: true,
+           altres: true,
+           birthday: "1997-09-23",
+        }
+  }
 
   render() {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
-
-
           <View style={styles.containerProfile}>
             <View style={styles.profileImage}>
               <Image source={require("../img/profile-pic.jpg")} style={styles.image} rezideMode="center"></Image>
@@ -24,19 +39,19 @@ export default class Perfil extends React.Component {
           </View>
 
           <View style={styles.infoContainer}>
-            <Text style={[styles.text, {fontWeight: '200', fontSize:30, color: '#AEB5BC'}]}>Agustí Conesa</Text>
+            <Text style={[styles.text, {fontWeight: '200', fontSize:30, color: '#AEB5BC'}]}>{this.state.textName}</Text>
           </View>
           <View style={styles.extraInfo}>
             <Text style={styles.titleApartats}>SOBRE MI</Text>
-            <Text style={styles.information}>Sóc un noi jove que li encanta anar a actes sardanistes cada cap de setmana.</Text>
+            <Text style={styles.information}>{this.state.textSobreMi}</Text>
             <Text style={styles.titleApartats}>CONTACTE</Text>
             <View style={styles.imageTelephone}>
               <Icon name={'md-call'} size={30} color={'green'}  />
-              <Text style={styles.numberTelephone}>676236998</Text>
+              <Text style={styles.numberTelephone}>{this.state.textNumber}</Text>
             </View>
             <View style={styles.imageMail}>
               <Icon name={'md-mail'} size={30} color={'orange'}  />
-              <Text style={styles.textMail}>agusticonesaeij@gmail.com</Text>
+              <Text style={styles.textMail}>{this.state.textMail}</Text>
             </View>
             <Text style={styles.titleApartats}>VEHICLE</Text>
             <Text style={styles.information}>SÍ</Text>

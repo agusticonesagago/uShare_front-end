@@ -9,6 +9,8 @@ import Drawer from './components/Drawer.js';
 import DrawerFilters from './components/DrawerFilters.js';
 import DrawerFiltersPerson from './components/DrawerFiltersPerson.js';
 import ActeComplete from './components/ActeComplete.js';
+import ModifyPerfil from './components/ModifyPerfil.js';
+import Perfil from './components/Perfil.js';
 
 import {NavigationContainer} from '@react-navigation/native';
 
@@ -23,7 +25,7 @@ export default class App extends React.Component {
       /*<NavigationContainer>
         <AppIndex/>
       </NavigationContainer> */
-      <ActeComplete/>
+      <Perfil/>
     );
   }
 }
