@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Drawer from './components/Drawer.js';
 import DrawerFilters from './components/DrawerFilters.js';
 import DrawerFiltersPerson from './components/DrawerFiltersPerson.js';
+import ActeComplete from './components/ActeComplete.js';
 
 import {NavigationContainer} from '@react-navigation/native';
 
@@ -19,9 +20,10 @@ export default class App extends React.Component {
       <NavigationContainer>
         <DrawerFiltersPerson/>
       </NavigationContainer>*/
-      <NavigationContainer>
+      /*<NavigationContainer>
         <AppIndex/>
-      </NavigationContainer>
+      </NavigationContainer> */
+      <ActeComplete/>
     );
   }
 }
