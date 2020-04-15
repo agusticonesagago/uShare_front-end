@@ -41,4 +41,5 @@ npm install @react-native-community/checkbox --save
 Nova dependencia:
 ```bash
 npm install react-native-image-picker --save
+react-native link react-native-image-picker
 ```
