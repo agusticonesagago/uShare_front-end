@@ -9,15 +9,8 @@ import Drawer from './Drawer.js';
 
 export default class Actes extends React.Component {
   render() {
-
-
     return (
-      <View style={styles.container}>
-        <View style={styles.containerNavigator}>
-          <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
-          <Text style={styles.titleNavigator}> Actes </Text>
-        </View>
-        <View style={styles.containerActe}>
+      <View style={styles.containerActe}>
           <View style={styles.WhereWhen}>
             <Text style={styles.Where}>
               RIPOLL. Plaça de l'Ajuntament
@@ -36,7 +29,6 @@ export default class Actes extends React.Component {
           </View>
           <View style={{marginTop: 3}}></View>
           <Text style={styles.ExtraInfoActe}>Festa Major. A les 12h sardanes d'honor i ballada de 3 sardanes. A les 17:30h, ballada a la Plaça Gran (sardana de 7 tirades)</Text>
-         </View>
       </View>
     );
   }
@@ -54,40 +46,11 @@ Actes.navigationOptions = {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'flex-start',
-  },
-  containerNavigator: {
-    backgroundColor: '#714170',
-    height: '12%',
-    width:'100%',
-    flexDirection:'row',
-  },
-  titleNavigator:{
-    color:'white',
-    fontSize:30,
-    paddingTop:20,
-    width:'50%',
-  },
-  image:{
-    borderRadius:100,
-    overflow: 'hidden',
-    position: 'relative',
-    height:60,
-    width:60,
-    marginTop:10,
-    marginBottom:10,
-    marginLeft:20,
-    marginRight:20,
-  },
   containerActe: {
     backgroundColor: 'grey',
     width:'100%',
     backgroundColor: "beige",
-    borderWidth: 1,
-    marginBottom: 2,
+    borderWidth: 0.5,
   },
   WhereWhen:{
     flexDirection: 'row',
