@@ -38,3 +38,7 @@ npm install react-native-datepicker --save
 ```bash
 npm install @react-native-community/checkbox --save
 ```
+Nova dependencia:
+```bash
+npm install react-native-image-picker --save
+```
