@@ -10,47 +10,65 @@ import CheckBox from '@react-native-community/checkbox';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import DatePicker from 'react-native-datepicker'
+import ImagePicker from 'react-native-image-picker'
 
 var movie = 'https://reactnative.dev/movies.json'; // Per veure si va: SI 
 
 var myPC = 'http://192.168.1.12:8080/api'; //NO posar localhost, posar la IP del PC
 var sardapp='https://sardapp.herokuapp.com/api'; // Per veure si va: SI
 
+
+
 var endpoint = sardapp;
+
 // TODO: Refactor codi de la API
 // TODO: Quan s'hagi decidit el ordre de les pantalles i eso, implementar el canvi de pantalla
-// TODO: Imatge
-// TODO: Preferencies --> Posarles en el registre, o demanar-les al fer login? Registre sembla millor
+// TODO: Preferencies --> Posarles en el registre Registre
+/*
+<Image source={{ uri: 'data:image/jpeg;base64,' + this.state.fileData }}
+        style={styles.images}
+      />
+
+    PER MOSTRA LA IMATGE:
+      <Image source={{ uri: 'data:' + photo.type + ';base64,' + this.state.photo.data }}
+        style={styles.images}
+      />
+ */
 export default class SignUp extends React.Component {
 
    
   constructor(props) {
     super(props);
     this.state = {
-      // Usuari
-      email:    null,
-      password: null,
+        // Usuari
+        email:    null,
+        password: null,
 
-      // Personal Info
-      nom:      null,
-      cognom:   null,
-      birthday: "2016-05-16",
-      description: null,
-      photo: null, // correct type?
+        // Personal Info
+        nom:      null,
+        cognom:   null,
+        birthday: "2016-05-16",
+        description: null,
+        photo: null, // correct type?
 
-      // Other info
-      hasCar:      true, // Checkbox(yes or no)
-      mobileNumber: null, 
+        // Other info
+        hasCar:      true, // Checkbox(yes or no)
+        mobileNumber: null, //  TODO(int)
+        comptarRepartir: false,
+        experienciaBallades: false,
 
-      // Preferences(Actes)
-      aplecs:   true, // Checkbox(bool)
-      concerts: true, // Checkbox(bool)
-      ballades: true,
-      concursos: true,
-      cursets: true,
-      altres: true,
+        // Preferences(Actes)
+        aplecs:   true, // Checkbox(bool)
+        concerts: true, // Checkbox(bool)
+        ballades: true,
+        concursos: true,
+        cursets: true,
+        altres: true,
 
-
+        preferenciaEdat: null, // Edat similar?  Es confos, l'hauria d'escollir en el buscador
+        preferenciaInteresActes: null, // Esta interessat en assistir als actes? --> Ja es veu en els actes que ha escollit
+        preferenciaProximitat: null, // Bool? Es confos: l'hauria d'escollir en el buscador
+        preferenciaQualitatActe: null, // La cobla la escollira en el buscador
 
       // More...
     }
@@ -61,45 +79,113 @@ export default class SignUp extends React.Component {
    */
    async registerUser() {
     try {
-      const response = await fetch(endpoint+'/users', 
+        var photoBase64 =  null;
+        if(this.state.photo) photoBase64 = this.state.photo.data;
+        alert("RegisterUser() begin!");
+
+        var jsonBody = JSON.stringify({
+            altres: this.state.altres,
+            aplecs: this.state.aplecs,
+            ballades: this.state.ballades,
+            birthday: this.state.birthday,
+            comptarRepartir: this.state.comptarRepartir,
+            concerts: this.state.concerts,
+            concursos: this.state.concursos,
+            cursets: this.state.cursets,
+            description: this.state.description,
+            edat: false,//this.state.preferenciaEdat,
+            email: this.state.email,
+            experienciaBallades: this.state.experienciaBallades,
+            image: photoBase64,
+            interesActes: false,//this.state.preferenciaInteresActes,
+            name: this.state.nom,
+            password: this.state.password,
+            phoneNumber: this.state.mobileNumber,
+            proximitat: false,//this.state.preferenciaProximitat,
+            qualitatActe: false,//this.state.preferenciaQualitatActe,
+            surname: this.state.cognom,
+            vehicle: this.state.hasCar
+        });
+
+        const response = await fetch(endpoint+'/users',
         {
           method: 'POST',
           headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            altres: this.state.altres,
-            aplecs: this.state.aplecs,
-            ballades: this.state.ballades,
-            birthday: this.state.birthday,
-            comptarRepartir: true, // Default per ara
-            concerts: this.state.concerts,
-            concursos: this.state.concursos,
-            cursets: this.state.cursets,
-            description: this.state.description,
-            edat: true, // Default per ara
-            email: this.state.email,
-            experienciaBallades: true, // Default per ara
-            interesActes: true, // Default per ara
-            name: this.state.nom,
-            password: this.state.password,
-            proximitat: true, // Default per ara
-            qualitatActe: true, // Default per ara
-            surname: this.state.cognom,
-            vehicle: this.state.hasCar
-        }),
+        body: jsonBody
       });
+        /*
       const json = await response.json();
       console.log('\n');
       console.log('\n');
-      console.log(json)
-      return json;
+      console.log(json);*/
+        var text = response.text()
+        console.log("TEXT ", text);
+
+        console.log("upload succes", response);
+        console.log("Sended JSON BODY: ", jsonBody);
+
+        alert("Upload success!");
+
+        //return json;
     }
     catch (error) {
       console.error(error);
+        alert("Upload failed!");
+        console.log("Sended JSON BODY: ", jsonBody);
+
+
     }
   }
+
+  createFormData = (photo) => {
+    const formData = new FormData();
+    //formData.append('rdfreferfre', 'testName');
+
+    const image = {
+      uri: photo.uri,
+      type: photo.type,
+      name: photo.fileName,
+    }
+
+    formData.append("image", image);
+
+    return formData;
+  };
+
+
+  
+
+  handleUploadPhoto = () => {
+    var data = this.createFormData(this.state.photo);
+    let options = {
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+      method: 'PUT',
+      body: JSON.stringify(data)
+    };
+
+
+
+    //delete options.headers['Content-Type'];
+
+    fetch(endpoint+'/users/a@a.com/updateProfileImage', options)
+      .then(response => response.json())
+      .then(response => {
+        console.log("upload succes", response);
+        alert("Upload success!");
+        this.setState({ photo: null });
+      })
+      .catch(error => {
+        console.log("upload error", error);
+        alert("Upload failed!");
+      });
+  };
+
 
   
   async getUsers() {
@@ -117,6 +203,21 @@ export default class SignUp extends React.Component {
     }
   }
 
+    async getUser(email) {
+        try {
+            const response = await fetch(endpoint+'/users/' + email);
+            console.log('\n');
+
+            const json = await response.json();
+            console.log(json);
+
+            return json;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+
   
 
   onChangeState = (key, val) => {
@@ -131,16 +232,42 @@ export default class SignUp extends React.Component {
     Alert.alert("Alert", "Button pressed "+viewId);
   }
 
+  handleChoosePhoto = () => {
+    const options = {
+      noData: false,
+    }
+    ImagePicker.launchImageLibrary(options, response => {
+      if (response.uri) {
+        console.log('\n\n\nStart-----------------------------------------------------')
+        console.log(response.uri)
+        console.log('\n')
+        console.log(response)
+        this.onChangeState('photo', response)
+      }
+    })
+  }
+
 
   render() {
     return (
+
+
       <View style={styles.container}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.form} >
             <Text style={styles.titols}>DADES</Text>
 
             <View style={styles.imageSelector}>
-              <Text >[Image Selector Section]</Text>
+              <Text style={styles.text}>Foto</Text>
+              <View >
+                {this.state.photo && (
+                  <Image
+                    source={ { uri: this.state.photo.uri }}
+                    style={{ width: 300, height: 300 }}
+                  />
+                )}
+                <Button title="Escull una foto de perfil" onPress={this.handleChoosePhoto} />
+              </View>
             </View>
 
             <TextInput
@@ -197,9 +324,11 @@ export default class SignUp extends React.Component {
                 value={this.state.hasCar}
                 onValueChange={val => this.onChangeState('hasCar', val)}
               />
-            </View> 
+            </View>
 
-            <TextInput
+
+
+              <TextInput
               style={styles.input}
               placeholder='Telefon mòvil'
               autoCapitalize="none"
@@ -233,8 +362,10 @@ export default class SignUp extends React.Component {
 
             <View style={styles.actes}>
               <Text style={styles.titols}>ACTES</Text>
+                <Text style={styles.text}> En quins actes assisteixes?  </Text>
 
-              <View style={styles.checkBox}>
+
+                <View style={styles.checkBox}>
                 <CheckBox
                   title='Click Here '
                   value={this.state.aplecs}
@@ -249,8 +380,7 @@ export default class SignUp extends React.Component {
                   value={this.state.ballades}
                   onValueChange={val => this.onChangeState('ballades', val)}
                 />
-                <Text style={styles.text}> Ballades </Text>    
-
+                <Text style={styles.text}> Ballades </Text>
               </View> 
 
               <View style={styles.checkBox}>
@@ -292,10 +422,33 @@ export default class SignUp extends React.Component {
               </View> 
 
             </View>
+            <View style={styles.capacitatsPersonals}>
+              <View style={styles.checkBox}>
+                  <CheckBox
+                      title='Click Here '
+                      value={this.state.comptarRepartir}
+                      onValueChange={val => this.onChangeState('comptarRepartir', val)}
+                  />
+                  <Text style={styles.text}> Saps comptar i repartir? </Text>
+              </View>
+
+              <View style={styles.checkBox}>
+                  <CheckBox
+                      title='Click Here '
+                      value={this.state.experienciaBallades}
+                      onValueChange={val => this.onChangeState('experienciaBallades', val)}
+                  />
+                  <Text style={styles.text}> Tens experiencia ballant? </Text>
+              </View>
+            </View>
+
+            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
+                // onPress={() => this.handleUploadPhoto()}
+                //onPress={() => this.getUser("a@a.com")}
+                onPress={() => this.registerUser()}
+                >
 
 
-            <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} 
-              onPress={() => this.registerUser()}>
 
               <Text style={styles.loginText}>Uneix-te!</Text>
             </TouchableHighlight>
@@ -347,9 +500,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
 },
 
-checkBox:{
-  flexDirection: 'row',
-},
+    checkBox:{
+      flexDirection: 'row',
+
+    },
+    capacitatsPersonals:{
+          marginTop: 8,
+    },
     imageSelector:{
       width:undefined,
       height:undefined,
@@ -367,10 +524,12 @@ checkBox:{
       },
 
       actes:{
-        marginTop: 20
+        marginTop: 20,
       },
       titols:{
         fontSize:40,
+          alignItems: 'center',
+
       },
       text:{
         fontSize:25,

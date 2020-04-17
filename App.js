@@ -12,6 +12,11 @@ import ActeComplete from './components/ActeComplete.js';
 import ModifyPerfil from './components/ModifyPerfil.js';
 import Perfil from './components/Perfil.js';
 
+import SignUp from './components/SignUpView.js';
+import LogIn from './components/LoginView.js';
+
+
+
 import {NavigationContainer} from '@react-navigation/native';
 
 const AppIndex = createAppContainer(AppNavigator);
@@ -25,7 +30,10 @@ export default class App extends React.Component {
       /*<NavigationContainer>
         <AppIndex/>
       </NavigationContainer> */
-      <Perfil/>
+      //<Perfil/>
+      <LogIn/>
+      //<SignUp/>
+
     );
   }
 }
