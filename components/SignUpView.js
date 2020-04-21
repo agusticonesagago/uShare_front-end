@@ -1,4 +1,3 @@
-
 import React , {Component} from 'react';
 import {StyleSheet, Text, TextInput, View, Image, 
   Button,
@@ -11,19 +10,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import DatePicker from 'react-native-datepicker'
 import ImagePicker from 'react-native-image-picker'
-
-var movie = 'https://reactnative.dev/movies.json'; // Per veure si va: SI 
-
-var myPC = 'http://192.168.1.12:8080/api'; //NO posar localhost, posar la IP del PC
-var sardapp='https://sardapp.herokuapp.com/api'; // Per veure si va: SI
+import * as globalHelper from "./Auxiliars/GlobalHelper";
 
 
+var API_USER = globalHelper.API_USER;
 
-var endpoint = sardapp;
+
 
 // TODO: Refactor codi de la API
 // TODO: Quan s'hagi decidit el ordre de les pantalles i eso, implementar el canvi de pantalla
-// TODO: Preferencies --> Posarles en el registre Registre
 /*
 <Image source={{ uri: 'data:image/jpeg;base64,' + this.state.fileData }}
         style={styles.images}
@@ -31,12 +26,14 @@ var endpoint = sardapp;
 
     PER MOSTRA LA IMATGE:
       <Image source={{ uri: 'data:' + photo.type + ';base64,' + this.state.photo.data }}
-        style={styles.images}
+        style={styles.images} //TODO: Demanar en backend un atribut pel tipus?
+                              // TODO: O potser passa a base64 tot i recuperar-ho tot
+                              // TODO: O potser afegir el tipus al enviar-ho(concatenat)
       />
  */
 export default class SignUp extends React.Component {
 
-   
+
   constructor(props) {
     super(props);
     this.state = {
@@ -107,7 +104,7 @@ export default class SignUp extends React.Component {
             vehicle: this.state.hasCar
         });
 
-        const response = await fetch(endpoint+'/users',
+        const response = await fetch(API_USER,
         {
           method: 'POST',
           headers: {
@@ -140,57 +137,10 @@ export default class SignUp extends React.Component {
     }
   }
 
-  createFormData = (photo) => {
-    const formData = new FormData();
-    //formData.append('rdfreferfre', 'testName');
 
-    const image = {
-      uri: photo.uri,
-      type: photo.type,
-      name: photo.fileName,
-    }
-
-    formData.append("image", image);
-
-    return formData;
-  };
-
-
-  
-
-  handleUploadPhoto = () => {
-    var data = this.createFormData(this.state.photo);
-    let options = {
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-      method: 'PUT',
-      body: JSON.stringify(data)
-    };
-
-
-
-    //delete options.headers['Content-Type'];
-
-    fetch(endpoint+'/users/a@a.com/updateProfileImage', options)
-      .then(response => response.json())
-      .then(response => {
-        console.log("upload succes", response);
-        alert("Upload success!");
-        this.setState({ photo: null });
-      })
-      .catch(error => {
-        console.log("upload error", error);
-        alert("Upload failed!");
-      });
-  };
-
-
-  
   async getUsers() {
     try {
-      const response = await fetch(endpoint+'/users');
+      const response = await fetch(API_USER);
       console.log('\n');
 
       const json = await response.json();
@@ -205,7 +155,7 @@ export default class SignUp extends React.Component {
 
     async getUser(email) {
         try {
-            const response = await fetch(endpoint+'/users/' + email);
+            const response = await fetch(API_USER + email);
             console.log('\n');
 
             const json = await response.json();
@@ -218,7 +168,6 @@ export default class SignUp extends React.Component {
         }
     }
 
-  
 
   onChangeState = (key, val) => {
     this.setState({ [key]: val })

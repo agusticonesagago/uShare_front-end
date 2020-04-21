@@ -1,35 +1,59 @@
-
-import React , {Component} from 'react';
+import React from 'react';
 import {
-    StyleSheet, Text, TextInput, View, Image,
-    Button,
+    Alert,
+    AsyncStorage,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
     TouchableHighlight,
-    Alert, ScrollView
+    View
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-var myPC = 'http://192.168.1.12:8080/api'; //NO posar localhost, posar la IP del PC
-var sardapp='https://sardapp.herokuapp.com/api'; // Per veure si va: SI
+import * as globalHelper from './Auxiliars/GlobalHelper.js'
 
 
-
-var endpoint = sardapp;
+var API_USER = globalHelper.API_USER;
+const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
 
 export default class LoginView extends React.Component {
 
-  
   constructor(props) {
     super(props);
     this.state = {
       email   : '',
       password: '',
+        fotoProva: null,
     }
   }
 
   onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed "+viewId);
+      Alert.alert("Alert", "Button pressed " + viewId);
   }
+
+    onChangeState = (key, val) => {
+        this.setState({ [key]: val })
+    }
+
+
+
+    async getUser(email) {
+        try {
+            const response = await fetch(API_USER + email);
+            console.log('\n');
+
+            const json = await response.json();
+            console.log(json);
+
+            return json;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
 
     /*
     * Crida la API i fa el logIn del usuari a partir del this.state
@@ -37,7 +61,7 @@ export default class LoginView extends React.Component {
     async logInUser() {
         var email = this.state.email;
         var password = this.state.password;
-        var loginUri = endpoint+'/users/' + email + '/login';
+        var loginUri = API_USER + email + '/login';
 
         try {
             const response = await fetch(loginUri,
@@ -63,7 +87,12 @@ export default class LoginView extends React.Component {
 
             if(response.status === 200) {
                 alert("Upload success!");
-                // TODO: Guarda el usuari quan hi hagi la autentificacio
+                await globalHelper.signInStoreLoggedUserEmailAsync(email);
+                const json = await this.getUser(email);
+                this.onChangeState("fotoProva", json.image);
+            }
+            else {
+                alert("Wrong email or username");
             }
 
 
@@ -71,7 +100,7 @@ export default class LoginView extends React.Component {
         }
         catch (error) {
             console.error(error);
-            alert("Upload failed!");
+            alert("Upload Exception failed!");
         }
     }
 
@@ -83,7 +112,7 @@ export default class LoginView extends React.Component {
           <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
             <View style={styles.LogIn}>
                 <View style={styles.logo}>
-                  <Image source={require("../img/logoconfederacio.png")} style={styles.image} rezideMode="center"></Image>
+                  <Image source={require("../img/logoconfederacio.png")} style={styles.image} rezideMode="center"/>
                 </View>
 
                 <View style={styles.inputContainer}>
@@ -113,6 +142,24 @@ export default class LoginView extends React.Component {
                                     onPress={() => this.onClickListener('register')}>
                   <Text>Registrat</Text>
                 </TouchableHighlight>
+
+                <TouchableHighlight style={styles.buttonContainer}
+                                    onPress={async () => {
+                                        let storedUserEmail = await globalHelper.getLoggedUserEmailAsync();
+                                        alert(storedUserEmail);
+
+                                        console.log('\n');
+                                        console.log("storedUserEmail: ", storedUserEmail);
+                                        console.log('\n');
+                                    }
+                                    } >
+
+                                    <Text>Test logged user </Text>
+                </TouchableHighlight>
+
+
+
+
 
 
             </View>

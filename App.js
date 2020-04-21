@@ -27,11 +27,11 @@ export default class App extends React.Component {
       <NavigationContainer>
         <DrawerFiltersPerson/>
       </NavigationContainer>*/
-      /*<NavigationContainer>
+      <NavigationContainer>
         <AppIndex/>
-      </NavigationContainer> */
+      </NavigationContainer>
       //<Perfil/>
-      <LogIn/>
+      //<LogIn/>
       //<SignUp/>
 
     );

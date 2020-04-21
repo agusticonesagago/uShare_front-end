@@ -1,0 +1,76 @@
+import React from 'react';
+import {
+    AsyncStorage,
+} from 'react-native';
+
+
+/*
+ * API Endpoint candidates
+ */
+export var myPC = 'http://192.168.1.12:8080/api'; //NO posar localhost, posar la IP del PC
+export var sardapp='https://sardapp.herokuapp.com/api'; // Per veure si va: SI
+
+
+/*
+ * API to call
+ */
+export var API = sardapp;
+export var API_USER = API + '/users/';
+
+/*
+ * KEYS
+ */
+export var asyncStorageLoggedUserEmailKey = "LoggedUserEmail";
+
+
+
+/*
+ * Set Value from AsyncStorage
+ */
+
+export async function signInAsync(key, value) {
+    await AsyncStorage.setItem(key, value);
+    //this.props.navigation.navigate('App');
+}
+
+export async function signInStoreLoggedUserEmailAsync(value) {
+    await AsyncStorage.setItem(asyncStorageLoggedUserEmailKey, value);
+    //this.props.navigation.navigate('App');
+}
+
+
+
+/*
+ * Get Value from AsyncStorage
+ */
+
+// Fetch the value from storage
+export async function getValueFromAsyncStorage(key) {
+    return await AsyncStorage.getItem(key);
+}
+
+// Fetch the email from storage
+export async function getLoggedUserEmailAsync() {
+    try {
+        return await this.getValueFromAsyncStorage(asyncStorageLoggedUserEmailKey);
+
+    } catch (e) {
+        console.error(e.message());
+    }
+}
+
+
+
+/* // TODO: make it an    export async function
+    _signOutAsync = async () => {
+        await AsyncStorage.clear();
+        this.props.navigation.navigate('Auth');
+    };
+*/
+
+
+
+
+
+
+
