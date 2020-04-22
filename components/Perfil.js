@@ -1,34 +1,139 @@
 import React , {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, TouchableHighlight} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import * as globalHelper from './Auxiliars/GlobalHelper.js'
+
+var API_USER = globalHelper.API_USER;
+const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
 
 export default class Perfil extends React.Component {
+  componentDidMount() {
+   this.getInfoUser();
+  }
   constructor(props) {
         super(props)
         this.state = {
-           textSobreMi: 'Sóc un noi jove que li encanta anar a actes sardanistes cada cap de setmana.',
-           textName:'Agustí Conesa',
-           textNumber:'676236998',
-           textMail:'agusticonesaeij@gmail.com',
-           textVehicle:true,
+           textSobreMi: '',
+           textName:'',
+           textNumber:'',
+           textMail:'foto@gmail.com',
+           textVehicle: '',
            aplecs:   true,
            concerts: true,
            ballades: true,
            concursos: true,
+           edat: true,
            cursets: true,
            altres: true,
-           birthday: "1997-09-23",
+           birthday: "",
+           photo: null,
+           sardanistaCompeticio: true,
+           coblaCompeticio: true,
         }
   }
 
+  onChangeState = (key, val) => {
+      this.setState({ [key]: val })
+  }
+
+  renderActes () {
+    let actes = []
+    if(this.state.aplecs){
+      actes.push(
+        <View style={styles.listActes}>
+           <Icon name={'md-checkmark'} size={30} color={'green'}  />
+           <Text style={styles.actesText}>Aplecs</Text>
+        </View>
+      )
+    }
+    if(this.state.ballades){
+      actes.push(
+        <View style={styles.listActes}>
+           <Icon name={'md-checkmark'} size={30} color={'green'}  />
+           <Text style={styles.actesText}>Ballades</Text>
+        </View>
+      )
+    }
+    if(this.state.concerts){
+      actes.push(
+        <View style={styles.listActes}>
+           <Icon name={'md-checkmark'} size={30} color={'green'}  />
+           <Text style={styles.actesText}>Concerts</Text>
+        </View>
+      )
+    }
+    if(this.state.concursos){
+      actes.push(
+        <View style={styles.listActes}>
+           <Icon name={'md-checkmark'} size={30} color={'green'}  />
+           <Text style={styles.actesText}>Concursos</Text>
+        </View>
+      )
+    }
+    if(this.state.cursets){
+      actes.push(
+        <View style={styles.listActes}>
+           <Icon name={'md-checkmark'} size={30} color={'green'}  />
+           <Text style={styles.actesText}>Cursets</Text>
+        </View>
+      )
+    }
+    if(this.state.altres){
+      actes.push(
+        <View style={styles.listActes}>
+           <Icon name={'md-checkmark'} size={30} color={'green'}  />
+           <Text style={styles.actesText}>Altres</Text>
+        </View>
+      )
+    }
+    return actes;
+  }
+
+  async getInfoUser() {
+      try {
+          const response = await fetch(API_USER + this.state.textMail);
+
+          const json = await response.json();
+
+          this.onChangeState("textSobreMi", json.description);
+          this.onChangeState("textNumber", json.phoneNumber);
+          this.onChangeState("textName", json.name + ' ' + json.surname);
+          this.onChangeState("textNumber", json.phoneNumber);
+          this.onChangeState("photo", json.image);
+          this.onChangeState("textMail", json.email);
+
+          if(json.vehicle){
+            this.onChangeState("textVehicle", "SÍ");
+          }
+          else this.onChangeState("textVehicle", "NO");
+
+          this.onChangeState("aplecs", json.aplecs);
+          this.onChangeState("ballades", json.ballades);
+          this.onChangeState("concerts", json.concerts);
+          this.onChangeState("concursos", json.concursos);
+          this.onChangeState("cursets", json.cursets);
+          this.onChangeState("altres", json.altres);
+          this.onChangeState("edat", json.edat);
+      }
+      catch (error) {
+          console.error(error);
+      }
+  }
+
+
+
   render() {
+
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.containerProfile}>
             <View style={styles.profileImage}>
-              <Image source={require("../img/profile-pic.jpg")} style={styles.image} rezideMode="center"></Image>
+              {this.state.photo && (
+                <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
+              )}
+              {!this.state.photo && (<Image source={require("../img/profile-pic.jpg")} style={styles.image} rezideMode="center"></Image>)}
             </View>
             <View style={styles.button}>
               <Icon name={'md-chatboxes'} size={20} backgroundColor={'#41444B'} color={'#DFD8C8'}  />
@@ -54,21 +159,20 @@ export default class Perfil extends React.Component {
               <Text style={styles.textMail}>{this.state.textMail}</Text>
             </View>
             <Text style={styles.titleApartats}>VEHICLE</Text>
-            <Text style={styles.information}>SÍ</Text>
+            <Text style={styles.information}>{this.state.textVehicle}</Text>
+            <Text style={styles.titleApartats}>SARDANISTA DE COMPETICIÓ</Text>
+            <Text style={styles.information}>{this.state.sardanistaCompeticio}</Text>
+            <Text style={styles.titleApartats}>COBLA DE COMPETICIÓ</Text>
+            <Text style={styles.information}>{this.state.coblaCompeticio}</Text>
             <Text style={styles.titleApartats}>ACTES</Text>
-            <View style={styles.listActes}>
-              <Icon name={'md-checkmark'} size={30} color={'green'}  />
-              <Text style={styles.actesText}>Aplecs</Text>
-            </View>
-            <View style={styles.listActes}>
-              <Icon name={'md-checkmark'} size={30} color={'green'}  />
-              <Text style={styles.actesText}>Ballades</Text>
-            </View>
-            <View style={styles.listActes}>
-              <Icon name={'md-checkmark'} size={30} color={'green'}  />
-              <Text style={styles.actesText}>Concursos</Text>
+            <View>
+              <View>{this.renderActes()}</View>
             </View>
           </View>
+          <TouchableHighlight style={[styles.buttonContainer, styles.modifyButton]}
+                              onPress={() => this.logInUser()}>
+            <Text style={styles.modifyText}>MODIFICAR</Text>
+          </TouchableHighlight>
           <View style={styles.end}/>
         </ScrollView>
       </View>
@@ -186,4 +290,21 @@ const styles = StyleSheet.create({
   end:{
     marginBottom:20,
   },
+  buttonContainer: {
+    height:45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    borderRadius:30,
+    marginTop:20,
+    width:'80%',
+    marginLeft:'10%',
+    marginRight:'10%',
+  },
+  modifyButton: {
+    backgroundColor: "#714170",
+  },
+  modifyText: {
+    color: 'white',
+  }
 });
