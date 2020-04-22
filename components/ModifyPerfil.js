@@ -1,27 +1,67 @@
 import React , {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image,TextInput , Alert} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image,TextInput , Alert, TouchableHighlight} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import CheckBox from '@react-native-community/checkbox';
 
+import * as globalHelper from './Auxiliars/GlobalHelper.js'
+
+var API_USER = globalHelper.API_USER;
+const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
+
 export default class Perfil extends React.Component {
+  componentDidMount() {
+   this.getInfoUser();
+  }
   constructor(props) {
         super(props)
         this.state = {
-           textSobreMi: 'Sóc un noi jove que li encanta anar a actes sardanistes cada cap de setmana.',
-           textName:'Agustí Conesa',
-           textNumber:'676236998',
-           textMail:'agusticonesaeij@gmail.com',
-           textVehicle:true,
-           aplecs:   true,
-           concerts: true,
-           ballades: true,
-           concursos: true,
-           cursets: true,
-           altres: true,
-           birthday: "1997-09-23",
+          textSobreMi: '',
+          textName:'',
+          textNumber:'',
+          textMail:'foto@gmail.com',
+          textVehicle: '',
+          aplecs:   true,
+          concerts: true,
+          ballades: true,
+          concursos: true,
+          edat: true,
+          cursets: true,
+          altres: true,
+          birthday: "",
+          photo: null,
+          sardanistaCompeticio: true,
+          coblaCompeticio: true,
         }
         this.handleTextSubmit = this.handleTextSubmit.bind(this);
+  }
+
+
+  async getInfoUser() {
+      try {
+          const response = await fetch(API_USER + this.state.textMail);
+
+          const json = await response.json();
+
+          this.onChangeState("textSobreMi", json.description);
+          this.onChangeState("textNumber", json.phoneNumber);
+          this.onChangeState("textName", json.name + ' ' + json.surname);
+          this.onChangeState("textNumber", json.phoneNumber);
+          this.onChangeState("photo", json.image);
+          this.onChangeState("textMail", json.email);
+          this.onChangeState("birthday", json.birthday);
+          this.onChangeState("aplecs", json.aplecs);
+          this.onChangeState("ballades", json.ballades);
+          this.onChangeState("concerts", json.concerts);
+          this.onChangeState("concursos", json.concursos);
+          this.onChangeState("cursets", json.cursets);
+          this.onChangeState("altres", json.altres);
+          this.onChangeState("edat", json.edat);
+          this.onChangeState("vehicle", json.vehicle);
+      }
+      catch (error) {
+          console.error(error);
+      }
   }
 
   handleTextSubmit() {
@@ -50,7 +90,10 @@ export default class Perfil extends React.Component {
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.containerProfile}>
             <View style={styles.profileImage}>
-              <Image source={require("../img/profile-pic.jpg")} style={styles.image} rezideMode="center"></Image>
+              {this.state.photo && (
+                <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
+              )}
+              {!this.state.photo && (<Image source={require("../img/profile-pic.jpg")} style={styles.image} rezideMode="center"></Image>)}
             </View>
             <View style={styles.button}>
               <Icon name={'md-chatboxes'} size={20} backgroundColor={'#41444B'} color={'#DFD8C8'}  />
@@ -143,6 +186,10 @@ export default class Perfil extends React.Component {
               </View>
             </View>
           </View>
+          <TouchableHighlight style={[styles.buttonContainer, styles.modifyButton]}
+                              onPress={() => navigate()}>
+            <Text style={styles.modifyText}>GUARDAR CANVIS</Text>
+          </TouchableHighlight>
           <View style={styles.end}/>
         </ScrollView>
       </View>
@@ -279,4 +326,21 @@ const styles = StyleSheet.create({
   end:{
     marginBottom:20,
   },
+  buttonContainer: {
+    height:45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    borderRadius:30,
+    marginTop:20,
+    width:'80%',
+    marginLeft:'10%',
+    marginRight:'10%',
+  },
+  modifyButton: {
+    backgroundColor: "#714170",
+  },
+  modifyText: {
+    color: 'white',
+  }
 });
