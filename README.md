@@ -51,3 +51,7 @@ npm install react-native-reanimated react-native-gesture-handler react-native-sc
 ```bash
 npm install @react-navigation/bottom-tabs --save
 ```
+
+```bash
+npm install react-navigation-tabs --save
+```
