@@ -46,17 +46,23 @@ export default class SignUp extends React.Component {
         cognom:   null,
         birthday: "2016-05-16",
         description: null,
-        photo: null, // correct type?
+        photo: null,
+        photoType: null,
+
+        // Falta fer, els poso default
+        coblaCompeticio: true, // todo
+        comarca: "string", // todo
+        competidor: true, // todo
 
         // Other info
         hasCar:      true, // Checkbox(yes or no)
-        mobileNumber: null, //  TODO(int)
+        mobileNumber: null,
         comptarRepartir: false,
         experienciaBallades: false,
 
         // Preferences(Actes)
         aplecs:   true, // Checkbox(bool)
-        concerts: true, // Checkbox(bool)
+        concerts: true,
         ballades: true,
         concursos: true,
         cursets: true,
@@ -78,28 +84,27 @@ export default class SignUp extends React.Component {
     try {
         var photoBase64 =  null;
         if(this.state.photo) photoBase64 = this.state.photo.data;
-        alert("RegisterUser() begin!");
 
         var jsonBody = JSON.stringify({
             altres: this.state.altres,
             aplecs: this.state.aplecs,
             ballades: this.state.ballades,
             birthday: this.state.birthday,
+            coblaCompeticio: true, // todo
+            comarca: "string", // todo
+            competidor: true, // todo
             comptarRepartir: this.state.comptarRepartir,
             concerts: this.state.concerts,
             concursos: this.state.concursos,
             cursets: this.state.cursets,
             description: this.state.description,
-            edat: false,//this.state.preferenciaEdat,
             email: this.state.email,
-            experienciaBallades: this.state.experienciaBallades,
             image: photoBase64,
-            interesActes: false,//this.state.preferenciaInteresActes,
+            imageType: this.state.imageType,
             name: this.state.nom,
             password: this.state.password,
             phoneNumber: this.state.mobileNumber,
-            proximitat: false,//this.state.preferenciaProximitat,
-            qualitatActe: false,//this.state.preferenciaQualitatActe,
+            publicProfile: true, // per defecte
             surname: this.state.cognom,
             vehicle: this.state.hasCar
         });
@@ -113,27 +118,25 @@ export default class SignUp extends React.Component {
         },
         body: jsonBody
       });
-        /*
-      const json = await response.json();
-      console.log('\n');
-      console.log('\n');
-      console.log(json);*/
+
         var text = response.text()
-        console.log("TEXT ", text);
-
-        console.log("upload succes", response);
-        console.log("Sended JSON BODY: ", jsonBody);
-
-        alert("Upload success!");
-
-        //return json;
+        if(response.status === globalHelper.API_USER_CREATED_CODE) {
+            console.log("TEXT ", text);
+            console.log("Upload succes: ", response);
+            //console.log("Sended JSON BODY: ", jsonBody);
+            //alert("Upload success!");
+            this.props.navigation.navigate(globalHelper.LogInScreenID);
+        }
+        else {
+            alert("No s'ha pogut registra l'usuari!");
+            console.log("TEXT ", text);
+            console.log("Upload failed: ", response);
+        }
     }
     catch (error) {
       console.error(error);
         alert("Upload failed!");
         console.log("Sended JSON BODY: ", jsonBody);
-
-
     }
   }
 
@@ -191,7 +194,9 @@ export default class SignUp extends React.Component {
         console.log(response.uri)
         console.log('\n')
         console.log(response)
-        this.onChangeState('photo', response)
+        this.onChangeState('photo', response);
+        this.onChangeState('photoType', response.type)
+
       }
     })
   }
@@ -392,12 +397,8 @@ export default class SignUp extends React.Component {
             </View>
 
             <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
-                // onPress={() => this.handleUploadPhoto()}
-                //onPress={() => this.getUser("a@a.com")}
                 onPress={() => this.registerUser()}
                 >
-
-
 
               <Text style={styles.loginText}>Uneix-te!</Text>
             </TouchableHighlight>

@@ -3,6 +3,25 @@ import {
     AsyncStorage,
 } from 'react-native';
 
+import { NavigationActions, StackActions } from 'react-navigation';
+
+/*
+ * ID of the screens
+ */
+export var AuthScreenID = "Auth";
+export var SignUpScreenID = "Registre";
+export var LogInScreenID = "Login";
+
+export var HomeScreenID = "Home";
+export var ActesScreenID = "Actes";
+export var PerfilScreenID = "Perfil";
+
+
+/*
+ *  Reset Navigation
+ */
+
+
 
 /*
  * API Endpoint candidates
@@ -21,6 +40,17 @@ export var API_USER = API + '/users/';
  * KEYS
  */
 export var asyncStorageLoggedUserEmailKey = "LoggedUserEmail";
+
+
+/*
+ * API CODES
+ */
+
+export var API_USER_CREATED_CODE = 201;
+export var API_SUCESSFUL_LOGIN_CODE = 200;
+
+
+
 
 
 

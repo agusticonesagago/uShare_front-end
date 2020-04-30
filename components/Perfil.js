@@ -179,7 +179,7 @@ export default class Perfil extends React.Component {
     );
   }
 }
-
+/*
 Perfil.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
@@ -190,7 +190,7 @@ Perfil.navigationOptions = {
     />
   )
 }
-
+*/
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   },
   extraInfo:{
     flex: 1,
-    flexDirection: 'row',
+    //flexDirection: 'row',
     justifyContent: 'flex-start',
     marginLeft:50,
     flexDirection:'column',

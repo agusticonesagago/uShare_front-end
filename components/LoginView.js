@@ -15,7 +15,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 
-
 var API_USER = globalHelper.API_USER;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
 
@@ -23,11 +22,12 @@ export default class LoginView extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      email   : '',
-      password: '',
-        fotoProva: null,
+
+      this.state = {
+          email   : '',
+          password: '',
     }
+
   }
 
   onClickListener = (viewId) => {
@@ -36,7 +36,11 @@ export default class LoginView extends React.Component {
 
     onChangeState = (key, val) => {
         this.setState({ [key]: val })
-    }
+    };
+
+
+
+
 
 
 
@@ -73,30 +77,20 @@ export default class LoginView extends React.Component {
                     },
                     body: password
                 });
-            /*
-          const json = await response.json();
-          console.log('\n');
-          console.log('\n');
-          console.log(json);*/
-            console.log('\n');
-            console.log("URI: ", loginUri);
-            console.log("Status: ", response.status);
-            console.log("StatusText: ", response.statusText);
-            console.log('\n');
-            console.log("succes", response);
 
-            if(response.status === 200) {
+            if(response.status === globalHelper.API_SUCESSFUL_LOGIN_CODE) {
                 alert("Upload success!");
                 await globalHelper.signInStoreLoggedUserEmailAsync(email);
                 const json = await this.getUser(email);
-                this.onChangeState("fotoProva", json.image);
+
+                this.props.navigation.replace(globalHelper.HomeScreenID);
             }
             else {
                 alert("Wrong email or username");
+                console.log('\n');
+                console.log("Status: ", response.status);
             }
 
-
-            //return json;
         }
         catch (error) {
             console.error(error);
@@ -139,7 +133,7 @@ export default class LoginView extends React.Component {
                 </TouchableHighlight>
 
                 <TouchableHighlight style={styles.buttonContainer}
-                                    onPress={() => this.onClickListener('register')}>
+                                    onPress={() => this.props.navigation.navigate(globalHelper.SignUpScreenID) }>
                   <Text>Registrat</Text>
                 </TouchableHighlight>
 

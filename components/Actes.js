@@ -33,7 +33,7 @@ export default class Actes extends React.Component {
     );
   }
 }
-
+/*
 Actes.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
@@ -44,10 +44,9 @@ Actes.navigationOptions = {
     />
   )
 }
-
+*/
 const styles = StyleSheet.create({
   containerActe: {
-    backgroundColor: 'grey',
     width:'100%',
     backgroundColor: "beige",
     borderWidth: 0.5,
