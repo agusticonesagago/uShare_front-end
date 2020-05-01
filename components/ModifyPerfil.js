@@ -1,27 +1,143 @@
 import React , {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image,TextInput , Alert} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image,TextInput , Alert, TouchableHighlight, Switch} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import CheckBox from '@react-native-community/checkbox';
 
+import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
+
+import * as globalHelper from './Auxiliars/GlobalHelper.js'
+
+var API_USER = globalHelper.API_USER;
+const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
+
+
+const DataComarques = [
+  {code: 'Alt Camp', name: 'Alt Camp'},
+  {code: 'Alt Empordà', name: 'Alt Empordà'},
+  {code: 'Alt Penedès', name: 'Alt Penedès'},
+  {code: 'Alt Urgell', name: 'Alt Urgell'},
+  {code: 'Alta Cerdanya', name: 'Alta Cerdanya'},
+  {code: 'Alta Ribagorça', name: 'Alta Ribagorça'},
+  {code: 'Andorra', name: 'Andorra'},
+  {code: 'Anoia', name: 'Anoia'},
+  {code: 'Bages', name: 'Bages'},
+  {code: 'Baix Camp', name: 'Baix Camp'},
+  {code: 'Baix Ebre', name: 'Baix Ebre'},
+  {code: 'Baix Empordà', name: 'Baix Empordà'},
+  {code: 'Baix Llobregat', name: 'Baix Llobregat'},
+  {code: 'Baix Penedès', name: 'Baix Penedès'},
+  {code: 'Baixa Cerdanya', name: 'Baixa Cerdanya'},
+  {code: 'Barcelonès', name: 'Barcelonès'},
+  {code: 'Berguedà', name: 'Berguedà'},
+  {code: 'Capcir', name: 'Capcir'},
+  {code: 'Conca de Barberà', name: 'Conca de Barberà'},
+  {code: 'Conflent', name: 'Conflent'},
+  {code: 'Fenolleda', name: 'Fenolleda'},
+  {code: 'Garraf', name: 'Garraf'},
+  {code: 'Garrigues', name: 'Garrigues'},
+  {code: 'Garrotxa', name: 'Garrotxa'},
+  {code: 'Gironès', name: 'Gironès'},
+  {code: 'Illes Balears', name: 'Illes Balears'},
+  {code: 'Maresme', name: 'Maresme'},
+  {code: 'Montsià', name: 'Montsià'},
+  {code: 'Noguera', name: 'Noguera'},
+  {code: 'Osona', name: 'Osona'},
+  {code: 'País Valencià', name: 'País Valencià'},
+  {code: 'Pallars Jussà', name: 'Pallars Jussà'},
+  {code: 'Pallars Sobirà', name: 'Pallars Sobirà'},
+  {code: 'Pla Estany', name: 'Pla Estany'},
+  {code: 'Pla Urgell', name: 'Pla Urgell'},
+  {code: 'Priorat', name: 'Priorat'},
+  {code: 'Resta Estat Espanyol', name: 'Resta Estat Espanyol'},
+  {code: 'Resta Estat Francès', name: 'Resta Estat Francès'},
+  {code: 'Resta Món', name: 'Resta Món'},
+  {code: 'Ribera Ebre', name: 'Ribera Ebre'},
+  {code: 'Ripollès', name: 'Ripollès'},
+  {code: 'Roselló', name: 'Roselló'},
+  {code: 'Segarra', name: 'Segarra'},
+  {code: 'Segrià', name: 'Segrià'},
+  {code: 'Selva', name: 'Selva'},
+  {code: 'Solsonès', name: 'Solsonès'},
+  {code: 'Tarragonès', name: 'Tarragonès'},
+  {code: 'Terra Alta', name: 'Terra Alta'},
+  {code: 'Urgell', name: 'Urgell'},
+  {code: 'Val Aran', name: 'Val Aran'},
+  {code: 'Vallès Occidental', name: 'Vallès Occidental'},
+  {code: 'Vallès Oriental', name: 'Vallès Oriental'},
+  {code: 'Vallespir', name: 'Vallespir'},
+];
+
 export default class Perfil extends React.Component {
+  componentDidMount() {
+   this.getInfoUser();
+  }
+
   constructor(props) {
         super(props)
         this.state = {
-           textSobreMi: 'Sóc un noi jove que li encanta anar a actes sardanistes cada cap de setmana.',
-           textName:'Agustí Conesa',
-           textNumber:'676236998',
-           textMail:'agusticonesaeij@gmail.com',
-           textVehicle:true,
-           aplecs:   true,
-           concerts: true,
-           ballades: true,
-           concursos: true,
-           cursets: true,
-           altres: true,
-           birthday: "1997-09-23",
+          textSobreMi: '',
+          textName:'',
+          localitat:'',
+          textNumber:'',
+          textMail:'agusticonesa@gmail.com',
+          textVehicle: '',
+          aplecs:   true,
+          concerts: true,
+          ballades: true,
+          concursos: true,
+          edat: true,
+          cursets: true,
+          altres: true,
+          birthday: "",
+          photo: null,
+          sardanistaCompeticio: true,
+          coblaCompeticio: true,
+          publicProfile: true,
+          DataActualdos:  {
+            code: '', name:  ''
+          },
+          comptarRepartir: false
         }
         this.handleTextSubmit = this.handleTextSubmit.bind(this);
+  }
+
+  async getInfoUser() {
+      try {
+          const response = await fetch(API_USER + this.state.textMail);
+
+          const json = await response.json();
+
+          this.onChangeState("textSobreMi", json.description);
+          this.onChangeState("textNumber", json.phoneNumber);
+          this.onChangeState("textName", json.name + ' ' + json.surname);
+          this.onChangeState("textNumber", json.phoneNumber);
+          this.onChangeState("photo", json.image);
+          this.onChangeState("textMail", json.email);
+          this.onChangeState("birthday", json.birthday);
+          this.onChangeState("aplecs", json.aplecs);
+          this.onChangeState("ballades", json.ballades);
+          this.onChangeState("concerts", json.concerts);
+          this.onChangeState("concursos", json.concursos);
+          this.onChangeState("cursets", json.cursets);
+          this.onChangeState("altres", json.altres);
+          this.onChangeState("edat", json.edat);
+          this.onChangeState("vehicle", json.vehicle);
+          this.onChangeState("localitat", json.comarca);
+          this.onChangeState("publicProfile", json.publicProfile);
+          this.onChangeState("comptarRepartir", json.comptarRepartir);
+
+          this.setState({
+            DataActualdos: {
+              name: this.state.localitat,
+              code: this.state.localitat,
+            }
+          });
+
+      }
+      catch (error) {
+          console.error(error);
+      }
   }
 
   handleTextSubmit() {
@@ -44,13 +160,82 @@ export default class Perfil extends React.Component {
     this.setState({ [key]: val })
   }
 
+  async sendChanges() {
+    try {
+        var photoBase64 =  null;
+        var ModifyProfilelUri = API_USER + this.state.textMail ;
+
+        if(this.state.photo) photoBase64 = this.state.photo.data;
+        var jsonBody = JSON.stringify({
+            altres: this.state.altres,
+            aplecs: this.state.aplecs,
+            ballades: this.state.ballades,
+            birthday: this.state.birthday,
+            coblaCompeticio: this.state.coblaCompeticio,
+            comarca: this.state.DataActualdos.name,
+            competidor: this.state.sardanistaCompeticio,
+            comptarRepartir: this.state.comptarRepartir,
+            concerts: this.state.concerts,
+            concursos: this.state.concursos,
+            cursets: this.state.cursets,
+            description: this.state.textSobreMi,
+            publicProfile: this.state.publicProfile,
+            name: this.state.textName,
+            phoneNumber: this.state.textNumber,
+            vehicle: this.state.hasCar,
+            /*  image: photoBase64,
+            */
+        });
+
+        const response = await fetch(ModifyProfilelUri,
+        {
+          method: 'PUT',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: jsonBody
+        });
+
+        var text = response.text()
+        console.log("TEXT ", text);
+
+        console.log("Changes succes", response);
+        console.log("Sended JSON BODY: ", jsonBody);
+
+        alert("Changes success!");
+
+    }
+    catch (error) {
+      console.error(error);
+        alert("Changes failed!");
+        console.log("Sended JSON BODY: ", jsonBody);
+    }
+  }
+
+ changeComarca = (inputName, inputValue) => {
+    console.log(inputName);
+    console.log(inputValue);
+    this.setState(state => ({
+     ...state,
+     DataActualdos: {
+       name: inputValue.name,
+       code: inputValue.code,
+     }
+   }))
+ }
+
   render() {
+    let a = '';
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.containerProfile}>
             <View style={styles.profileImage}>
-              <Image source={require("../img/profile-pic.jpg")} style={styles.image} rezideMode="center"></Image>
+              {this.state.photo && (
+                <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
+              )}
+              {!this.state.photo && (<Image source={require("../img/profile-pic.jpg")} style={styles.image} rezideMode="center"></Image>)}
             </View>
             <View style={styles.button}>
               <Icon name={'md-chatboxes'} size={20} backgroundColor={'#41444B'} color={'#DFD8C8'}  />
@@ -68,6 +253,22 @@ export default class Perfil extends React.Component {
             <TextInput style={styles.information} multiline
             onSubmitEditing={this.handleTextSubmit} onChangeText={(textSobreMi) => this.setState({textSobreMi})}
             editable>{this.state.textSobreMi}</TextInput>
+            <Text style={styles.titleApartats}>LOCALITAT</Text>
+            <View style={styles.imageLocalitat}>
+              <View style={styles.containerIconLocalitat}>
+                <Icon name={'md-home'} size={30} color={'#0000FF'}  />
+              </View>
+              <View style={styles.dropdownLocalitat}>
+                <Autocomplete
+                  data={DataComarques}
+                  displayKey="name"
+                  placeholderColor={'black'}
+                  dropDownIconColor	={'#714170'}
+                  value = {this.state.DataActualdos}
+                  onSelect={value => this.changeComarca('value', value)}
+                />
+              </View>
+            </View>
             <Text style={styles.titleApartats}>NAIXEMENT</Text>
             <View style={styles.imageMail}>
               <Icon name={'md-gift'} size={30} color={'red'}  />
@@ -141,8 +342,28 @@ export default class Perfil extends React.Component {
                 />
                 <Text style={styles.informationCheckBox}>Altres</Text>
               </View>
+
+              <Text style={styles.titleApartats}>HABILITATS</Text>
+              <View style={styles.listActes}>
+                <View style={styles.checkBox}>
+                  <CheckBox
+                    title='Click Here'
+                    value={this.state.comptarRepartir}
+                    onValueChange={val => this.onChangeState('comptarRepartir', val)}
+                  />
+                  <Text style={styles.informationCheckBox}>Comptar i Repartir</Text>
+                </View>
+              </View>
+              <Text style={styles.titleApartats}>PÚBLIC</Text>
+              <View style={styles.imageTelephone}>
+                <Switch onValueChange={val => this.onChangeState('publicProfile', val)} value = {this.state.publicProfile}/>
+              </View>
             </View>
           </View>
+          <TouchableHighlight style={[styles.buttonContainer, styles.modifyButton]}
+                              onPress={() => this.sendChanges()}>
+            <Text style={styles.modifyText}>GUARDAR CANVIS</Text>
+          </TouchableHighlight>
           <View style={styles.end}/>
         </ScrollView>
       </View>
@@ -256,6 +477,11 @@ const styles = StyleSheet.create({
     marginTop:10,
     flexDirection:'row',
   },
+  imageLocalitat:{
+    marginTop:-10,
+    flexDirection:'row',
+    marginRight:10,
+  },
   textMail:{
     marginTop:2,
     marginLeft:10,
@@ -279,4 +505,29 @@ const styles = StyleSheet.create({
   end:{
     marginBottom:20,
   },
+  buttonContainer: {
+    height:45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    borderRadius:30,
+    marginTop:20,
+    width:'80%',
+    marginLeft:'10%',
+    marginRight:'10%',
+  },
+  modifyButton: {
+    backgroundColor: "#714170",
+  },
+  modifyText: {
+    color: 'white',
+  },
+  dropdownLocalitat: {
+    width:'50%',
+    flexDirection:'row',
+  },
+  containerIconLocalitat: {
+    marginTop:28,
+    marginRight:20,
+  }
 });
