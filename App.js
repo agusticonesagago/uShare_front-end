@@ -17,8 +17,11 @@ import Actes from './components/Actes.js';
 import SignUp from './components/SignUpView.js';
 import LogIn from './components/LoginView.js';
 
+<<<<<<< HEAD
 import * as globalHelper from './components/Auxiliars/GlobalHelper.js'
 
+=======
+>>>>>>> cd176dc... Merge
 import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import SignUpView from "./components/SignUpView";
@@ -79,6 +82,7 @@ function AuthStackScreen() {
 
 
 export default class App extends React.Component {
+<<<<<<< HEAD
   constructor(props) {
     super(props);
     let email = async () => {
@@ -103,6 +107,14 @@ render() {
           <Stack.Screen name="Home" component={LogIn} />
         </Stack.Navigator>
       </NavigationContainer>
+=======
+  render() {
+    return (/*
+      <NavigationContainer>
+        <DrawerFiltersPerson/>
+      </NavigationContainer>*/
+      <ModifyPerfil/>
+>>>>>>> cd176dc... Merge
       //<Perfil/>
 
      */

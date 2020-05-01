@@ -17,7 +17,7 @@ export default class Perfil extends React.Component {
            textSobreMi: '',
            textName:'',
            textNumber:'',
-           textMail:'foto@gmail.com',
+           textMail:'agusticonesa@gmail.com',
            textVehicle: '',
            aplecs:   true,
            concerts: true,
@@ -124,7 +124,7 @@ export default class Perfil extends React.Component {
 
 
   render() {
-
+    var {navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
@@ -170,7 +170,7 @@ export default class Perfil extends React.Component {
             </View>
           </View>
           <TouchableHighlight style={[styles.buttonContainer, styles.modifyButton]}
-                              onPress={() => this.logInUser()}>
+                              onPress={() => navigate()}>
             <Text style={styles.modifyText}>MODIFICAR</Text>
           </TouchableHighlight>
           <View style={styles.end}/>

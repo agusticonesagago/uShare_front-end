@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {StyleSheet, Text, TextInput, View, Image, 
+import {StyleSheet, Text, TextInput, View, Image,
   Button,
   TouchableHighlight,
   Alert, ScrollView} from 'react-native';
@@ -204,8 +204,6 @@ export default class SignUp extends React.Component {
 
   render() {
     return (
-
-
       <View style={styles.container}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.form} >
@@ -236,12 +234,12 @@ export default class SignUp extends React.Component {
               autoCapitalize="none"
               onChangeText={val => this.onChangeText('cognom', val)}
             />
-            
+
             <View style={styles.selectBirthday}>
               <Text style={styles.text}> Data de naixement </Text>
               <DatePicker
                 style={{
-                  width: 200, 
+                  width: 200,
                   backgroundColor: '#FFDFDF',
                   marginBottom: 15,
                   marginLeft:5
@@ -272,7 +270,7 @@ export default class SignUp extends React.Component {
             </View>
 
             <View style={styles.checkBox}>
-              <Text style={styles.text}> Tens cotxe? </Text>    
+              <Text style={styles.text}> Tens cotxe? </Text>
               <CheckBox
                 title='Click Here '
                 value={this.state.hasCar}
@@ -325,8 +323,8 @@ export default class SignUp extends React.Component {
                   value={this.state.aplecs}
                   onValueChange={val => this.onChangeState('aplecs', val)}
                 />
-                <Text style={styles.text}> Aplecs </Text>    
-              </View> 
+                <Text style={styles.text}> Aplecs </Text>
+              </View>
 
               <View style={styles.checkBox}>
                 <CheckBox
@@ -335,7 +333,7 @@ export default class SignUp extends React.Component {
                   onValueChange={val => this.onChangeState('ballades', val)}
                 />
                 <Text style={styles.text}> Ballades </Text>
-              </View> 
+              </View>
 
               <View style={styles.checkBox}>
                 <CheckBox
@@ -343,8 +341,8 @@ export default class SignUp extends React.Component {
                   value={this.state.concerts}
                   onValueChange={val => this.onChangeState('concerts', val)}
                 />
-                <Text style={styles.text}> Concerts </Text>    
-              </View> 
+                <Text style={styles.text}> Concerts </Text>
+              </View>
 
               <View style={styles.checkBox}>
                 <CheckBox
@@ -352,8 +350,8 @@ export default class SignUp extends React.Component {
                   value={this.state.concursos}
                   onValueChange={val => this.onChangeState('concursos', val)}
                 />
-                <Text style={styles.text}> Concursos </Text>    
-              </View> 
+                <Text style={styles.text}> Concursos </Text>
+              </View>
 
 
 
@@ -363,8 +361,8 @@ export default class SignUp extends React.Component {
                   value={this.state.cursets}
                   onValueChange={val => this.onChangeState('cursets', val)}
                 />
-                <Text style={styles.text}> Cursets </Text>    
-              </View> 
+                <Text style={styles.text}> Cursets </Text>
+              </View>
 
               <View style={styles.checkBox}>
                 <CheckBox
@@ -372,8 +370,8 @@ export default class SignUp extends React.Component {
                   value={this.state.altres}
                   onValueChange={val => this.onChangeState('altres', val)}
                 />
-                <Text style={styles.text}> Altres </Text>    
-              </View> 
+                <Text style={styles.text}> Altres </Text>
+              </View>
 
             </View>
             <View style={styles.capacitatsPersonals}>
@@ -423,7 +421,7 @@ SignUp.navigationOptions = {
 
 const styles = StyleSheet.create({
 
-  
+
 
   logo:{
     height:180,
@@ -503,10 +501,5 @@ const styles = StyleSheet.create({
           fontSize: 20,
         }
 
-    
+
 });
- 
-
-
-
-

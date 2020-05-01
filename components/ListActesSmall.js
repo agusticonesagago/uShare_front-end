@@ -12,7 +12,7 @@ import PerfilSmall from './PerfilSmall.js';
 export default class ListActesSmall extends React.Component {
   render() {
     let actes = []
-    for (let i = 0; i < 8; ++i) {
+    for (let i = 0; i < 4; ++i) {
      actes.push(<Actes/>)
     }
     return (
