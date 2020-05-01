@@ -38,12 +38,6 @@ export default class LoginView extends React.Component {
         this.setState({ [key]: val })
     };
 
-
-
-
-
-
-
     async getUser(email) {
         try {
             const response = await fetch(API_USER + email);
