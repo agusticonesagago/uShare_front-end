@@ -185,8 +185,7 @@ export default class Perfil extends React.Component {
             name: this.state.textName,
             phoneNumber: this.state.textNumber,
             vehicle: this.state.hasCar,
-            /*  image: photoBase64,
-            */
+            image: photoBase64,
         });
 
         const response = await fetch(ModifyProfilelUri,
