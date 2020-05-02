@@ -1,10 +1,11 @@
 import React , {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image,TextInput , Alert, TouchableHighlight, Switch} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image,TextInput , Alert, TouchableHighlight, Switch, Button} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import CheckBox from '@react-native-community/checkbox';
 
 import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
+import ImagePicker from 'react-native-image-picker'
 
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 
@@ -91,6 +92,7 @@ export default class Perfil extends React.Component {
           altres: true,
           birthday: "",
           photo: null,
+          photoType: null,
           sardanistaCompeticio: true,
           coblaCompeticio: true,
           publicProfile: true,
@@ -163,9 +165,9 @@ export default class Perfil extends React.Component {
   async sendChanges() {
     try {
         var photoBase64 =  null;
+        if(this.state.photo) photoBase64 = this.state.photo.data;
         var ModifyProfilelUri = API_USER + this.state.textMail ;
 
-        if(this.state.photo) photoBase64 = this.state.photo.data;
         var jsonBody = JSON.stringify({
             altres: this.state.altres,
             aplecs: this.state.aplecs,
@@ -225,6 +227,24 @@ export default class Perfil extends React.Component {
    }))
  }
 
+
+   handleChoosePhoto = () => {
+     const options = {
+       noData: false,
+     }
+     ImagePicker.launchImageLibrary(options, response => {
+       if (response.uri) {
+         console.log('\n\n\nStart-----------------------------------------------------')
+         console.log(response.uri)
+         console.log('\n')
+         console.log(response)
+         this.onChangeState('photo', response);
+         this.onChangeState('photoType', response.type)
+
+       }
+     })
+   }
+
   render() {
     let a = '';
     return (
@@ -232,16 +252,21 @@ export default class Perfil extends React.Component {
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.containerProfile}>
             <View style={styles.profileImage}>
+
               {this.state.photo && (
-                <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
+                <Image
+                  source={ { uri: this.state.photo.uri }}
+                  style={styles.image}
+                  rezideMode="center"
+                />
               )}
-              {!this.state.photo && (<Image source={require("../img/profile-pic.jpg")} style={styles.image} rezideMode="center"></Image>)}
+              {!this.state.photo && (<Image source={require("../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
             </View>
             <View style={styles.button}>
               <Icon name={'md-chatboxes'} size={20} backgroundColor={'#41444B'} color={'#DFD8C8'}  />
             </View>
             <View style={styles.add}>
-              <Icon name={'md-add'} size={35} backgroundColor={'#41444B'} color={'#DFD8C8'}  />
+              <Icon name={'md-camera'} size={35} backgroundColor={'#41444B'} color={'#DFD8C8'} onPress={this.handleChoosePhoto}/>
             </View>
           </View>
 
