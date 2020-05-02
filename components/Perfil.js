@@ -28,8 +28,10 @@ export default class Perfil extends React.Component {
            altres: true,
            birthday: "",
            photo: null,
-           sardanistaCompeticio: true,
-           coblaCompeticio: true,
+           sardanistaCompeticio: '',
+           coblaCompeticio: '',
+           comarca:'',
+           comptarIRepartir:'',
         }
   }
 
@@ -115,6 +117,24 @@ export default class Perfil extends React.Component {
           this.onChangeState("cursets", json.cursets);
           this.onChangeState("altres", json.altres);
           this.onChangeState("edat", json.edat);
+          this.onChangeState("comarca", json.comarca);
+          this.onChangeState("birthday", json.birthday);
+
+          if(json.competidor){
+            this.onChangeState("sardanistaCompeticio", "SÍ");
+          }
+          else this.onChangeState("sardanistaCompeticio", "NO");
+
+          if(json.coblaCompetició){
+            this.onChangeState("coblaCompeticio", "SÍ");
+          }
+          else this.onChangeState("coblaCompeticio", "NO");
+
+          if(json.comptarRepartir){
+            this.onChangeState("comptarIRepartir", "SÍ");
+          }
+          else this.onChangeState("comptarIRepartir", "NO");
+
       }
       catch (error) {
           console.error(error);
@@ -124,7 +144,7 @@ export default class Perfil extends React.Component {
 
 
   render() {
-    var {navigate} = this.props.navigation;
+    //var {navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
@@ -133,7 +153,7 @@ export default class Perfil extends React.Component {
               {this.state.photo && (
                 <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
               )}
-              {!this.state.photo && (<Image source={require("../img/profile-pic.jpg")} style={styles.image} rezideMode="center"></Image>)}
+              {!this.state.photo && (<Image source={require("../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
             </View>
             <View style={styles.button}>
               <Icon name={'md-chatboxes'} size={20} backgroundColor={'#41444B'} color={'#DFD8C8'}  />
@@ -149,6 +169,16 @@ export default class Perfil extends React.Component {
           <View style={styles.extraInfo}>
             <Text style={styles.titleApartats}>SOBRE MI</Text>
             <Text style={styles.information}>{this.state.textSobreMi}</Text>
+            <Text style={styles.titleApartats}>LOCALITAT</Text>
+            <View style={styles.imageTelephone}>
+                <Icon name={'md-home'} size={30} color={'#0000FF'}  />
+                <Text style={styles.textMail}>{this.state.comarca}</Text>
+            </View>
+            <Text style={styles.titleApartats}>NAIXEMENT</Text>
+            <View style={styles.imageMail}>
+              <Icon name={'md-gift'} size={30} color={'red'}  />
+              <Text style={styles.textMail}>{this.state.birthday}</Text>
+            </View>
             <Text style={styles.titleApartats}>CONTACTE</Text>
             <View style={styles.imageTelephone}>
               <Icon name={'md-call'} size={30} color={'green'}  />
@@ -160,7 +190,9 @@ export default class Perfil extends React.Component {
             </View>
             <Text style={styles.titleApartats}>VEHICLE</Text>
             <Text style={styles.information}>{this.state.textVehicle}</Text>
-            <Text style={styles.titleApartats}>SARDANISTA DE COMPETICIÓ</Text>
+            <Text style={styles.titleApartats}>HABILITATS</Text>
+            <Text style={styles.information}>{this.state.comptarIRepartir}</Text>
+            <Text style={styles.titleApartats}>SARDANES DE COMPETICIÓ</Text>
             <Text style={styles.information}>{this.state.sardanistaCompeticio}</Text>
             <Text style={styles.titleApartats}>COBLA DE COMPETICIÓ</Text>
             <Text style={styles.information}>{this.state.coblaCompeticio}</Text>
@@ -169,9 +201,13 @@ export default class Perfil extends React.Component {
               <View>{this.renderActes()}</View>
             </View>
           </View>
-          <TouchableHighlight style={[styles.buttonContainer, styles.modifyButton]}
+          <TouchableHighlight style={[styles.editButtonContainer, styles.modifyButton]}
                               onPress={() => navigate()}>
-            <Text style={styles.modifyText}>MODIFICAR</Text>
+            <Text style={styles.modifyText}>EDITAR</Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={[styles.passwordButtonContainer, styles.modifyButton]}
+                              onPress={() => navigate()}>
+            <Text style={styles.modifyText}>MODIFICAR CONTRASENYA</Text>
           </TouchableHighlight>
           <View style={styles.end}/>
         </ScrollView>
@@ -290,13 +326,23 @@ const styles = StyleSheet.create({
   end:{
     marginBottom:20,
   },
-  buttonContainer: {
+  editButtonContainer: {
     height:45,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom:20,
     borderRadius:30,
     marginTop:20,
+    width:'80%',
+    marginLeft:'10%',
+    marginRight:'10%',
+  },
+  passwordButtonContainer: {
+    height:45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    borderRadius:30,
     width:'80%',
     marginLeft:'10%',
     marginRight:'10%',
