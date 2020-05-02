@@ -167,7 +167,6 @@ export default class Perfil extends React.Component {
         var photoBase64 =  null;
         if(this.state.photo) photoBase64 = this.state.photo.data;
         var ModifyProfilelUri = API_USER + this.state.textMail ;
-
         var jsonBody = JSON.stringify({
             altres: this.state.altres,
             aplecs: this.state.aplecs,
@@ -186,6 +185,7 @@ export default class Perfil extends React.Component {
             phoneNumber: this.state.textNumber,
             vehicle: this.state.hasCar,
             image: photoBase64,
+            imageType: this.state.imageType,
         });
 
         const response = await fetch(ModifyProfilelUri,
@@ -253,11 +253,7 @@ export default class Perfil extends React.Component {
             <View style={styles.profileImage}>
 
               {this.state.photo && (
-                <Image
-                  source={ { uri: this.state.photo.uri }}
-                  style={styles.image}
-                  rezideMode="center"
-                />
+                <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
               )}
               {!this.state.photo && (<Image source={require("../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
             </View>
