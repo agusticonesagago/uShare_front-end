@@ -8,27 +8,71 @@ import {NavigationContainer} from '@react-navigation/native';
 import Drawer from './Drawer.js';
 import PerfilSmall from './PerfilSmall.js';
 
+import * as globalHelper from './Auxiliars/GlobalHelper.js'
+
+var API_USER = globalHelper.API_USER;
+const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
+
 export default class ListPerfilSmall extends React.Component {
+
+  componentDidMount() {
+   this.getInfoPersones();
+  }
+
+  constructor(props) {
+        super(props);
+        this.state = {
+          'persones': [],
+           personesLoaded: false
+        }
+  }
+
+  async getInfoPersones() {
+      try {
+          const response = await fetch(API_USER);
+
+          const json = await response.json();
+          this.state.persones = json;
+
+          this.setState({
+            personesLoaded: true
+          });
+          //console.log(this.state.actpersoneses); //Per veure quines persones hi ha
+      }
+      catch (error) {
+          console.error(error);
+      }
+  }
+
   render() {
-    let profiles = []
-    for (let i = 0; i < 8; ++i) {
-     profiles.push(<PerfilSmall/>)
-    }
-    return (
-      <View style={styles.container}>
-        <View style={styles.containerNavigator}>
-          <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
-          <Text style={styles.titleNavigator}> Perfils </Text>
+
+    if(this.state.personesLoaded){
+      let profiles = []
+      for (let i = 0; i < this.state.persones.length; ++i) {
+       profiles.push(<PerfilSmall  nomCognom={this.state.persones[i].name}
+         description={this.state.persones[i].description}
+         photo={this.state.persones[i].image}
+         />)
+      }
+      return (
+        <View style={styles.container}>
+          <View style={styles.containerNavigator}>
+            <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
+            <Text style={styles.titleNavigator}> Perfils </Text>
+          </View>
+          <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
+            {profiles}
+          </ScrollView>
         </View>
-        <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
-          {profiles}
-        </ScrollView>
-      </View>
-    );
+      )
+    }
+    else {
+     return null;
+    }
   }
 }
 
-ListPerfilSmall.navigationOptions = {
+/*ListPerfilSmall.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
       //name={focused ? 'md-calendar' : 'ios-calendar'}
@@ -37,7 +81,7 @@ ListPerfilSmall.navigationOptions = {
       color={tintColor}
     />
   )
-}
+}*/
 
 const styles = StyleSheet.create({
   container: {

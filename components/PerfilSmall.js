@@ -12,10 +12,13 @@ export default class PerfilSmall extends React.Component {
   render() {
     return (
         <View style={styles.containerPerfil}>
-          <Image source={require("../img/profile-pic.jpg")} style={styles.imageProfile}></Image>
+          {this.props.photo && (
+            <Image source={{uri: `data:image/gif;base64,${this.props.photo}`}} style={styles.imageProfile}></Image>
+          )}
+          {!this.props.photo && (<Image source={require("../img/interface.png")} style={styles.imageProfile} rezideMode="center"></Image>)}
           <View style={styles.containerInfoProfile}>
-            <Text style={styles.nameProfile}>Agustí Conesa Gago</Text>
-            <Text style={styles.descriptionProfile}>Sóc un noi jove que li encanta anar a actes sardanistes cada cap de setmana.</Text>
+            <Text style={styles.nameProfile}>{this.props.nomCognom}</Text>
+            <Text style={styles.descriptionProfile}>{this.props.description}</Text>
           </View>
         </View>
     );
