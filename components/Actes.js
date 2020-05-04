@@ -13,22 +13,24 @@ export default class Actes extends React.Component {
       <View style={styles.containerActe}>
           <View style={styles.WhereWhen}>
             <Text style={styles.Where}>
-              RIPOLL. Plaça de l'Ajuntament
+              {/*RIPOLL. Plaça de l'Ajuntament*/}
+              {this.props.where}
             </Text>
             <Text style={styles.When}>
-              11.05.2020 12:00h i 17:30h
+              {/*11.05.2020 12:00h i 17:30h*/}
+              {this.props.when} h
             </Text>
           </View>
           <View style={styles.ActivitatCobles}>
             <Text style={styles.ActivitatCoblesInterpets}>Activitat:</Text>
-            <Text style={styles.InfoActeActivitatCobles}>Ballada</Text>
+            <Text style={styles.InfoActeActivitatCobles}>{/*Ballada*/} {this.props.activitat}</Text>
           </View>
           <View style={styles.ActivitatCobles}>
             <Text style={styles.ActivitatCoblesInterpets}>Cobles/Intèrprets:</Text>
-            <Text style={styles.InfoActeActivitatCobles}>La Selvatana</Text>
+            <Text style={styles.InfoActeActivitatCobles}>{/*La Selvatana*/}{this.props.cobla}</Text>
           </View>
           <View style={{marginTop: 3}}></View>
-          <Text style={styles.ExtraInfoActe}>Festa Major. A les 12h sardanes d'honor i ballada de 3 sardanes. A les 17:30h, ballada a la Plaça Gran (sardana de 7 tirades)</Text>
+          <Text style={styles.ExtraInfoActe}>{/*Festa Major. A les 12h sardanes d'honor i ballada de 3 sardanes. A les 17:30h, ballada a la Plaça Gran (sardana de 7 tirades)*/}{this.props.description}</Text>
       </View>
     );
   }
@@ -62,6 +64,7 @@ const styles = StyleSheet.create({
     color: '#714170',
     fontWeight: 'bold',
     fontSize: 15,
+    width:'80%',
   },
   When:{
     color:'grey',

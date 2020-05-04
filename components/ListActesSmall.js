@@ -9,23 +9,69 @@ import Actes from './Actes.js';
 import Drawer from './Drawer.js';
 import PerfilSmall from './PerfilSmall.js';
 
+import * as globalHelper from './Auxiliars/GlobalHelper.js'
+
+var API = globalHelper.API;
+const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
+
 export default class ListActesSmall extends React.Component {
+  componentDidMount() {
+   this.getInfoActes();
+  }
+
+  constructor(props) {
+        super(props);
+        this.state = {
+          'actes': [],
+           actesLoaded: false
+        }
+  }
+
+  async getInfoActes() {
+      try {
+          const response = await fetch(API + '/actes');
+
+          const json = await response.json();
+          this.state.actes = json;
+
+          this.setState({
+            actesLoaded: true
+          });
+          //console.log(this.state.actes); //Per veure quins actes té
+      }
+      catch (error) {
+          console.error(error);
+      }
+  }
+
   render() {
-    let actes = []
-    for (let i = 0; i < 4; ++i) {
-     actes.push(<Actes/>)
-    }
-    return (
-      <View style={styles.container}>
-        <View style={styles.containerNavigator}>
-          <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
-          <Text style={styles.titleNavigator}> Actes </Text>
-        </View>
-        <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
-          {actes}
-        </ScrollView>
-      </View>
-    );
+
+    if(this.state.actesLoaded){
+        let actes = [];
+        //console.log(this.state.actes.length);
+        for (let i = 0; i < this.state.actes.length; ++i) {
+         actes.push(<Actes where={this.state.actes[i].lloc}
+           when={this.state.actes[i].hora1}
+           activitat={this.state.actes[i].tipus}
+           cobla={this.state.actes[i].cobla1}
+           description={this.state.actes[i].nomActivitat}/>)
+        }
+
+        return(
+          <View style={styles.container}>
+            <View style={styles.containerNavigator}>
+              <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
+              <Text style={styles.titleNavigator}> Actes </Text>
+            </View>
+            <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
+              {actes}
+            </ScrollView>
+          </View>
+        )
+      }
+      else {
+       return null;
+      }
   }
 }
 
