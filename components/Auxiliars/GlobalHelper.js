@@ -15,6 +15,7 @@ export var LogInScreenID = "Login";
 export var HomeScreenID = "Home";
 export var ActesScreenID = "Actes";
 export var PerfilScreenID = "Perfil";
+export var ListPerfilScreenID = "ListPerfil";
 
 
 /*
@@ -81,22 +82,22 @@ export async function getValueFromAsyncStorage(key) {
 
 // Fetch the email from storage
 export async function getLoggedUserEmailAsync() {
+    console.log("entra getLoggedUserEmailAsync");
     try {
-        return await this.getValueFromAsyncStorage(asyncStorageLoggedUserEmailKey);
-
+        return await getValueFromAsyncStorage(asyncStorageLoggedUserEmailKey);
     } catch (e) {
-        console.error(e.message());
+        console.error("error:" +e.message());
     }
 }
 
 
 
-/* // TODO: make it an    export async function
-    _signOutAsync = async () => {
+ // TODO: make it an    export async function
+    export async function _signOutAsync() {
         await AsyncStorage.clear();
-        this.props.navigation.navigate('Auth');
+        //this.props.navigation.navigate('Auth');
     };
-*/
+
 
 
 
