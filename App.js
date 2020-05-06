@@ -49,24 +49,33 @@ function HomeTabScreen() {
   );
 }
 
-function AuthStackScreen() {
+function HomeStackScreen() {
   return (
+    // Hide header
+    //https://stackoverflow.com/questions/61185135/react-native-navigation-error-the-action-navigate-with-payload-name-192-168
       <AuthStack.Navigator>
-        <AuthStack.Screen name={globalHelper.LogInScreenID} component={LogIn} />
-        <AuthStack.Screen name={globalHelper.SignUpScreenID} component={SignUp} />
-        <AuthStack.Screen name={globalHelper.HomeScreenID} component={HomeTabScreen} />
+        <AuthStack.Screen name={globalHelper.HomeTabScreenID} component={HomeTabScreen} 
+        options={{ title: '', headerTransparent: true }} />
       </AuthStack.Navigator>
   );
 }
 
-
+function AuthStackScreen() {
+  return (
+      <AuthStack.Navigator>
+        <AuthStack.Screen name={globalHelper.LogInScreenID} component={LogIn} options={{ title: '', headerTransparent: true }}/>
+        <AuthStack.Screen name={globalHelper.SignUpScreenID} component={SignUp} options={{ title: '', headerTransparent: true }} />
+        <AuthStack.Screen name={globalHelper.HomeStackScreenID} component={HomeStackScreen} options={{ title: '', headerTransparent: true }} />
+      </AuthStack.Navigator>
+  );
+}
 
 
 function myCreateNavigatorFunction() {
 
   //let storedUserEmail = await globalHelper.getLoggedUserEmailAsync();
   //globalHelper._signOutAsync();
-
+  /*
   let email = async () => {
     let x= await globalHelper.getLoggedUserEmailAsync();
     console.log("email: "+x);
@@ -75,24 +84,37 @@ function myCreateNavigatorFunction() {
 
   console.log("email: "+email);
   let home = email === undefined;
+*/
+/*
+  let email;
+  this.state.email =
+  globalHelper.getLoggedUserEmailAsync().then((token)=>{
+    console.log("token: " + token)
+    this.state.emai = token;
+    return token;
+    //check if user is logged in
+  })
 
+  console.log("email: "+email);
+*/
+  let home=false;
   const rootSwitch = createSwitchNavigator(
       {
-        [globalHelper.HomeScreenID]: HomeTabScreen,
+        [globalHelper.HomeStackScreenID]: HomeStackScreen,
         [globalHelper.AuthScreenID]: AuthStackScreen,
       },
       {
-        initialRouteName: home ?  globalHelper.AuthScreenID : globalHelper.HomeScreenID
+        initialRouteName: home ?  globalHelper.HomeStackScreenID : globalHelper.AuthScreenID
       }
   );
 
   return rootSwitch;
 }
 
-const rootSwitch = myCreateNavigatorFunction();
+const RootSwitch = myCreateNavigatorFunction();
 
 
-const AppContainer = createAppContainer(rootSwitch);
+const AppContainer = createAppContainer(RootSwitch);
 
 export default class App extends React.Component {
 
@@ -128,10 +150,24 @@ export default class App extends React.Component {
           </Stack.Navigator>
       </NavigationContainer>
 */
+
         <NavigationContainer>
           <AppContainer/>
         </NavigationContainer>
 
+
+
+      /*
+        <NavigationContainer>
+          <HomeTabScreen/>
+        </NavigationContainer>
+        */
+
+        /*
+        <NavigationContainer>
+          <HomeStackScreen/>
+        </NavigationContainer>
+        */
     )
   }
 }

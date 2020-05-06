@@ -77,7 +77,8 @@ export default class LoginView extends React.Component {
                 await globalHelper.signInStoreLoggedUserEmailAsync(email);
                 const json = await this.getUser(email);
 
-                this.props.navigation.replace(globalHelper.HomeScreenID);
+                //this.props.navigation.navigate(globalHelper.HomeStackScreenID);
+                this.props.navigation.replace(globalHelper.HomeStackScreenID);
             }
             else {
                 alert("Wrong email or username");

@@ -12,7 +12,9 @@ export var AuthScreenID = "Auth";
 export var SignUpScreenID = "Registre";
 export var LogInScreenID = "Login";
 
-export var HomeScreenID = "Home";
+export var HomeStackScreenID = "HomeStack";
+export var HomeTabScreenID = "HomeTab";
+
 export var ActesScreenID = "Actes";
 export var PerfilScreenID = "Perfil";
 export var ListPerfilScreenID = "ListPerfil";
