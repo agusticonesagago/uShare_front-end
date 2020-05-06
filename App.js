@@ -9,7 +9,7 @@ import LogIn from './components/LoginView.js';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import Actes from './components/Actes.js';
+import Actes from './components/ListActesSmall.js';
 
 import * as globalHelper from './components/Auxiliars/GlobalHelper.js'
 
@@ -33,7 +33,9 @@ function HomeTabScreen() {
               if (route.name === globalHelper.ActesScreenID) {
                 iconName = 'md-calendar';
               } else if (route.name === globalHelper.PerfilScreenID) {
-                iconName = 'md-flame';
+                iconName = 'md-person';
+              } else if (route.name === globalHelper.ListPerfilSmall) {
+                iconName = 'md-people';
               }
               //return <Ionicons name={iconName} size={size} color={color}     />;
               return <Icon name={iconName} size={size+10} color={color}     />;
@@ -43,8 +45,8 @@ function HomeTabScreen() {
         inactiveTintColor: 'gray',
       }}>
         <Tab.Screen name={globalHelper.ActesScreenID} component={Actes} />
-        <Tab.Screen name={globalHelper.PerfilScreenID} component={Perfil} />
         <Tab.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall} />
+        <Tab.Screen name={globalHelper.PerfilScreenID} component={Perfil} />
       </Tab.Navigator>
   );
 }
@@ -54,7 +56,7 @@ function HomeStackScreen() {
     // Hide header
     //https://stackoverflow.com/questions/61185135/react-native-navigation-error-the-action-navigate-with-payload-name-192-168
       <AuthStack.Navigator>
-        <AuthStack.Screen name={globalHelper.HomeTabScreenID} component={HomeTabScreen} 
+        <AuthStack.Screen name={globalHelper.HomeTabScreenID} component={HomeTabScreen}
         options={{ title: '', headerTransparent: true }} />
       </AuthStack.Navigator>
   );

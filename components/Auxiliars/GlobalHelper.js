@@ -17,7 +17,7 @@ export var HomeTabScreenID = "HomeTab";
 
 export var ActesScreenID = "Actes";
 export var PerfilScreenID = "Perfil";
-export var ListPerfilScreenID = "ListPerfil";
+export var ListPerfilScreenID = "Sardanistes";
 
 
 /*
@@ -99,11 +99,3 @@ export async function getLoggedUserEmailAsync() {
         await AsyncStorage.clear();
         //this.props.navigation.navigate('Auth');
     };
-
-
-
-
-
-
-
-

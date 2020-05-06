@@ -100,7 +100,7 @@ export default class Perfil extends React.Component {
 
           this.onChangeState("textSobreMi", json.description);
           this.onChangeState("textNumber", json.phoneNumber);
-          this.onChangeState("textName", json.name + ' ' + json.surname);
+          this.onChangeState("textName", json.name);
           this.onChangeState("textNumber", json.phoneNumber);
           this.onChangeState("photo", json.image);
           this.onChangeState("textMail", json.email);
@@ -118,7 +118,7 @@ export default class Perfil extends React.Component {
           this.onChangeState("altres", json.altres);
           this.onChangeState("edat", json.edat);
           this.onChangeState("comarca", json.comarca);
-          this.onChangeState("birthday", json.birthday);
+          this.onChangeState("birthday", json.birthday.slice(0, 10));
 
           if(json.competidor){
             this.onChangeState("sardanistaCompeticio", "SÍ");
