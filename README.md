@@ -1,5 +1,23 @@
 # Sardapp
 
+Que fer quan peta: Si no pilla un modul
+```bash
+npx react-native run-android --reset-cache
+```
+o 
+```bash
+npx react-native start --reset-cache
+```
+
+--------------------------------------------
+Si es borra el projecte(en local), i es torna a baixar, fer:
+```bash
+npm uninstall lodash
+```
+i despres:
+```bash
+npm install lodash
+```
 
 # Agustí
 ```bash
