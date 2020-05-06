@@ -2,12 +2,13 @@ import React , {Component} from 'react';
 import {StyleSheet, Text, TextInput, View, Image,
   Button,
   TouchableHighlight,
-  Alert, ScrollView} from 'react-native';
+  Alert, ScrollView, ImageBackground, Divider } from 'react-native';
 
 import CheckBox from '@react-native-community/checkbox';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
 import DatePicker from 'react-native-datepicker'
 import ImagePicker from 'react-native-image-picker'
 import * as globalHelper from "./Auxiliars/GlobalHelper";
@@ -31,6 +32,64 @@ var API_USER = globalHelper.API_USER;
                               // TODO: O potser afegir el tipus al enviar-ho(concatenat)
       />
  */
+
+
+ const DataComarques = [
+   {code: 'Alt Camp', name: 'Alt Camp'},
+   {code: 'Alt Empordà', name: 'Alt Empordà'},
+   {code: 'Alt Penedès', name: 'Alt Penedès'},
+   {code: 'Alt Urgell', name: 'Alt Urgell'},
+   {code: 'Alta Cerdanya', name: 'Alta Cerdanya'},
+   {code: 'Alta Ribagorça', name: 'Alta Ribagorça'},
+   {code: 'Andorra', name: 'Andorra'},
+   {code: 'Anoia', name: 'Anoia'},
+   {code: 'Bages', name: 'Bages'},
+   {code: 'Baix Camp', name: 'Baix Camp'},
+   {code: 'Baix Ebre', name: 'Baix Ebre'},
+   {code: 'Baix Empordà', name: 'Baix Empordà'},
+   {code: 'Baix Llobregat', name: 'Baix Llobregat'},
+   {code: 'Baix Penedès', name: 'Baix Penedès'},
+   {code: 'Baixa Cerdanya', name: 'Baixa Cerdanya'},
+   {code: 'Barcelonès', name: 'Barcelonès'},
+   {code: 'Berguedà', name: 'Berguedà'},
+   {code: 'Capcir', name: 'Capcir'},
+   {code: 'Conca de Barberà', name: 'Conca de Barberà'},
+   {code: 'Conflent', name: 'Conflent'},
+   {code: 'Fenolleda', name: 'Fenolleda'},
+   {code: 'Garraf', name: 'Garraf'},
+   {code: 'Garrigues', name: 'Garrigues'},
+   {code: 'Garrotxa', name: 'Garrotxa'},
+   {code: 'Gironès', name: 'Gironès'},
+   {code: 'Illes Balears', name: 'Illes Balears'},
+   {code: 'Maresme', name: 'Maresme'},
+   {code: 'Montsià', name: 'Montsià'},
+   {code: 'Noguera', name: 'Noguera'},
+   {code: 'Osona', name: 'Osona'},
+   {code: 'País Valencià', name: 'País Valencià'},
+   {code: 'Pallars Jussà', name: 'Pallars Jussà'},
+   {code: 'Pallars Sobirà', name: 'Pallars Sobirà'},
+   {code: 'Pla Estany', name: 'Pla Estany'},
+   {code: 'Pla Urgell', name: 'Pla Urgell'},
+   {code: 'Priorat', name: 'Priorat'},
+   {code: 'Resta Estat Espanyol', name: 'Resta Estat Espanyol'},
+   {code: 'Resta Estat Francès', name: 'Resta Estat Francès'},
+   {code: 'Resta Món', name: 'Resta Món'},
+   {code: 'Ribera Ebre', name: 'Ribera Ebre'},
+   {code: 'Ripollès', name: 'Ripollès'},
+   {code: 'Roselló', name: 'Roselló'},
+   {code: 'Segarra', name: 'Segarra'},
+   {code: 'Segrià', name: 'Segrià'},
+   {code: 'Selva', name: 'Selva'},
+   {code: 'Solsonès', name: 'Solsonès'},
+   {code: 'Tarragonès', name: 'Tarragonès'},
+   {code: 'Terra Alta', name: 'Terra Alta'},
+   {code: 'Urgell', name: 'Urgell'},
+   {code: 'Val Aran', name: 'Val Aran'},
+   {code: 'Vallès Occidental', name: 'Vallès Occidental'},
+   {code: 'Vallès Oriental', name: 'Vallès Oriental'},
+   {code: 'Vallespir', name: 'Vallespir'},
+ ];
+
 export default class SignUp extends React.Component {
 
 
@@ -44,7 +103,7 @@ export default class SignUp extends React.Component {
         // Personal Info
         nom:      null,
         cognom:   null,
-        birthday: "2016-05-16",
+        birthday: "",
         description: null,
         photo: null,
         photoType: null,
@@ -73,8 +132,27 @@ export default class SignUp extends React.Component {
         preferenciaProximitat: null, // Bool? Es confos: l'hauria d'escollir en el buscador
         preferenciaQualitatActe: null, // La cobla la escollira en el buscador
 
+        DataActualdos:  {
+          code: '', name:  ''
+        },
       // More...
     }
+  }
+
+  changeComarca = (inputName, inputValue) => {
+     console.log(inputName);
+     console.log(inputValue);
+     this.setState(state => ({
+      ...state,
+      DataActualdos: {
+        name: inputValue.name,
+        code: inputValue.code,
+      }
+    }))
+  }
+
+  onChangeState = (key, val) => {
+    this.setState({ [key]: val })
   }
 
   /*
@@ -91,8 +169,8 @@ export default class SignUp extends React.Component {
             ballades: this.state.ballades,
             birthday: this.state.birthday,
             coblaCompeticio: true, // todo
-            comarca: "string", // todo
-            competidor: true, // todo
+            comarca: "Comarca", // todo
+            competidor: this.state.competidor, // todo
             comptarRepartir: this.state.comptarRepartir,
             concerts: this.state.concerts,
             concursos: this.state.concursos,
@@ -106,7 +184,8 @@ export default class SignUp extends React.Component {
             phoneNumber: this.state.mobileNumber,
             publicProfile: true, // per defecte
             surname: this.state.cognom,
-            vehicle: this.state.hasCar
+            vehicle: this.state.hasCar,
+            comarca: this.state.DataActualdos.name,
         });
 
         const response = await fetch(API_USER,
@@ -128,7 +207,7 @@ export default class SignUp extends React.Component {
             this.props.navigation.navigate(globalHelper.LogInScreenID);
         }
         else {
-            alert("No s'ha pogut registra l'usuari!");
+            alert("No s'ha pogut registrar l'usuari!");
             console.log("TEXT ", text);
             console.log("Upload failed: ", response);
         }
@@ -205,94 +284,34 @@ export default class SignUp extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+
+        <ImageBackground source={require("../img/background-texture.jpg")} style={styles.container}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.form} >
-            <Text style={styles.titols}>DADES</Text>
-
+            <Image source={require("../img/logorodo.png")} style={styles.imageLogo}></Image>
+            <View style={styles.containerHeader}>
+              <View style={styles.lineLeft} />
+              <Text style={styles.titols}>Registra't</Text>
+              <View style={styles.lineRight} />
+            </View>
             <View style={styles.imageSelector}>
-              <Text style={styles.text}>Foto</Text>
-              <View >
+              <Icon name={'md-camera'} size={55} color={'#e3d1e3'} onPress={this.handleChoosePhoto} />
+              <View>
                 {this.state.photo && (
                   <Image
                     source={ { uri: this.state.photo.uri }}
                     style={{ width: 300, height: 300 }}
                   />
                 )}
-                <Button title="Escull una foto de perfil" onPress={this.handleChoosePhoto} />
+                <Button style={styles.button} title="Escull una foto de perfil" color="#4040ff" onPress={this.handleChoosePhoto} />
               </View>
             </View>
 
             <TextInput
               style={styles.input}
-              placeholder='Nom'
+              placeholder='Nom i Cognom'
               autoCapitalize="none"
               onChangeText={val => this.onChangeText('nom', val)}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder='Cognom'
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('cognom', val)}
-            />
-
-            <View style={styles.selectBirthday}>
-              <Text style={styles.text}> Data de naixement </Text>
-              <DatePicker
-                style={{
-                  width: 200,
-                  backgroundColor: '#FFDFDF',
-                  marginBottom: 15,
-                  marginLeft:5
-                }}
-                date={this.state.birthday}
-                mode="date"
-                placeholder="Select date"
-                format="YYYY-MM-DD"
-                minDate="1900-01-01"
-                maxDate="2020-01-01"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-
-                customStyles={{
-                  dateIcon: {
-                    position: 'absolute',
-                    left: 0,
-                    top: 4,
-                    marginLeft: 0
-                  },
-                  dateInput: {
-                    marginLeft: 36
-                  }
-                  // ... You can check the source to find the other keys.
-                }}
-                onDateChange={(birthday) => {this.setState({birthday: birthday})}}
-              />
-            </View>
-
-            <View style={styles.checkBox}>
-              <Text style={styles.text}> Tens cotxe? </Text>
-              <CheckBox
-                title='Click Here '
-                value={this.state.hasCar}
-                onValueChange={val => this.onChangeState('hasCar', val)}
-              />
-            </View>
-
-
-
-              <TextInput
-              style={styles.input}
-              placeholder='Telefon mòvil'
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('mobileNumber', val)}
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder='Descripció'
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('description', val)}
-              multiline={true} // More than one line
             />
 
             <TextInput
@@ -302,106 +321,213 @@ export default class SignUp extends React.Component {
               onChangeText={val => this.onChangeText('email', val)}
             />
 
+
             <TextInput
               style={styles.input}
               placeholder='Contrasenya'
               autoCapitalize="none"
               secureTextEntry={true}
               underlineColorAndroid='transparent'
-
               onChangeText={val => this.onChangeText('password', val)}
             />
 
-            <View style={styles.actes}>
-              <Text style={styles.titols}>ACTES</Text>
-                <Text style={styles.text}> En quins actes assisteixes?  </Text>
+            <TextInput
+              style={styles.input}
+              placeholder='Confirmar Contrasenya'
+              autoCapitalize="none"
+              secureTextEntry={true}
+              underlineColorAndroid='transparent'
+              onChangeText={val => this.onChangeText('password', val)}
+            />
+
+            <View style={styles.selectBirthday}>
+              <DatePicker
+                style={{
+                  width: 300,
+                  backgroundColor: '#ffffff',
+                  marginBottom: 15,
+                  marginLeft:5,
+                  borderRadius: 14,
+                  border:0,
+                  height:50,
+                }}
+                date={this.state.birthday}
+                mode="date"
+                placeholder="Data de naixement"
+                //format="YYYY-MM-DD"
+                format="DD-MM-YYYY"
+                //minDate="1900-01-01"
+                //maxDate="2020-01-01"
+                minDate="01-01-1900"
+                maxDate="01-01-2020"
+                confirmBtnText="Confirm"
+                cancelBtnText="Cancel"
+                customStyles={{
+                  dateIcon: {
+                    position: 'absolute',
+                    left: 0,
+                    top: 8,
+                    marginLeft: 5,
+                    border:0,
+                  },
+                  dateInput: {
+                    marginLeft: 36,
+                    borderWidth: 0,
+                    fontSize: 17,
+                    top:3,
+                  },
+                  dateText: {
+                    color: 'grey',
+                    fontSize: 17,
+                    top:3,
+                  },
+                  placeholderText:{
+                    color: 'grey',
+                    fontSize: 17,
+                    top:2,
+                  },
+                  // ... You can check the source to find the other keys.
+                }}
+                onDateChange={(birthday) => {this.setState({birthday: birthday})}}
+              />
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder='Telèfon mòbil'
+              autoCapitalize="none"
+              onChangeText={val => this.onChangeText('mobileNumber', val)}
+            />
+
+            <TextInput
+              style={styles.inputDescription}
+              placeholder='Descripció'
+              autoCapitalize="none"
+              onChangeText={val => this.onChangeText('description', val)}
+              multiline={true} // More than one line
+            />
+
+            {/*<View style={styles.imageLocalitat}>
+              <View style={styles.dropdownLocalitat}>
+                <Autocomplete
+                  data={DataComarques}
+                  displayKey="name"
+                  placeholderColor={'black'}
+                  dropDownIconColor	={'#714170'}
+                  value = {this.state.DataActualdos}
+                  textInputStyle={styles.text}
+                  onSelect={value => this.changeComarca('value', value)}
+                />
+              </View>
+            </View>*/}
+
+            <View style={styles.containerPreguntes}>
+              <Text style={styles.textTitle}>Habilitats</Text>
+              <View style={styles.checkBox}>
+                <Text style={styles.textCheckbox}>Tens cotxe?</Text>
+                <CheckBox
+                  title='Click Here '
+                  value={this.state.hasCar}
+                  onValueChange={val => this.onChangeState('hasCar', val)}
+                  style={styles.checkboxCaja}
+                  tintColors={{ true: 'blue' }}
+                />
+              </View>
+              <View style={styles.checkBox}>
+                <Text style={styles.textCheckbox}>Saps comptar i repartir?</Text>
+                <CheckBox
+                  title='Click Here '
+                  value={this.state.comptarRepartir}
+                  onValueChange={val => this.onChangeState('comptarRepartir', val)}
+                  style={styles.checkboxCaja}
+                  tintColors={{ true: 'blue' }}
+                />
+              </View>
+              <View style={styles.checkBox}>
+                <Text style={styles.textCheckbox}>Sardanista Competició</Text>
+                <CheckBox
+                  title='Click Here '
+                  value={this.state.competidor}
+                  onValueChange={val => this.onChangeState('competidor', val)}
+                  style={styles.checkboxCaja}
+                  tintColors={{ true: 'blue' }}
+                />
+              </View>
 
 
-                <View style={styles.checkBox}>
+              <Text style={styles.textTitleActes}>En quins actes assisteixes?</Text>
+              <View style={styles.checkBox}>
+                <Text style={styles.textCheckbox}>Aplecs</Text>
                 <CheckBox
                   title='Click Here '
                   value={this.state.aplecs}
                   onValueChange={val => this.onChangeState('aplecs', val)}
+                  style={styles.checkboxCaja}
+                  tintColors={{ true: 'blue' }}
                 />
-                <Text style={styles.text}> Aplecs </Text>
               </View>
-
               <View style={styles.checkBox}>
+                <Text style={styles.textCheckbox}>Ballades</Text>
                 <CheckBox
                   title='Click Here '
                   value={this.state.ballades}
                   onValueChange={val => this.onChangeState('ballades', val)}
+                  style={styles.checkboxCaja}
+                  tintColors={{ true: 'blue' }}
                 />
-                <Text style={styles.text}> Ballades </Text>
               </View>
-
               <View style={styles.checkBox}>
+                <Text style={styles.textCheckbox}>Concerts</Text>
                 <CheckBox
                   title='Click Here '
                   value={this.state.concerts}
                   onValueChange={val => this.onChangeState('concerts', val)}
+                  style={styles.checkboxCaja}
+                  tintColors={{ true: 'blue' }}
                 />
-                <Text style={styles.text}> Concerts </Text>
               </View>
-
               <View style={styles.checkBox}>
+                <Text style={styles.textCheckbox}>Concursos</Text>
                 <CheckBox
                   title='Click Here '
                   value={this.state.concursos}
                   onValueChange={val => this.onChangeState('concursos', val)}
+                  style={styles.checkboxCaja}
+                  tintColors={{ true: 'blue' }}
                 />
-                <Text style={styles.text}> Concursos </Text>
               </View>
-
-
-
               <View style={styles.checkBox}>
+                <Text style={styles.textCheckbox}>Cursets</Text>
                 <CheckBox
                   title='Click Here '
                   value={this.state.cursets}
                   onValueChange={val => this.onChangeState('cursets', val)}
+                  style={styles.checkboxCaja}
+                  tintColors={{ true: 'blue' }}
                 />
-                <Text style={styles.text}> Cursets </Text>
               </View>
-
               <View style={styles.checkBox}>
+                <Text style={styles.textCheckbox}>Altres</Text>
                 <CheckBox
                   title='Click Here '
                   value={this.state.altres}
                   onValueChange={val => this.onChangeState('altres', val)}
+                  style={styles.checkboxCaja}
+                  tintColors={{ true: 'blue' }}
                 />
-                <Text style={styles.text}> Altres </Text>
-              </View>
-
-            </View>
-            <View style={styles.capacitatsPersonals}>
-              <View style={styles.checkBox}>
-                  <CheckBox
-                      title='Click Here '
-                      value={this.state.comptarRepartir}
-                      onValueChange={val => this.onChangeState('comptarRepartir', val)}
-                  />
-                  <Text style={styles.text}> Saps comptar i repartir? </Text>
-              </View>
-
-              <View style={styles.checkBox}>
-                  <CheckBox
-                      title='Click Here '
-                      value={this.state.experienciaBallades}
-                      onValueChange={val => this.onChangeState('experienciaBallades', val)}
-                  />
-                  <Text style={styles.text}> Tens experiencia ballant? </Text>
               </View>
             </View>
+
+
 
             <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
                 onPress={() => this.registerUser()}
                 >
-
               <Text style={styles.loginText}>Uneix-te!</Text>
             </TouchableHighlight>
+
           </View>
         </ScrollView>
+        </ImageBackground>
       </View>
     );
   }
@@ -420,9 +546,6 @@ SignUp.navigationOptions = {
 
 
 const styles = StyleSheet.create({
-
-
-
   logo:{
     height:180,
     width:180,
@@ -430,76 +553,167 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     margin: 30
   },
-
-
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#DCDCDC',
+    //backgroundColor: '#DCDCDC',
+    width:'100%',
   },
   scrollView:{
     width:'100%',
   },
-
   form:{
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
     flexDirection: 'column',
-},
-
-    checkBox:{
+    marginTop:60,
+  },
+  checkBox:{
       flexDirection: 'row',
+      marginLeft:0,
+  },
+  capacitatsPersonals:{
+        marginTop: 8,
+  },
+  imageSelector:{
+    width:undefined,
+    height:undefined,
+    alignItems: 'center',
+    marginTop: 25,
+    marginBottom: 10,
+  },
+  input: {
+    width: 300,
+    height: 55,
+    backgroundColor: '#ffffff',
+    margin: 10,
+    padding: 8,
+    borderRadius: 14,
+    fontSize: 18,
+    fontWeight: '500',
+    marginTop:10,
+  },
+  inputDescription: {
+    width: 300,
+    height: 70,
+    backgroundColor: '#ffffff',
+    margin: 10,
+    padding: 8,
+    borderRadius: 14,
+    fontSize: 18,
+    fontWeight: '500',
+    marginBottom:40,
+  },
+  actes:{
+    marginTop: 20,
+  },
+  titols:{
+    fontSize:30,
+    alignItems: 'center',
+    color:'white',
+  },
+  text:{
+    fontSize:25,
 
-    },
-    capacitatsPersonals:{
-          marginTop: 8,
-    },
-    imageSelector:{
-      width:undefined,
-      height:undefined,
-      alignItems: 'center',
-    },
-      input: {
-        width: 300,
-        height: 55,
-        backgroundColor: '#ffffff',
-        margin: 10,
-        padding: 8,
-        borderRadius: 14,
-        fontSize: 18,
-        fontWeight: '500',
-      },
+  },
+  textCheckbox:{
+    fontSize:24,
+    textAlign:'left',
+    color:'blue',
+  },
+  textLocalitat:{
+    fontSize:18,
+    color:'white',
+    textAlign:'left',
+    marginLeft:-210,
+    marginTop:15,
+  },
+  buttonContainer: {
+    height:45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    marginTop: 30,
+    width:250,
+    borderRadius:30,
+  },
+  loginButton: {
+    backgroundColor: "#00b5ec",
+    //backgroundColor: "#4040ff",
+  },
+  loginText: {
+    color: 'white',
+    fontSize: 20,
+  },
+  imageLogo:{
+    borderRadius:100,
+    overflow: 'hidden',
+    position: 'relative',
+    height:90,
+    width:90,
+    marginTop:10,
+    marginBottom:10,
+    marginLeft:20,
+    marginRight:20,
+  },
+  containerHeader:{
+    flexDirection: 'row',
+  },
+  lineLeft:{
+    backgroundColor: 'white',
+    height: 2,
+    flex: 1,
+    alignSelf: 'center',
+    marginLeft:50,
+    marginRight:10,
+    width:'5%',
+  },
+  lineRight:{
+    backgroundColor: 'white',
+    height: 2,
+    flex: 1,
+    alignSelf: 'center',
+    marginLeft:10,
+    marginRight:50,
+    width:'5%',
+  },
+  selectBirthday:{
+    marginTop:10,
+  },
+  dropdownLocalitat: {
+    width: 300,
+    height: 'auto',
+    flexDirection:'row',
+    borderRadius:14,
+  },
+  containerIconLocalitat: {
+    marginTop:28,
+    marginRight:20,
+  },
 
-      actes:{
-        marginTop: 20,
-      },
-      titols:{
-        fontSize:40,
-          alignItems: 'center',
-
-      },
-      text:{
-        fontSize:25,
-      },
-    buttonContainer: {
-      height:45,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom:20,
-      marginTop: 30,
-      width:250,
-      borderRadius:30,
-    },
-      loginButton: {
-        backgroundColor: "#00b5ec",
-        //width: 300,
-      },
-        loginText: {
-          color: 'white',
-          fontSize: 20,
-        }
-
-
+  imageLocalitatSota:{
+    backgroundColor:'white',
+    width: 300,
+    height: 30,
+  },
+  textTitle:{
+    fontSize:24,
+    color:'white',
+    fontWeight: "bold",
+  },
+  textTitleActes:{
+    fontSize:24,
+    color:'white',
+    fontWeight: "bold",
+    marginTop:10,
+  },
+  containerPreguntes:{
+    textAlign:'left',
+    flexDirection: 'column',
+  },
+  checkboxCaja:{
+    top:2.5,
+  }
 });
