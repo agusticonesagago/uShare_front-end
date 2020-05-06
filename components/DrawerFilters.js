@@ -13,7 +13,10 @@ import Animated from 'react-native-reanimated';
 //import the screens
 import Perfil from './Perfil.js';
 import Actes from './Actes.js';
+import ListActesSmall from './ListActesSmall.js';
+import ListPerfilSmall from './ListPerfilSmall.js';
 import FilterOptions from './FilterOptions.js';
+import FilterOptionsPerson from './FilterOptionsPerson.js';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -34,7 +37,7 @@ const Screens = ({navigation}) => {
       </Button>
     )
   }}>
-    <Stack.Screen name="Perfil" component={Perfil}/>
+    <Stack.Screen name="ListActesSmall" component={ListActesSmall}/>
   </Stack.Navigator>
   );
 }
@@ -55,7 +58,7 @@ export default () => {
   const [progress, setProgres] = React.useState(new Animated.Value(0));
   return(
     <Drawer.Navigator
-      initialRouteName="Actes"
+      initialRouteName="Perfil"
       drawerPosition='right'
       drawerContent={props => {
         setProgres(props.progress);

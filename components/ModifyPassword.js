@@ -130,6 +130,16 @@ export default class ModifyPassword extends React.Component {
   }
 }
 
+ModifyPassword.navigationOptions = {
+  tabBarIcon: ({tintColor,focused}) => (
+    <Icon
+      //name={focused ? 'md-calendar' : 'ios-calendar'}
+      name={'md-calendar'}
+      size={28}
+      color={tintColor}
+    />
+  )
+}
 
 const styles = StyleSheet.create({
   container: {

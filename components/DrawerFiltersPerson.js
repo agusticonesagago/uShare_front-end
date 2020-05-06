@@ -16,6 +16,7 @@ import Actes from './Actes.js';
 import ListPerfilSmall from './ListPerfilSmall.js';
 import ListActesSmall from './ListActesSmall.js';
 import FilterOptionsPerson from './FilterOptionsPerson.js';
+import FilterOptions from './FilterOptions.js';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -37,7 +38,7 @@ const Screens = ({navigation}) => {
       </Button>
     )
   }}>
-    <Stack.Screen name="ListActesSmall" component={ListActesSmall}/>
+    <Stack.Screen name="ListPerfilSmall" component={ListPerfilSmall}/>
   </Stack.Navigator>
   );
 }

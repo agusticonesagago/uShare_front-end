@@ -69,7 +69,7 @@ const DataComarques = [
   {code: 'Vallespir', name: 'Vallespir'},
 ];
 
-export default class Perfil extends React.Component {
+export default class ModifyPerfil extends React.Component {
   componentDidMount() {
    this.getInfoUser();
   }
@@ -112,11 +112,11 @@ export default class Perfil extends React.Component {
 
           this.onChangeState("textSobreMi", json.description);
           this.onChangeState("textNumber", json.phoneNumber);
-          this.onChangeState("textName", json.name + ' ' + json.surname);
+          this.onChangeState("textName", json.name);
           this.onChangeState("textNumber", json.phoneNumber);
           this.onChangeState("photo", json.image);
           this.onChangeState("textMail", json.email);
-          this.onChangeState("birthday", json.birthday);
+          this.onChangeState("birthday", json.birthday.slice(0, 10));
           this.onChangeState("aplecs", json.aplecs);
           this.onChangeState("ballades", json.ballades);
           this.onChangeState("concerts", json.concerts);
@@ -391,11 +391,11 @@ export default class Perfil extends React.Component {
   }
 }
 
-Perfil.navigationOptions = {
+ModifyPerfil.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
-      //name={focused ? 'md-flame' : 'ios-flame'}
-      name={'md-person'}
+      //name={focused ? 'md-calendar' : 'ios-calendar'}
+      name={'md-calendar'}
       size={28}
       color={tintColor}
     />

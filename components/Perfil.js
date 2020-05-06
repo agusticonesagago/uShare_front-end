@@ -202,11 +202,11 @@ export default class Perfil extends React.Component {
             </View>
           </View>
           <TouchableHighlight style={[styles.editButtonContainer, styles.modifyButton]}
-                              onPress={() => navigate()}>
+                        onPress={() => this.props.navigation.navigate(globalHelper.ModifyPerfilID)}>
             <Text style={styles.modifyText}>EDITAR</Text>
           </TouchableHighlight>
           <TouchableHighlight style={[styles.passwordButtonContainer, styles.modifyButton]}
-                              onPress={() => navigate()}>
+                              onPress={() => this.props.navigation.navigate(globalHelper.ModifyPasswordID)}>
             <Text style={styles.modifyText}>MODIFICAR CONTRASENYA</Text>
           </TouchableHighlight>
           <View style={styles.end}/>

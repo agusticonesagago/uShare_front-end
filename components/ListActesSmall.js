@@ -9,6 +9,7 @@ import Actes from './Actes.js';
 import Drawer from './Drawer.js';
 import PerfilSmall from './PerfilSmall.js';
 
+
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 
 var API = globalHelper.API;

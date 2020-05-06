@@ -6,6 +6,15 @@ import Perfil from './components/Perfil.js';
 
 import SignUp from './components/SignUpView.js';
 import LogIn from './components/LoginView.js';
+import ModifyPassword from './components/ModifyPassword.js';
+import ModifyPerfil from './components/ModifyPerfil.js';
+import ActeComplete from './components/ActeComplete.js';
+
+import DrawerFiltersPerson from './components/DrawerFiltersPerson.js';
+import DrawerFilters from './components/DrawerFilters.js';
+
+import ListActesSmall from './components/ListActesSmall.js';
+
 
 import {NavigationContainer} from '@react-navigation/native';
 
@@ -68,6 +77,8 @@ function AuthStackScreen() {
         <AuthStack.Screen name={globalHelper.LogInScreenID} component={LogIn} options={{ title: '', headerTransparent: true }}/>
         <AuthStack.Screen name={globalHelper.SignUpScreenID} component={SignUp} options={{ title: '', headerTransparent: true }} />
         <AuthStack.Screen name={globalHelper.HomeStackScreenID} component={HomeStackScreen} options={{ title: '', headerTransparent: true }} />
+        <AuthStack.Screen name={globalHelper.ModifyPasswordID} component={ModifyPassword} options={{ title: '', headerTransparent: true }} />
+        <AuthStack.Screen name={globalHelper.ModifyPerfilID} component={ModifyPerfil} options={{ title: '', headerTransparent: true }} />
       </AuthStack.Navigator>
   );
 }
@@ -153,9 +164,20 @@ export default class App extends React.Component {
       </NavigationContainer>
 */
 
-        <NavigationContainer>
+       /*<NavigationContainer>
           <AppContainer/>
+        </NavigationContainer>*/
+
+        //<ActeComplete/>
+
+       /*<NavigationContainer>
+          <DrawerFiltersPerson/>
+        </NavigationContainer>*/
+
+        <NavigationContainer>
+          <DrawerFilters/>
         </NavigationContainer>
+
 
 
 
