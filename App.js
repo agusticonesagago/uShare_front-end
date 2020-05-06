@@ -34,7 +34,7 @@ function HomeTabScreen() {
                 iconName = 'md-calendar';
               } else if (route.name === globalHelper.PerfilScreenID) {
                 iconName = 'md-person';
-              } else if (route.name === globalHelper.ListPerfilSmall) {
+              } else if (route.name === globalHelper.ListPerfilScreenID) {
                 iconName = 'md-people';
               }
               //return <Ionicons name={iconName} size={size} color={color}     />;
