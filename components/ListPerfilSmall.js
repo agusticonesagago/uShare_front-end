@@ -46,26 +46,28 @@ export default class ListPerfilSmall extends React.Component {
 
   render() {
 
-    if(this.state.personesLoaded){
-      let profiles = []
-      for (let i = 0; i < this.state.persones.length; ++i) {
-       profiles.push(<PerfilSmall  nomCognom={this.state.persones[i].name}
-         description={this.state.persones[i].description}
-         photo={this.state.persones[i].image}
-         />)
+      if (this.state.personesLoaded) {
+          let profiles = [];
+          for (let i = 0; i < this.state.persones.length; ++i) {
+              profiles.push(<PerfilSmall nomCognom={this.state.persones[i].name}
+                                         description={this.state.persones[i].description}
+                                         photo={this.state.persones[i].image}
+              />)
+          }
+
+          return (
+              <View style={styles.container}>
+                  <View style={styles.containerNavigator}>
+                      <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
+                      <Text style={styles.titleNavigator}> Perfils </Text>
+                  </View>
+                  <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange}
+                              showVerticalScrollIndicator={false}>
+                      {profiles}
+                  </ScrollView>
+              </View>
+          )
       }
-      return (
-        <View style={styles.container}>
-          <View style={styles.containerNavigator}>
-            <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
-            <Text style={styles.titleNavigator}> Perfils </Text>
-          </View>
-          <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
-            {profiles}
-          </ScrollView>
-        </View>
-      )
-    }
     else {
      return null;
     }

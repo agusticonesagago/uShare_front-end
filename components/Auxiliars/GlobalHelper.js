@@ -20,6 +20,7 @@ export var HomeTabScreenID = "HomeTab";
 export var ActesScreenID = "Actes";
 export var PerfilScreenID = "Perfil";
 export var ListPerfilScreenID = "Sardanistes";
+export var ListActesScreenID = "ListActes";
 
 
 /*

@@ -163,21 +163,21 @@ export default class App extends React.Component {
           </Stack.Navigator>
       </NavigationContainer>
 */
-
-       /*<NavigationContainer>
+/*
+       <NavigationContainer>
           <AppContainer/>
-        </NavigationContainer>*/
-
+        </NavigationContainer>
+*/
         //<ActeComplete/>
 
-       /*<NavigationContainer>
+       <NavigationContainer>
           <DrawerFiltersPerson/>
-        </NavigationContainer>*/
-
+        </NavigationContainer>
+/*
         <NavigationContainer>
           <DrawerFilters/>
         </NavigationContainer>
-
+*/
 
 
 

@@ -18,6 +18,10 @@ import ListActesSmall from './ListActesSmall.js';
 import FilterOptionsPerson from './FilterOptionsPerson.js';
 import FilterOptions from './FilterOptions.js';
 
+import * as globalHelper from './Auxiliars/GlobalHelper.js'
+
+
+
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
@@ -38,7 +42,7 @@ const Screens = ({navigation}) => {
       </Button>
     )
   }}>
-    <Stack.Screen name="ListPerfilSmall" component={ListPerfilSmall}/>
+    <Stack.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall}/>
   </Stack.Navigator>
   );
 }
@@ -55,15 +59,26 @@ const DrawerContent = props => {
   );
 };
 
+
+
+
+
 export default () => {
   const [progress, setProgres] = React.useState(new Animated.Value(0));
+
+  var globalDrawerData = [];
+
+  function getData() {
+
+  }
+
   return(
     <Drawer.Navigator
-      initialRouteName="ListPerfilSmall"
+      //initialRouteName="ListPerfilSmall"
       drawerPosition='right'
       drawerContent={props => {
         setProgres(props.progress);
-        return <DrawerContent {...props} />;
+        return <DrawerContent {...props}/>;
       }}
     >
         <Drawer.Screen name="Screens" component={Screens}/>
