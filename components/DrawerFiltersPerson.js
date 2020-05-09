@@ -26,35 +26,14 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 
-const Screens = ({navigation}) => {
-  return(
-  <Stack.Navigator screenOptions={{
-    headerTransparent: true,
-    headerTitle: null,
-    headerRight: () => (
-      <Button
-        padding
-        transparent
-        marginHorizontal
-        onPress={() => navigation.openDrawer()}
-      >
-        <Icon name={'md-options'} size={28} color={'#41444B'}/>
-      </Button>
-    )
-  }}>
-    <Stack.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall}/>
-  </Stack.Navigator>
-  );
-}
 
-const DrawerContent = props => {
+
+const DrawerContent = (props) => {
   return(
-    <DrawerContentScrollView {...props}>
-      <Block>
+    <DrawerContentScrollView {...props} >
         <Block>
-          <FilterOptionsPerson/>
+          <FilterOptionsPerson {...props}/>
         </Block>
-      </Block>
     </DrawerContentScrollView>
   );
 };
@@ -64,24 +43,53 @@ const DrawerContent = props => {
 
 
 export default () => {
-  const [progress, setProgres] = React.useState(new Animated.Value(0));
 
-  var globalDrawerData = [];
+    var state = {
+      globalDrawerData: []
+    }
 
-  function getData() {
+    function getData() {
+        return state.globalDrawerData;
+    }
 
-  }
+    function setData(newData) {
+        state.globalDrawerData = newData;
+        console.log("\n\n---------------------------------------------\n\n")
+    }
 
-  return(
+
+    const Screens = ({navigation}) => {
+        return(
+            <Stack.Navigator screenOptions={{
+                headerTransparent: true,
+                headerTitle: null,
+                headerRight: () => (
+                    <Button
+                        padding
+                        transparent
+                        marginHorizontal
+                        onPress={() => navigation.openDrawer()}
+                    >
+                        <Icon name={'md-options'} size={28} color={'#41444B'}/>
+                    </Button>
+                )
+            }}>
+                <Stack.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall} />
+            </Stack.Navigator>
+        );
+    }
+
+    const [progress, setProgres] = React.useState(new Animated.Value(0));
+    return(
     <Drawer.Navigator
       //initialRouteName="ListPerfilSmall"
       drawerPosition='right'
       drawerContent={props => {
         setProgres(props.progress);
-        return <DrawerContent {...props}/>;
+        return <DrawerContent {...props} setData={setData} />;
       }}
     >
-        <Drawer.Screen name="Screens" component={Screens}/>
+        <Drawer.Screen name="Screens" component={Screens}  />
     </Drawer.Navigator>
   );
 };

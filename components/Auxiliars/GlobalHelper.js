@@ -10,16 +10,20 @@ import { NavigationActions, StackActions } from 'react-navigation';
  */
 export var AuthScreenID = "Auth";
 export var SignUpScreenID = "Registre";
-export var ModifyPasswordID = "ModifyPassword";
-export var ModifyPerfilID = "ModifyPerfil";
 export var LogInScreenID = "Login";
 
 export var HomeStackScreenID = "HomeStack";
 export var HomeTabScreenID = "HomeTab";
 
 export var ActesScreenID = "Actes";
+
 export var PerfilScreenID = "Perfil";
+export var ModifyPasswordID = "ModifyPassword";
+export var ModifyPerfilID = "ModifyPerfil";
+
 export var ListPerfilScreenID = "Sardanistes";
+export var FilterListPerfilScreenID = "FilterListPerfil";
+
 export var ListActesScreenID = "ListActes";
 
 

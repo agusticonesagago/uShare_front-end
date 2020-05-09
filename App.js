@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Button} from 'react-native';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Perfil from './components/Perfil.js';
@@ -25,6 +25,7 @@ import * as globalHelper from './components/Auxiliars/GlobalHelper.js'
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ListPerfilSmall from "./components/ListPerfilSmall";
+import FilterOptionsPerson from "./components/FilterOptionsPerson";
 
 const Stack = createStackNavigator();
 
@@ -84,6 +85,23 @@ function AuthStackScreen() {
 }
 
 
+function ListPerfilStackScreen() {
+    return (
+        // Hide header
+        //https://stackoverflow.com/questions/61185135/react-native-navigation-error-the-action-navigate-with-payload-name-192-168
+        <AuthStack.Navigator>
+            <AuthStack.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall}
+                              options={{
+                                  title: '',
+                                  headerTransparent: true,
+                              }}
+            />
+            <AuthStack.Screen name={globalHelper.FilterListPerfilScreenID} component={FilterOptionsPerson} options={{ title: '', headerTransparent: true }} />
+        </AuthStack.Navigator>
+    );
+}
+
+
 function myCreateNavigatorFunction() {
 
   //let storedUserEmail = await globalHelper.getLoggedUserEmailAsync();
@@ -133,16 +151,6 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props);
-    /*
-    let email = async () => {
-      let storedUserEmail = await globalHelper.getLoggedUserEmailAsync();
-      return storedUserEmail;
-    };
-    this.state = {
-      email:    email,
-    };*/
-
-
   }
 
   render() {
@@ -171,15 +179,8 @@ export default class App extends React.Component {
         //<ActeComplete/>
 
        <NavigationContainer>
-          <DrawerFiltersPerson/>
+          <ListPerfilStackScreen/>
         </NavigationContainer>
-/*
-        <NavigationContainer>
-          <DrawerFilters/>
-        </NavigationContainer>
-*/
-
-
 
       /*
         <NavigationContainer>

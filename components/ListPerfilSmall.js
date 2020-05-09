@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -22,17 +22,24 @@ export default class ListPerfilSmall extends React.Component {
   constructor(props) {
         super(props);
         this.state = {
-          'persones': [],
+          persones: [],
            personesLoaded: false
         }
   }
 
-  async getInfoPersones() {
+
+    async getInfoPersones() {
       try {
           const response = await fetch(API_USER);
 
           const json = await response.json();
           this.state.persones = json;
+
+          console.log("\n\n");
+          console.log(response);
+          console.log("\n\n");
+
+
 
           this.setState({
             personesLoaded: true
@@ -44,9 +51,15 @@ export default class ListPerfilSmall extends React.Component {
       }
   }
 
+
+  setData(data) {
+      this.state.persones = data;
+  }
+
   render() {
 
       if (this.state.personesLoaded) {
+          if(this.props.route.params)  this.state.persones = this.props.route.params.users;
           let profiles = [];
           for (let i = 0; i < this.state.persones.length; ++i) {
               profiles.push(<PerfilSmall nomCognom={this.state.persones[i].name}
@@ -55,12 +68,26 @@ export default class ListPerfilSmall extends React.Component {
               />)
           }
 
-          return (
+          return (// TODO: Fer la headerBar per a tots els que la necesitin
               <View style={styles.container}>
-                  <View style={styles.containerNavigator}>
-                      <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
-                      <Text style={styles.titleNavigator}> Perfils </Text>
+                  <View style={styles.headerBar}>
+                      <View style={styles.logoImage}>
+                          <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
+                          <Text style={styles.titleNavigator}> Perfils </Text>
+                      </View>
+                      <View style={styles.filterButton}>
+                          <Button style={styles.buttonContainer}
+                              onPress={() => {
+                                  alert("This is a button");
+                                  this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID);
+                              }}
+                              title={"Filtra"}
+                              //color={"#FFF"}
+                          />
+                      </View>
+
                   </View>
+
                   <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange}
                               showVerticalScrollIndicator={false}>
                       {profiles}
@@ -69,7 +96,13 @@ export default class ListPerfilSmall extends React.Component {
           )
       }
     else {
-     return null;
+        return (
+            <View style={styles.container}>
+                <Text style={styles.WaitingText}> Carregant... </Text>
+            </View>
+
+            //return null;
+            )
     }
   }
 }
@@ -95,12 +128,36 @@ const styles = StyleSheet.create({
     flex:1,
     width:'100%',
   },
-  containerNavigator: {
-    backgroundColor: '#714170',
-    height: '12%',
+
+    WaitingText:{
+        color:'black',
+        fontSize:30,
+        paddingTop:20,
+        width:'50%',
+    },
+    headerBar:{
+        width:'100%',
+        height: '12%',
+        flexDirection:'row',
+        backgroundColor: '#714170',
+    },
+
+    logoImage: {
+        flexDirection:'row',
+        flex:8
+    },
+    filterButton: {
+        flexDirection:'row',
+        height: '50%',
+        alignSelf: 'flex-end'
+    },
+
+
+    containerNavigator: {
     width:'100%',
     flexDirection:'row',
   },
+
   titleNavigator:{
     color:'white',
     fontSize:30,
@@ -118,4 +175,18 @@ const styles = StyleSheet.create({
     marginLeft:20,
     marginRight:20,
   },
+    text:{
+        fontSize:22,
+        marginLeft:15,
+    },
+
+    buttonContainer: {
+        height:45,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom:20,
+        width:250,
+        borderRadius:30,
+    },
 });
