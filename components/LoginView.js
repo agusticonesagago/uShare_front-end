@@ -8,7 +8,8 @@ import {
     Text,
     TextInput,
     TouchableHighlight,
-    View
+    View,
+    TouchableOpacity
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -81,7 +82,7 @@ export default class LoginView extends React.Component {
                 this.props.navigation.replace(globalHelper.HomeStackScreenID);
             }
             else {
-                alert("Wrong email or username");
+                Alert.alert("Vigila!", "Incorrecte email o contrasenya");
                 console.log('\n');
                 console.log("Status: ", response.status);
             }
@@ -122,17 +123,17 @@ export default class LoginView extends React.Component {
                     onChangeText={(password) => this.setState({password})}/>
                 </View>
 
-                <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]}
+                <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]}
                                     onPress={() => this.logInUser()}>
                   <Text style={styles.loginText}>Entra</Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
 
-                <TouchableHighlight style={styles.buttonContainer}
+                <TouchableOpacity style={styles.buttonContainer}
                                     onPress={() => this.props.navigation.navigate(globalHelper.SignUpScreenID) }>
                   <Text>Registrat</Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
 
-                <TouchableHighlight style={styles.buttonContainer}
+                <TouchableOpacity style={styles.buttonContainer}
                                     onPress={async () => {
                                         let storedUserEmail = await globalHelper.getLoggedUserEmailAsync();
                                         alert(storedUserEmail);
@@ -143,8 +144,8 @@ export default class LoginView extends React.Component {
                                     }
                                     } >
 
-                                    <Text>Test logged user </Text>
-                </TouchableHighlight>
+                                    <Text>Test logged user</Text>
+                </TouchableOpacity>
 
 
 

@@ -74,9 +74,16 @@ export default class ListPerfilSmall extends React.Component {
                       <View style={styles.logoImage}>
                           <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
                           <Text style={styles.titleNavigator}> Perfils </Text>
+                          <Icon name={'md-options'} size={34}
+                            color={'white'}
+                            style={styles.iconFilter}
+                            onPress={() => {
+                                this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID);
+                            }}
+                          />
                       </View>
-                      <View style={styles.filterButton}>
-                          <Button style={styles.buttonContainer}
+                      {/*<View style={styles.filterButton}>
+                         <Button style={styles.buttonContainer}
                               onPress={() => {
                                   alert("This is a button");
                                   this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID);
@@ -84,7 +91,16 @@ export default class ListPerfilSmall extends React.Component {
                               title={"Filtra"}
                               //color={"#FFF"}
                           />
-                      </View>
+                          <Icon name={'md-options'} size={28}
+                            color={'white'}
+                            style={styles.iconFilter}
+                            onPress={() => {
+                                this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID);
+                            }}
+                          >
+                          </Icon>
+
+                      </View>*/}
 
                   </View>
 
@@ -137,7 +153,7 @@ const styles = StyleSheet.create({
     },
     headerBar:{
         width:'100%',
-        height: '12%',
+        height: '13.2%',
         flexDirection:'row',
         backgroundColor: '#714170',
     },
@@ -189,4 +205,9 @@ const styles = StyleSheet.create({
         width:250,
         borderRadius:30,
     },
+    iconFilter:{
+      marginBottom:0,
+      marginLeft:50,
+      marginTop:23,
+    }
 });

@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   containerNavigator: {
     backgroundColor: '#714170',
-    height: '12%',
+    height: '13.2%',
     width:'100%',
     flexDirection:'row',
   },

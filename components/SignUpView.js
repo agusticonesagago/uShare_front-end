@@ -99,6 +99,7 @@ export default class SignUp extends React.Component {
         // Usuari
         email:    null,
         password: null,
+        confirmarPassword: null,
 
         // Personal Info
         nom:      null,
@@ -160,57 +161,62 @@ export default class SignUp extends React.Component {
    */
    async registerUser() {
     try {
-        var photoBase64 =  null;
-        if(this.state.photo) photoBase64 = this.state.photo.data;
+        if(this.state.password !== this.state.confirmarPassword){
+          Alert.alert("Vigila!", "Les contrasenyes introduïdes no coincideixen");
+        }
+        else{
+          var photoBase64 =  null;
+          if(this.state.photo) photoBase64 = this.state.photo.data;
 
-        var jsonBody = JSON.stringify({
-            altres: this.state.altres,
-            aplecs: this.state.aplecs,
-            ballades: this.state.ballades,
-            birthday: this.state.birthday,
-            coblaCompeticio: true, // todo
-            comarca: "Comarca", // todo
-            competidor: this.state.competidor, // todo
-            comptarRepartir: this.state.comptarRepartir,
-            concerts: this.state.concerts,
-            concursos: this.state.concursos,
-            cursets: this.state.cursets,
-            description: this.state.description,
-            email: this.state.email,
-            image: photoBase64,
-            imageType: this.state.imageType,
-            name: this.state.nom,
-            password: this.state.password,
-            phoneNumber: this.state.mobileNumber,
-            publicProfile: true, // per defecte
-            surname: this.state.cognom,
-            vehicle: this.state.hasCar,
-            comarca: this.state.DataActualdos.name,
+          var jsonBody = JSON.stringify({
+              altres: this.state.altres,
+              aplecs: this.state.aplecs,
+              ballades: this.state.ballades,
+              birthday: this.state.birthday,
+              coblaCompeticio: true, // todo
+              comarca: "Comarca", // todo
+              competidor: this.state.competidor, // todo
+              comptarRepartir: this.state.comptarRepartir,
+              concerts: this.state.concerts,
+              concursos: this.state.concursos,
+              cursets: this.state.cursets,
+              description: this.state.description,
+              email: this.state.email,
+              image: photoBase64,
+              imageType: this.state.imageType,
+              name: this.state.nom,
+              password: this.state.password,
+              phoneNumber: this.state.mobileNumber,
+              publicProfile: true, // per defecte
+              surname: this.state.cognom,
+              vehicle: this.state.hasCar,
+              comarca: this.state.DataActualdos.name,
+          });
+
+          const response = await fetch(API_USER,
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: jsonBody
         });
 
-        const response = await fetch(API_USER,
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: jsonBody
-      });
-
-        var text = response.text()
-        if(response.status === globalHelper.API_USER_CREATED_CODE) {
-            console.log("TEXT ", text);
-            console.log("Upload succes: ", response);
-            //console.log("Sended JSON BODY: ", jsonBody);
-            //alert("Upload success!");
-            this.props.navigation.navigate(globalHelper.LogInScreenID);
-        }
-        else {
-            alert("No s'ha pogut registrar l'usuari!");
-            console.log("TEXT ", text);
-            console.log("Upload failed: ", response);
-        }
+          var text = response.text()
+          if(response.status === globalHelper.API_USER_CREATED_CODE) {
+              console.log("TEXT ", text);
+              console.log("Upload succes: ", response);
+              //console.log("Sended JSON BODY: ", jsonBody);
+              //alert("Upload success!");
+              this.props.navigation.navigate(globalHelper.LogInScreenID);
+          }
+          else {
+              alert("No s'ha pogut registrar l'usuari!");
+              console.log("TEXT ", text);
+              console.log("Upload failed: ", response);
+          }
+      }
     }
     catch (error) {
       console.error(error);
@@ -285,17 +291,16 @@ export default class SignUp extends React.Component {
     return (
       <View style={styles.container}>
 
-        <ImageBackground source={require("../img/background-texture.jpg")} style={styles.container}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.form} >
             <Image source={require("../img/logorodo.png")} style={styles.imageLogo}></Image>
             <View style={styles.containerHeader}>
               <View style={styles.lineLeft} />
-              <Text style={styles.titols}>Registra't</Text>
+              <Text style={styles.titols}>Registrat</Text>
               <View style={styles.lineRight} />
             </View>
             <View style={styles.imageSelector}>
-              <Icon name={'md-camera'} size={55} color={'#e3d1e3'} onPress={this.handleChoosePhoto} />
+              <Icon name={'md-camera'} size={55} color={'#5564eb'} onPress={this.handleChoosePhoto} />
               <View>
                 {this.state.photo && (
                   <Image
@@ -307,104 +312,130 @@ export default class SignUp extends React.Component {
               </View>
             </View>
 
-            <TextInput
-              style={styles.input}
-              placeholder='Nom i Cognom'
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('nom', val)}
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder='Email'
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('email', val)}
-            />
 
 
-            <TextInput
-              style={styles.input}
-              placeholder='Contrasenya'
-              autoCapitalize="none"
-              secureTextEntry={true}
-              underlineColorAndroid='transparent'
-              onChangeText={val => this.onChangeText('password', val)}
-            />
-
-            <TextInput
-              style={styles.input}
-              placeholder='Confirmar Contrasenya'
-              autoCapitalize="none"
-              secureTextEntry={true}
-              underlineColorAndroid='transparent'
-              onChangeText={val => this.onChangeText('password', val)}
-            />
-
-            <View style={styles.selectBirthday}>
-              <DatePicker
-                style={{
-                  width: 300,
-                  backgroundColor: '#ffffff',
-                  marginBottom: 15,
-                  marginLeft:5,
-                  borderRadius: 14,
-                  border:0,
-                  height:50,
-                }}
-                date={this.state.birthday}
-                mode="date"
-                placeholder="Data de naixement"
-                //format="YYYY-MM-DD"
-                format="DD-MM-YYYY"
-                //minDate="1900-01-01"
-                //maxDate="2020-01-01"
-                minDate="01-01-1900"
-                maxDate="01-01-2020"
-                confirmBtnText="Confirm"
-                cancelBtnText="Cancel"
-                customStyles={{
-                  dateIcon: {
-                    position: 'absolute',
-                    left: 0,
-                    top: 8,
-                    marginLeft: 5,
-                    border:0,
-                  },
-                  dateInput: {
-                    marginLeft: 36,
-                    borderWidth: 0,
-                    fontSize: 17,
-                    top:3,
-                  },
-                  dateText: {
-                    color: 'grey',
-                    fontSize: 17,
-                    top:3,
-                  },
-                  placeholderText:{
-                    color: 'grey',
-                    fontSize: 17,
-                    top:2,
-                  },
-                  // ... You can check the source to find the other keys.
-                }}
-                onDateChange={(birthday) => {this.setState({birthday: birthday})}}
+            <View style={styles.inputContainerPrimer}>
+              <Icon name={'md-person'} size={28} style={styles.Icon} />
+              <TextInput
+                style={styles.inputs}
+                placeholder='Nom i Cognom'
+                autoCapitalize="none"
+                onChangeText={val => this.onChangeText('nom', val)}
               />
             </View>
-            <TextInput
-              style={styles.input}
-              placeholder='Telèfon mòbil'
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('mobileNumber', val)}
-            />
 
-            <TextInput
-              style={styles.inputDescription}
-              placeholder='Descripció'
-              autoCapitalize="none"
-              onChangeText={val => this.onChangeText('description', val)}
-              multiline={true} // More than one line
-            />
+            <View style={styles.inputContainer}>
+              <Icon name={'md-mail'} size={28} style={styles.Icon} />
+              <TextInput
+                style={styles.inputs}
+                placeholder='Email'
+                keyboardType="email-address"
+                onChangeText={val => this.onChangeText('email', val)}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Icon name={'md-key'} size={28} style={styles.Icon} />
+              <TextInput
+                style={styles.inputs}
+                placeholder='Contrasenya'
+                autoCapitalize="none"
+                secureTextEntry={true}
+                underlineColorAndroid='transparent'
+                onChangeText={val => this.onChangeText('password', val)}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Icon name={'md-lock'} size={28} style={styles.Icon} />
+              <TextInput
+                style={styles.inputs}
+                placeholder='Confirmar Contrasenya'
+                autoCapitalize="none"
+                secureTextEntry={true}
+                underlineColorAndroid='transparent'
+                onChangeText={val => this.onChangeText('confirmarPassword', val)}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Icon name={'md-calendar'} size={28} style={styles.Icon} />
+              <View style={styles.selectBirthday}>
+                <DatePicker
+                  style={{
+                    width: 200,
+                    //backgroundColor: '#ffffff',
+                    //marginBottom: 15,
+                    //marginLeft:5,
+                    borderRadius: 14,
+                    border:0,
+                    //height:50,
+                  }}
+                  showIcon={false}
+                  date={this.state.birthday}
+                  mode="date"
+                  placeholder="Data de naixement"
+                  //format="YYYY-MM-DD"
+                  format="DD-MM-YYYY"
+                  //minDate="1900-01-01"
+                  //maxDate="2020-01-01"
+                  minDate="01-01-1900"
+                  maxDate="01-01-2020"
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  customStyles={{
+                    /*dateIcon: {
+                      //position: 'absolute',
+                      //left: 0,
+                      //top: 8,
+                      //marginLeft: 5,
+                      border:0,
+                    },*/
+                    dateInput: {
+                      //textAlign:'left',
+                      borderWidth: 0,
+                      fontSize: 15,
+                      //marginRight: 4.5,
+                      //top:-5,
+                    },
+                    dateText: {
+                      fontSize: 15,
+                      marginRight: 88,
+                      top:-5,
+                    },
+                    placeholderText:{
+                      color: 'grey',
+                      fontSize: 15,
+                      marginRight: 30,
+                      top:-5,
+                    },
+                    // ... You can check the source to find the other keys.
+                  }}
+                  onDateChange={(birthday) => {this.setState({birthday: birthday})}}
+                />
+              </View>
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Icon name={'md-call'} size={28} style={styles.Icon} />
+              <TextInput
+                style={styles.inputs}
+                placeholder='Telèfon mòbil'
+                autoCapitalize="none"
+                onChangeText={val => this.onChangeText('mobileNumber', val)}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Icon name={'md-information-circle'} size={28} style={styles.Icon} />
+              <TextInput
+                style={styles.inputs}
+                placeholder='Descripció'
+                autoCapitalize="none"
+                onChangeText={val => this.onChangeText('description', val)}
+                multiline={true} // More than one line
+              />
+            </View>
 
             {/*<View style={styles.imageLocalitat}>
               <View style={styles.dropdownLocalitat}>
@@ -527,7 +558,6 @@ export default class SignUp extends React.Component {
 
           </View>
         </ScrollView>
-        </ImageBackground>
       </View>
     );
   }
@@ -556,7 +586,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    //backgroundColor: '#DCDCDC',
+    backgroundColor: '#DCDCDC',
     width:'100%',
   },
   scrollView:{
@@ -572,6 +602,7 @@ const styles = StyleSheet.create({
   checkBox:{
       flexDirection: 'row',
       marginLeft:0,
+      marginBottom:5,
   },
   capacitatsPersonals:{
         marginTop: 8,
@@ -611,20 +642,20 @@ const styles = StyleSheet.create({
   titols:{
     fontSize:30,
     alignItems: 'center',
-    color:'white',
+    color:'black',
   },
   text:{
     fontSize:25,
 
   },
   textCheckbox:{
-    fontSize:24,
+    fontSize:20,
     textAlign:'left',
-    color:'blue',
+    color:'black',
   },
   textLocalitat:{
     fontSize:18,
-    color:'white',
+    color:'black',
     textAlign:'left',
     marginLeft:-210,
     marginTop:15,
@@ -662,7 +693,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   lineLeft:{
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     height: 2,
     flex: 1,
     alignSelf: 'center',
@@ -671,7 +702,7 @@ const styles = StyleSheet.create({
     width:'5%',
   },
   lineRight:{
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     height: 2,
     flex: 1,
     alignSelf: 'center',
@@ -694,26 +725,68 @@ const styles = StyleSheet.create({
   },
 
   imageLocalitatSota:{
-    backgroundColor:'white',
+    backgroundColor:'black',
     width: 300,
     height: 30,
   },
   textTitle:{
     fontSize:24,
-    color:'white',
+    color:'black',
     fontWeight: "bold",
+    marginBottom:20,
   },
   textTitleActes:{
     fontSize:24,
-    color:'white',
+    color:'black',
     fontWeight: "bold",
     marginTop:10,
+    marginBottom:20,
   },
   containerPreguntes:{
-    textAlign:'left',
+    textAlign:'center',
     flexDirection: 'column',
+    width:'70%',
+    paddingLeft:24,
+    marginTop:10,
   },
   checkboxCaja:{
-    top:2.5,
-  }
+    top:0,
+    marginLeft:5,
+  },
+  inputContainerPrimer: {
+      borderBottomColor: '#F5FCFF',
+      backgroundColor: '#FFFFFF',
+      borderRadius:30,
+      borderBottomWidth: 1,
+      width:250,
+      height:45,
+      marginBottom:20,
+      flexDirection: 'row',
+      alignItems:'center',
+      marginTop:20,
+  },
+  inputContainer: {
+      borderBottomColor: '#F5FCFF',
+      backgroundColor: '#FFFFFF',
+      borderRadius:30,
+      borderBottomWidth: 1,
+      width:250,
+      height:45,
+      marginBottom:20,
+      flexDirection: 'row',
+      alignItems:'center',
+      marginTop:5,
+  },
+  inputs:{
+      height:45,
+      marginLeft:16,
+      borderBottomColor: '#FFFFFF',
+      flex:1,
+  },
+  Icon:{
+    width:30,
+    height:30,
+    marginLeft:15,
+    justifyContent: 'center'
+  },
 });

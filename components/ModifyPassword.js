@@ -58,7 +58,7 @@ export default class ModifyPassword extends React.Component {
           var pasantic = this.state.passwordAntic;
 
           if(this.state.passwordPrimer !== this.state.passwordSegon){
-            alert("Contrasenyes són diferents!");
+            Alert.alert("Vigila!", "Les contrasenyes introduïdes no coincideixen");
           }
           else{
               var ModifyProfilelUri = API_USER + email + '/updatePassword?newPassword=' + pasnew +  '&oldPassword=' + pasantic;
