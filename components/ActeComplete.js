@@ -38,6 +38,7 @@ export default class ActeComplete extends React.Component {
 
   async getInfoActe() {
       try {
+          this.state.idActe = this.props.route.params.id;
           const response = await fetch(API + '/actes/' + this.state.idActe);
 
           const json = await response.json();

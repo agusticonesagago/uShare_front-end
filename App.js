@@ -18,7 +18,7 @@ import ListActesSmall from './components/ListActesSmall.js';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import Actes from './components/ListActesSmall.js';
+import Actes from './components/Actes.js';
 
 import * as globalHelper from './components/Auxiliars/GlobalHelper.js'
 
@@ -26,6 +26,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ListPerfilSmall from "./components/ListPerfilSmall";
 import FilterOptionsPerson from "./components/FilterOptionsPerson";
+
+import FilterOptions from "./components/FilterOptions";
 
 const Stack = createStackNavigator();
 
@@ -40,7 +42,7 @@ function HomeTabScreen() {
 
               let iconName;
 
-              if (route.name === globalHelper.ActesScreenID) {
+              if (route.name === globalHelper.ActesStackScreenID) {
                 iconName = 'md-calendar';
               } else if (route.name === globalHelper.PerfilScreenID) {
                 iconName = 'md-person';
@@ -54,8 +56,8 @@ function HomeTabScreen() {
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
       }}>
-        <Tab.Screen name={globalHelper.ActesScreenID} component={Actes} />
-        <Tab.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall} />
+        <Tab.Screen name={globalHelper.ActesStackScreenID} component={ListActesStackScreen} />
+        <Tab.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilStackScreen} />
         <Tab.Screen name={globalHelper.PerfilScreenID} component={Perfil} />
       </Tab.Navigator>
   );
@@ -84,6 +86,15 @@ function AuthStackScreen() {
   );
 }
 
+function ListActesStackScreen() {
+  return (
+      <AuthStack.Navigator>
+        <AuthStack.Screen name={globalHelper.ListActesScreenID} component={ListActesSmall} options={{ title: '', headerTransparent: true }} />
+        <AuthStack.Screen name={globalHelper.ActeCompleteID} component={ActeComplete} options={{ title: '', headerTransparent: true }}/>
+        <AuthStack.Screen name={globalHelper.ActesScreenID} component={Actes} options={{ title: '', headerTransparent: true }}/>
+      </AuthStack.Navigator>
+  );
+}
 
 function ListPerfilStackScreen() {
     return (
@@ -178,9 +189,9 @@ export default class App extends React.Component {
 */
         //<ActeComplete/>
 
-       <NavigationContainer>
+       /*<NavigationContainer>
           <ListPerfilStackScreen/>
-        </NavigationContainer>
+        </NavigationContainer>*/
 
       /*
         <NavigationContainer>
@@ -188,11 +199,19 @@ export default class App extends React.Component {
         </NavigationContainer>
         */
 
+       <NavigationContainer>
+          <AppContainer/>
+        </NavigationContainer>
+
+        //<DrawerFilters/>
+
         /*
         <NavigationContainer>
           <HomeStackScreen/>
         </NavigationContainer>
         */
+
+
     )
   }
 }

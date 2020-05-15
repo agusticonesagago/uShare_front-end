@@ -1,5 +1,16 @@
-import React , {Component} from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import React from 'react';
+import {
+    Alert,
+    AsyncStorage,
+    Image,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableHighlight,
+    View,
+    TouchableOpacity
+} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -7,7 +18,17 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import Drawer from './Drawer.js';
 
+import * as globalHelper from './Auxiliars/GlobalHelper.js'
+
+var API_USER = globalHelper.API_USER;
+const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
+
 export default class Actes extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    }
+  }
   render() {
     return (
       <View style={styles.containerActe}>
@@ -31,6 +52,10 @@ export default class Actes extends React.Component {
           </View>
           <View style={{marginTop: 3}}></View>
           <Text style={styles.ExtraInfoActe}>{/*Festa Major. A les 12h sardanes d'honor i ballada de 3 sardanes. A les 17:30h, ballada a la Plaça Gran (sardana de 7 tirades)*/}{this.props.description}</Text>
+          <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
+                                onPress={() => this.props.navigation.navigate(globalHelper.ActeCompleteID, {id:this.props.identificador})}>
+            <Text style={styles.loginText}>Més informació</Text>
+          </TouchableOpacity>
       </View>
     );
   }
@@ -90,5 +115,17 @@ const styles = StyleSheet.create({
     color:'grey',
     marginBottom:10,
     fontSize: 15,
+  },
+  buttonContainer: {
+    height:45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    width:250,
+    borderRadius:30,
+  },
+  InfoButton: {
+    backgroundColor: "purple",
   },
 });

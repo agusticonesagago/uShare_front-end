@@ -15,7 +15,7 @@ export var LogInScreenID = "Login";
 export var HomeStackScreenID = "HomeStack";
 export var HomeTabScreenID = "HomeTab";
 
-export var ActesScreenID = "Actes";
+
 
 export var PerfilScreenID = "Perfil";
 export var ModifyPasswordID = "ModifyPassword";
@@ -24,7 +24,11 @@ export var ModifyPerfilID = "ModifyPerfil";
 export var ListPerfilScreenID = "Sardanistes";
 export var FilterListPerfilScreenID = "FilterListPerfil";
 
-export var ListActesScreenID = "ListActes";
+export var ListActesScreenID = "ListActesSmall";
+export var ActeCompleteID = "ActeComplete";
+export var ActesStackScreenID = "Actes";
+export var ActesScreenID = "ActesScreen";
+
 
 
 /*
@@ -95,7 +99,7 @@ export async function getLoggedUserEmailAsync() {
     try {
         return await getValueFromAsyncStorage(asyncStorageLoggedUserEmailKey);
     } catch (e) {
-        console.error("error:" +e.message());
+        console.error("error:" + e.message());
     }
 }
 

@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, Alert} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
@@ -135,6 +135,7 @@ export default class Perfil extends React.Component {
           }
           else this.onChangeState("comptarIRepartir", "NO");
 
+          Alert.alert("Alert", "Button pressed " + asyncStorageLoggedUserEmailKey);
       }
       catch (error) {
           console.error(error);
