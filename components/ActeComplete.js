@@ -27,7 +27,8 @@ export default class ActeComplete extends React.Component {
            extraInfo:'',
            cobles:'',
            acteLoaded: false,
-           imatge:''
+           imatge:'',
+           nomActivitat:''
         }
   }
 
@@ -49,11 +50,12 @@ export default class ActeComplete extends React.Component {
           if(json.llocSiPlou === '') this.onChangeState("llocFaMalTemps", "No n'hi ha");
           else this.onChangeState("llocFaMalTemps", json.llocSiPlou);
 
-          if(json.mesDades === '') this.onChangeState("extraInfo", json.nomActivitat);
-          else this.onChangeState("extraInfo", json.nomActivitat + ' | ' + json.mesDades);
+
+          this.onChangeState("extraInfo", json.mesDades);
 
           this.onChangeState("cobles", json.cobla1);
           this.onChangeState("imatge", json.imatge);
+          this.onChangeState("nomActivitat", json.nomActivitat);
           this.setState({
             acteLoaded: true
           });
@@ -61,6 +63,18 @@ export default class ActeComplete extends React.Component {
       catch (error) {
           console.error(error);
       }
+  }
+
+  mesInformacio() {
+    if(this.state.extraInfo!=''){
+      return(
+        <View style={styles.ActivitatCobles}>
+          <Text style={styles.ActivitatCoblesInterpets}>Més informarció:</Text>
+          <Text style={styles.InfoActeActivitatCobles}>{this.state.extraInfo}</Text>
+        </View>
+      )
+    }
+    else return null;
   }
 
   render() {
@@ -71,30 +85,30 @@ export default class ActeComplete extends React.Component {
             <Image source={Image_Http_URL} style={styles.image} rezideMode="center"></Image>
             <View style={styles.containerInfoActe}>
               <View style={styles.WhereWhen}>
+                <Text style={styles.Which}>
+                  {this.state.nomActivitat}
+                </Text>
                 <Text style={styles.Where}>
-                  {/*RIPOLL. Plaça de l'Ajuntament*/}
                   {this.state.where}
                 </Text>
                 <Text style={styles.When}>
-                  {/*11.05.2020 12:00h i 17:30h*/}
                   {this.state.when}
                 </Text>
               </View>
               <View style={styles.ActivitatCobles}>
                 <Text style={styles.ActivitatCoblesInterpets}>Activitat:</Text>
-                <Text style={styles.InfoActeActivitatCobles}>{/*Ballada*/}{this.state.activitat}</Text>
+                <Text style={styles.InfoActeActivitatCobles}>{this.state.activitat}</Text>
               </View>
               <View style={styles.ActivitatCobles}>
                 <Text style={styles.ActivitatCoblesInterpets}>Cobles/Intèrprets:</Text>
-                <Text style={styles.InfoActeActivitatCobles}>{/*La Selvatana*/}{this.state.cobles}</Text>
+                <Text style={styles.InfoActeActivitatCobles}>{this.state.cobles}</Text>
               </View>
               <View style={styles.ActivitatCobles}>
                 <Text style={styles.ActivitatCoblesInterpets}>Lloc si fa mal temps:</Text>
-                <Text style={styles.InfoActeActivitatCobles}>{/*CEIP Sant Cristòfor*/}{this.state.llocFaMalTemps}</Text>
+                <Text style={styles.InfoActeActivitatCobles}>{this.state.llocFaMalTemps}</Text>
               </View>
               <View style={{marginTop: 3}}></View>
-              <Text style={styles.ExtraInfoActe}>{/*Festa Major. A les 12h sardanes d'honor i ballada de 3 sardanes. A les 17:30h, ballada a la Plaça Gran (sardana de 7 tirades)*/}
-              {this.state.extraInfo}</Text>
+              {this.mesInformacio()}
           </View>
         </View>
       )
@@ -135,23 +149,32 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginLeft: 10,
     marginRight: 20,
-    marginTop:15,
+    marginTop:10,
   },
   Where:{
+    color:'grey',
+    fontSize: 20,
+    color: '#714170',
+    fontWeight: 'bold',
+    marginTop:0,
+  },
+  Which:{
     marginRight: 2,
     color: '#714170',
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 25,
+    marginBottom:10,
   },
   When:{
     color:'grey',
     fontSize: 20,
     color: '#714170',
     fontWeight: 'bold',
-    marginTop:10,
+    marginBottom:10,
   },
   ActivitatCobles:{
     marginLeft: 10,
+    width:'67%',
     marginTop:5,
     flexDirection:'row',
   },
