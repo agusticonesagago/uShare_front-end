@@ -34,28 +34,36 @@ export default class Actes extends React.Component {
       <View style={styles.containerActe}>
           <View style={styles.WhereWhen}>
             <Text style={styles.Where}>
-              {/*RIPOLL. Plaça de l'Ajuntament*/}
-              {this.props.where}
+              {this.props.nomActivitat}
             </Text>
             <Text style={styles.When}>
-              {/*11.05.2020 12:00h i 17:30h*/}
               {this.props.when} h
             </Text>
           </View>
-          <View style={styles.ActivitatCobles}>
-            <Text style={styles.ActivitatCoblesInterpets}>Activitat:</Text>
-            <Text style={styles.InfoActeActivitatCobles}>{/*Ballada*/} {this.props.activitat}</Text>
+          <View style={styles.containerActeIndiv}>
+            <View style={styles.containerInfoActe}>
+              <View style={styles.ActivitatCobles}>
+                <Text style={styles.ActivitatCoblesInterpets}>Activitat:</Text>
+                <Text style={styles.InfoActeActivitatCobles}>{this.props.activitat}</Text>
+              </View>
+              <View style={styles.ActivitatCobles}>
+                <Text style={styles.ActivitatCoblesInterpets}>Cobles/Intèrprets:</Text>
+                <Text style={styles.InfoActeActivitatCobles}>{this.props.cobla}</Text>
+              </View>
+              <View style={styles.ActivitatCobles}>
+                <Text style={styles.ActivitatCoblesInterpets}>On:</Text>
+                <Text style={styles.InfoActeActivitatCobles}>{this.props.where}</Text>
+              </View>
+              <View style={{marginTop: 3}}></View>
+            </View>
+
+            <View style={styles.containerButtonActe}>
+              <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
+                                    onPress={() => this.props.navigation.navigate(globalHelper.ActeCompleteID, {id:this.props.identificador})}>
+                <Text style={styles.mesInfoText}>Més informació</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.ActivitatCobles}>
-            <Text style={styles.ActivitatCoblesInterpets}>Cobles/Intèrprets:</Text>
-            <Text style={styles.InfoActeActivitatCobles}>{/*La Selvatana*/}{this.props.cobla}</Text>
-          </View>
-          <View style={{marginTop: 3}}></View>
-          <Text style={styles.ExtraInfoActe}>{/*Festa Major. A les 12h sardanes d'honor i ballada de 3 sardanes. A les 17:30h, ballada a la Plaça Gran (sardana de 7 tirades)*/}{this.props.description}</Text>
-          <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
-                                onPress={() => this.props.navigation.navigate(globalHelper.ActeCompleteID, {id:this.props.identificador})}>
-            <Text style={styles.loginText}>Més informació</Text>
-          </TouchableOpacity>
       </View>
     );
   }
@@ -84,31 +92,46 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginTop:15,
   },
+  containerInfoActe:{
+    flexDirection: 'column',
+    width:'70%',
+  },
+  containerActeIndiv:{
+    flexDirection: 'row',
+    width:'100%',
+  },
   Where:{
     marginRight: 2,
     color: '#714170',
     fontWeight: 'bold',
     fontSize: 15,
-    width:'80%',
+    width:'75%',
+    marginRight:'5%',
   },
   When:{
     color:'grey',
     fontSize: 15,
+    width:'auto',
+    maxWidth:'20%',
   },
   ActivitatCobles:{
     marginLeft: 10,
     marginTop:5,
     flexDirection:'row',
+    width:'100%',
   },
   ActivitatCoblesInterpets:{
     fontWeight: 'bold',
     marginRight:5,
     color:'grey',
     fontSize: 15,
+    width:'auto',
   },
   InfoActeActivitatCobles:{
     color:'grey',
     fontSize: 15,
+    width:'auto',
+    maxWidth:'50%',
   },
   ExtraInfoActe:{
     marginLeft: 10,
@@ -122,10 +145,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom:20,
-    width:250,
+    width:'100%',
+    paddingTop:10,
+    paddingBottom:10,
     borderRadius:30,
   },
   InfoButton: {
-    backgroundColor: "purple",
+    backgroundColor: "#714170",
   },
+  mesInfoText: {
+    color: 'white',
+    fontSize: 15,
+    width:'90%',
+    textAlign:'center',
+  },
+  containerButtonActe:{
+    width:'27%',
+    marginRight:'3%',
+    marginTop:20,
+  }
 });

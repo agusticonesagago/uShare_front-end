@@ -82,35 +82,37 @@ export default class ActeComplete extends React.Component {
     if(this.state.acteLoaded){
       let Image_Http_URL = {uri: this.state.imatge};
       return (
-        <View style={styles.containerActe}>
-            <Image source={Image_Http_URL} style={styles.image} rezideMode="center"></Image>
-            <View style={styles.containerInfoActe}>
-              <View style={styles.WhereWhen}>
-                <Text style={styles.Which}>
-                  {this.state.nomActivitat}
-                </Text>
-                <Text style={styles.Where}>
-                  {this.state.where}
-                </Text>
-                <Text style={styles.When}>
-                  {this.state.when}
-                </Text>
-              </View>
-              <View style={styles.ActivitatCobles}>
-                <Text style={styles.ActivitatCoblesInterpets}>Activitat:</Text>
-                <Text style={styles.InfoActeActivitatCobles}>{this.state.activitat}</Text>
-              </View>
-              <View style={styles.ActivitatCobles}>
-                <Text style={styles.ActivitatCoblesInterpets}>Cobles/Intèrprets:</Text>
-                <Text style={styles.InfoActeActivitatCobles}>{this.state.cobles}</Text>
-              </View>
-              <View style={styles.ActivitatCobles}>
-                <Text style={styles.ActivitatCoblesInterpets}>Lloc si fa mal temps:</Text>
-                <Text style={styles.InfoActeActivitatCobles}>{this.state.llocFaMalTemps}</Text>
-              </View>
-              <View style={{marginTop: 3}}></View>
-              {this.mesInformacio()}
-          </View>
+        <View style={styles.containerActeFlecha}>
+            <View style={styles.containerActe}>
+              <Image source={Image_Http_URL} style={styles.image} rezideMode="center"></Image>
+              <View style={styles.containerInfoActe}>
+                <View style={styles.WhereWhen}>
+                  <Text style={styles.Which}>
+                    {this.state.nomActivitat}
+                  </Text>
+                  <Text style={styles.Where}>
+                    {this.state.where}
+                  </Text>
+                  <Text style={styles.When}>
+                    {this.state.when}
+                  </Text>
+                </View>
+                <View style={styles.ActivitatCobles}>
+                  <Text style={styles.ActivitatCoblesInterpets}>Activitat:</Text>
+                  <Text style={styles.InfoActeActivitatCobles}>{this.state.activitat}</Text>
+                </View>
+                <View style={styles.ActivitatCobles}>
+                  <Text style={styles.ActivitatCoblesInterpets}>Cobles/Intèrprets:</Text>
+                  <Text style={styles.InfoActeActivitatCobles}>{this.state.cobles}</Text>
+                </View>
+                <View style={styles.ActivitatCobles}>
+                  <Text style={styles.ActivitatCoblesInterpets}>Lloc si fa mal temps:</Text>
+                  <Text style={styles.InfoActeActivitatCobles}>{this.state.llocFaMalTemps}</Text>
+                </View>
+                <View style={{marginTop: 3}}></View>
+                  {this.mesInformacio()}
+                </View>
+            </View>
         </View>
       )
     }
@@ -134,8 +136,14 @@ ActeComplete.navigationOptions = {
 const styles = StyleSheet.create({
   containerActe: {
     backgroundColor: 'grey',
+    marginTop:'14%',
     width:'100%',
     backgroundColor: "beige",
+  },
+  containerActeFlecha: {
+    backgroundColor: 'grey',
+    width:'100%',
+    backgroundColor: "#714170",
   },
   image:{
     width:'100%',
@@ -149,7 +157,6 @@ const styles = StyleSheet.create({
   WhereWhen:{
     flexDirection: 'column',
     marginLeft: 10,
-    marginRight: 20,
     marginTop:10,
   },
   Where:{
@@ -194,6 +201,10 @@ const styles = StyleSheet.create({
     color:'grey',
     marginBottom:10,
     fontSize: 15,
+  },
+  scrollView:{
+    flex:1,
+    width:'100%',
   },
   scrollView:{
     flex:1,
