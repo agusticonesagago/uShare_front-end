@@ -14,7 +14,7 @@ import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
 
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 import * as globalHelperData from './Auxiliars/GlobalHelperData.js'
-import * as globalHelperAPI from './Auxiliars/GlobalHelperAPI.js'
+import * as globalHelperAPI from './Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Users.js'
 
 import ListPerfilSmall from "./ListPerfilSmall";
 

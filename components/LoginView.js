@@ -29,7 +29,20 @@ export default class LoginView extends React.Component {
           password: '',
     }
 
+    this.promiseHandling();
   }
+
+  promiseHandling = async () => {
+      try{
+          const token = await globalHelper.getLoggedUserEmailAsync();
+          if(token) this.props.navigation.replace(globalHelper.HomeStackScreenID);
+
+      } catch (error) {
+          console.error(error);
+      }
+
+  };
+
 
   onClickListener = (viewId) => {
       Alert.alert("Alert", "Button pressed " + viewId);

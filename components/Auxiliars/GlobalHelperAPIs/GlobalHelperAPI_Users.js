@@ -1,7 +1,6 @@
 import React from 'react';
 import {exp} from "react-native-reanimated";
-import * as globalHelper from "./GlobalHelper";
-
+import * as globalHelper from "../GlobalHelper";
 
 
 
@@ -41,7 +40,7 @@ function addParameterHabilitats(state, url) {
 }
 
 function buildURL(state) {
-    let API_USER_FILTER = globalHelper.API_USER + "filters";
+    let API_USER_FILTER = globalHelper.API_USER + "filter";
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"comarca",state.comarca);
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"edatMax",state.edatMax);
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"edatMin",state.edatMin);

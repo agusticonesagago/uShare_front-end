@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Button} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Perfil from './components/Perfil.js';
@@ -9,9 +9,6 @@ import LogIn from './components/LoginView.js';
 import ModifyPassword from './components/ModifyPassword.js';
 import ModifyPerfil from './components/ModifyPerfil.js';
 import ActeComplete from './components/ActeComplete.js';
-
-import DrawerFiltersPerson from './components/DrawerFiltersPerson.js';
-import DrawerFilters from './components/DrawerFilters.js';
 
 import ListActesSmall from './components/ListActesSmall.js';
 
@@ -26,7 +23,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ListPerfilSmall from "./components/ListPerfilSmall";
 import FilterOptionsPerson from "./components/FilterOptionsPerson";
-
 import FilterOptions from "./components/FilterOptions";
 
 const Stack = createStackNavigator();
@@ -92,6 +88,7 @@ function ListActesStackScreen() {
         <AuthStack.Screen name={globalHelper.ListActesScreenID} component={ListActesSmall} options={{ title: '', headerTransparent: true }} />
         <AuthStack.Screen name={globalHelper.ActeCompleteID} component={ActeComplete} options={{ title: '', headerTransparent: true }}/>
         <AuthStack.Screen name={globalHelper.ActesScreenID} component={Actes} options={{ title: '', headerTransparent: true }}/>
+        <AuthStack.Screen name={globalHelper.FilterListActesScreenID} component={FilterOptions} options={{ title: '', headerTransparent: true }} />
       </AuthStack.Navigator>
   );
 }
@@ -140,7 +137,13 @@ function myCreateNavigatorFunction() {
   console.log("email: "+email);
 */
   let home=false;
-  const rootSwitch = createSwitchNavigator(
+  //globalHelper._signOutAsync();
+  //let email = globalHelper.getLoggedUserEmailAsync();
+  //console.log("App.js email: ");
+  //console.log(email);
+  //home = email !== null;
+
+    const rootSwitch = createSwitchNavigator(
       {
         [globalHelper.HomeStackScreenID]: HomeStackScreen,
         [globalHelper.AuthScreenID]: AuthStackScreen,

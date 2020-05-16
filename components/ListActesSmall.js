@@ -48,6 +48,8 @@ export default class ListActesSmall extends React.Component {
   render() {
 
     if(this.state.actesLoaded){
+        if(this.props.route.params)  this.state.actes = this.props.route.params.data;
+
         let actes = [];
         //console.log(this.state.actes.length);
         for (let i = 0; i < this.state.actes.length; ++i) {
@@ -61,9 +63,16 @@ export default class ListActesSmall extends React.Component {
 
         return(
           <View style={styles.container}>
-            <View style={styles.containerNavigator}>
+            <View style={styles.containerNavigator}> 
               <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
               <Text style={styles.titleNavigator}> Actes </Text>
+                <Icon name={'md-options'} size={34}
+                      color={'white'}
+                      style={styles.iconFilter}
+                      onPress={() => {
+                          this.props.navigation.navigate(globalHelper.FilterListActesScreenID);
+                      }}
+                />
             </View>
             <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
               {actes}
@@ -121,4 +130,9 @@ const styles = StyleSheet.create({
     marginLeft:20,
     marginRight:20,
   },
+    iconFilter:{
+        marginBottom:0,
+        marginLeft:50,
+        marginTop:23,
+    }
 });

@@ -5,6 +5,8 @@ import {
 
 import { NavigationActions, StackActions } from 'react-navigation';
 
+
+
 /*
  * ID of the screens
  */
@@ -25,6 +27,8 @@ export var ListPerfilScreenID = "Sardanistes";
 export var FilterListPerfilScreenID = "FilterListPerfil";
 
 export var ListActesScreenID = "ListActesSmall";
+export let FilterListActesScreenID = "FilterListActes";
+
 export var ActeCompleteID = "ActeComplete";
 export var ActesStackScreenID = "Actes";
 export var ActesScreenID = "ActesScreen";
@@ -49,6 +53,7 @@ export var sardapp='https://sardapp.herokuapp.com/api'; // Per veure si va: SI
  */
 export var API = sardapp;
 export var API_USER = API + '/users/';
+export var API_ACTES = API + '/actes/';
 
 /*
  * KEYS
@@ -97,7 +102,9 @@ export async function getValueFromAsyncStorage(key) {
 export async function getLoggedUserEmailAsync() {
     console.log("entra getLoggedUserEmailAsync");
     try {
-        return await getValueFromAsyncStorage(asyncStorageLoggedUserEmailKey);
+        let tmp = await getValueFromAsyncStorage(asyncStorageLoggedUserEmailKey);;
+        console.log("Email:" + tmp);
+        return tmp;
     } catch (e) {
         console.error("error:" + e.message());
     }
