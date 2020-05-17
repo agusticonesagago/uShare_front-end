@@ -203,11 +203,11 @@ export default class Perfil extends React.Component {
             </View>
           </View>
           <TouchableOpacity style={[styles.editButtonContainer, styles.modifyButton]}
-                        onPress={() => this.props.navigation.navigate(globalHelper.ModifyPerfilID)}>
+                        onPress={() => this.props.navigation.navigate(globalHelper.ModifyPerfilID, {email:this.state.textMail})}>
             <Text style={styles.modifyText}>EDITAR</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.passwordButtonContainer, styles.modifyButton]}
-                              onPress={() => this.props.navigation.navigate(globalHelper.ModifyPasswordID)}>
+                              onPress={() => this.props.navigation.navigate(globalHelper.ModifyPasswordID, {email:this.state.textMail})}>
             <Text style={styles.modifyText}>MODIFICAR CONTRASENYA</Text>
           </TouchableOpacity>
           <View style={styles.end}/>

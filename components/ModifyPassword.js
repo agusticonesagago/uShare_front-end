@@ -18,7 +18,7 @@ export default class ModifyPassword extends React.Component {
   constructor(props) {
         super(props)
         this.state = {
-          textMail:'aat@gmail.com',
+          textMail:'',
           passwordPrimer: "",
           passwordSegon: "",
           passwordAntic: "",
@@ -53,7 +53,7 @@ export default class ModifyPassword extends React.Component {
 
   async sendChanges() {
     try {
-          var email = this.state.textMail;
+          var email = this.props.route.params.email;
           var pasnew = this.state.passwordPrimer;
           var pasantic = this.state.passwordAntic;
 

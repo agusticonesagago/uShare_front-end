@@ -81,7 +81,7 @@ export default class ModifyPerfil extends React.Component {
           textName:'',
           localitat:'',
           textNumber:'',
-          textMail:'agusticonesa@gmail.com',
+          textMail:'',
           textVehicle: '',
           aplecs:   true,
           concerts: true,
@@ -106,6 +106,7 @@ export default class ModifyPerfil extends React.Component {
 
   async getInfoUser() {
       try {
+          this.state.textMail = this.props.route.params.email;
           const response = await fetch(API_USER + this.state.textMail);
 
           const json = await response.json();
