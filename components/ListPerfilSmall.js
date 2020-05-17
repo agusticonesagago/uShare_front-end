@@ -65,6 +65,8 @@ export default class ListPerfilSmall extends React.Component {
               profiles.push(<PerfilSmall nomCognom={this.state.persones[i].name}
                                          description={this.state.persones[i].description}
                                          photo={this.state.persones[i].image}
+                                         navigation={this.props.navigation}
+                                         email={this.state.persones[i].email}
               />)
           }
 

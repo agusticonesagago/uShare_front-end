@@ -7,7 +7,7 @@ import * as globalHelper from './Auxiliars/GlobalHelper.js'
 var API_USER = globalHelper.API_USER;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
 
-export default class Perfil extends React.Component {
+export default class PerfilExtern extends React.Component {
   componentDidMount() {
    this.getInfoUser();
   }
@@ -94,7 +94,10 @@ export default class Perfil extends React.Component {
 
   async getInfoUser() {
       try {
-          const response = await fetch(API_USER + this.state.textMail);
+          console.log(this.props.route.params.email);
+          if(this.props.route.params.email != '') this.state.email = this.props.route.params.email;
+          console.log(this.state.email);
+          const response = await fetch(API_USER + this.state.email);
 
           const json = await response.json();
 
@@ -135,7 +138,7 @@ export default class Perfil extends React.Component {
           }
           else this.onChangeState("comptarIRepartir", "NO");
 
-          Alert.alert("Alert", "Button pressed " + asyncStorageLoggedUserEmailKey);
+          //Alert.alert("Alert", "Button pressed " + asyncStorageLoggedUserEmailKey);
       }
       catch (error) {
           console.error(error);
@@ -202,14 +205,6 @@ export default class Perfil extends React.Component {
               <View>{this.renderActes()}</View>
             </View>
           </View>
-          <TouchableOpacity style={[styles.editButtonContainer, styles.modifyButton]}
-                        onPress={() => this.props.navigation.navigate(globalHelper.ModifyPerfilID)}>
-            <Text style={styles.modifyText}>EDITAR</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.passwordButtonContainer, styles.modifyButton]}
-                              onPress={() => this.props.navigation.navigate(globalHelper.ModifyPasswordID)}>
-            <Text style={styles.modifyText}>MODIFICAR CONTRASENYA</Text>
-          </TouchableOpacity>
           <View style={styles.end}/>
         </ScrollView>
       </View>

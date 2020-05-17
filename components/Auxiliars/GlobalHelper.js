@@ -17,14 +17,14 @@ export var LogInScreenID = "Login";
 export var HomeStackScreenID = "HomeStack";
 export var HomeTabScreenID = "HomeTab";
 
-
-
 export var PerfilScreenID = "Perfil";
 export var ModifyPasswordID = "ModifyPassword";
 export var ModifyPerfilID = "ModifyPerfil";
 
 export var ListPerfilScreenID = "Sardanistes";
 export var FilterListPerfilScreenID = "FilterListPerfil";
+export var PerfilSmallScreenID = "PerfilSmall";
+export var PerfilExternScreenID = "PerfilExtern";
 
 export var ListActesScreenID = "ListActesSmall";
 export let FilterListActesScreenID = "FilterListActes";

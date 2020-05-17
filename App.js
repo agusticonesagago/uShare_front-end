@@ -3,6 +3,8 @@ import {StyleSheet} from 'react-native';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Perfil from './components/Perfil.js';
+import PerfilExtern from './components/PerfilExtern.js';
+import PerfilSmall from './components/PerfilSmall.js';
 
 import SignUp from './components/SignUpView.js';
 import LogIn from './components/LoginView.js';
@@ -105,6 +107,8 @@ function ListPerfilStackScreen() {
                               }}
             />
             <AuthStack.Screen name={globalHelper.FilterListPerfilScreenID} component={FilterOptionsPerson} options={{ title: '', headerTransparent: true }} />
+            <AuthStack.Screen name={globalHelper.PerfilExternScreenID} component={PerfilExtern} options={{ title: '', headerTransparent: true }} />
+            <AuthStack.Screen name={globalHelper.PerfilSmallScreenID} component={PerfilSmall} options={{ title: '', headerTransparent: true }} />
         </AuthStack.Navigator>
     );
 }
