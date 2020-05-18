@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {StyleSheet, Text, View, Image, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, Image, ScrollView, TouchableOpacity} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -28,7 +28,8 @@ export default class ActeComplete extends React.Component {
            cobles:'',
            acteLoaded: false,
            imatge:'',
-           nomActivitat:''
+           nomActivitat:'',
+           apuntat: true,
         }
   }
 
@@ -78,6 +79,29 @@ export default class ActeComplete extends React.Component {
     else return null;
   }
 
+  bottomApuntarse() {
+    if(this.state.apuntat){
+        return(
+          <View style={styles.containerButtonActe}>
+            <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
+                                  onPress={() => this.props.navigation.navigate(globalHelper.ActeCompleteID, {id:this.props.identificador})}>
+              <Text style={styles.apuntarseText}>APUNTAR-SE</Text>
+            </TouchableOpacity>
+          </View>
+        )
+    }
+    else{
+      return(
+        <View style={styles.containerButtonActe}>
+          <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
+                                onPress={() => this.props.navigation.navigate(globalHelper.ActeCompleteID, {id:this.props.identificador})}>
+            <Text style={styles.apuntarseText}>DESAPUNTAR-SE</Text>
+          </TouchableOpacity>
+        </View>
+      )
+    }
+  }
+
   render() {
     if(this.state.acteLoaded){
       let Image_Http_URL = {uri: this.state.imatge};
@@ -86,6 +110,13 @@ export default class ActeComplete extends React.Component {
           <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
             <View style={styles.containerActe}>
               <Image source={Image_Http_URL} style={styles.image} rezideMode="center"></Image>
+              {this.bottomApuntarse()}
+              <View style={styles.containerButtonQuiVa}>
+                <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
+                                      onPress={() => this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {id:this.props.identificador})}>
+                  <Text style={styles.apuntarseText}>QUI VA?</Text>
+                </TouchableOpacity>
+              </View>
               <View style={styles.containerInfoActe}>
               <View style={styles.WhereWhen}>
                 <Text style={styles.Which}>
@@ -213,5 +244,39 @@ const styles = StyleSheet.create({
   scrollView:{
     flex:1,
     width:'100%',
+  },
+  containerButtonActe:{
+    width:'40%',
+    marginRight:'3%',
+    marginTop:-60,
+    marginLeft:10,
+  },
+  containerButtonQuiVa:{
+    width:'40%',
+    marginRight:'3%',
+    marginTop:-65,
+    marginLeft:230,
+  },
+  buttonContainer: {
+    height:45,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom:20,
+    width:'100%',
+    paddingTop:10,
+    paddingBottom:10,
+    borderRadius:30,
+    borderWidth:2,
+    borderColor:'white',
+  },
+  InfoButton: {
+    backgroundColor: "#714170",
+  },
+  apuntarseText: {
+    color: 'white',
+    fontSize: 15,
+    width:'90%',
+    textAlign:'center',
   },
 });
