@@ -63,7 +63,7 @@ export default class ListActesSmall extends React.Component {
 
         return(
           <View style={styles.container}>
-            <View style={styles.containerNavigator}> 
+            <View style={styles.containerNavigator}>
               <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
               <Text style={styles.titleNavigator}> Actes </Text>
                 <Icon name={'md-options'} size={34}

@@ -56,10 +56,24 @@ function HomeTabScreen() {
       }}>
         <Tab.Screen name={globalHelper.ActesStackScreenID} component={ListActesStackScreen} />
         <Tab.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilStackScreen} />
-        <Tab.Screen name={globalHelper.PerfilScreenID} component={Perfil} />
+        <Tab.Screen name={globalHelper.PerfilScreenID} component={PerfilStackSreen} />
       </Tab.Navigator>
   );
 }
+
+function PerfilStackSreen() {
+  return (
+      <AuthStack.Navigator>
+        <AuthStack.Screen name={globalHelper.PerfilScreenID} component={Perfil}
+        options={{ title: '', headerTransparent: true }} />
+        <AuthStack.Screen name={globalHelper.ModifyPasswordID} component={ModifyPassword} options={{ title: '', headerTransparent: true }} />
+        <AuthStack.Screen name={globalHelper.ModifyPerfilID} component={ModifyPerfil} options={{ title: '', headerTransparent: true }} />
+        <AuthStack.Screen name={globalHelper.ActeCompleteID} component={ActeComplete} options={{ title: '', headerTransparent: true }}/>
+      </AuthStack.Navigator>
+  );
+}
+
+
 
 function HomeStackScreen() {
   return (

@@ -4,12 +4,24 @@ import {StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, Alert, To
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 
+import {NavigationContainer} from '@react-navigation/native';
+
 var API_USER = globalHelper.API_USER;
+var API = globalHelper.API;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
+
+import ModifyPerfil from './ModifyPerfil.js';
+import ActesPerPerfil from './ActesPerPerfil.js';
+
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator();
 
 export default class Perfil extends React.Component {
   componentDidMount() {
    this.getInfoUser();
+   this.getInfoActesAntics();
+   this.getInfoActesNous();
   }
   constructor(props) {
         super(props)
@@ -32,6 +44,12 @@ export default class Perfil extends React.Component {
            coblaCompeticio: '',
            comarca:'',
            comptarIRepartir:'',
+           option:1,
+           changeInfo:false,
+           actesAnticsLoaded:false,
+           actesFutursLoaded:false,
+           'actesNous': [],
+           'actesAntics': [],
         }
   }
 
@@ -92,6 +110,71 @@ export default class Perfil extends React.Component {
     return actes;
   }
 
+  async getInfoActesNous() {
+      try {
+          const response = await fetch(API + '/actes');
+
+          const json = await response.json();
+          this.state.actesNous = json;
+
+          this.setState({
+            actesFutursLoaded: true
+          });
+          //console.log(this.state.actes); //Per veure quins actes té
+      }
+      catch (error) {
+          console.error(error);
+      }
+  }
+
+  async getInfoActesAntics() {
+      try {
+          const response = await fetch(API + '/actes');
+
+          const json = await response.json();
+          this.state.actesAntics = json;
+
+          this.setState({
+            actesAnticsLoaded: true
+          });
+          //console.log(this.state.actes); //Per veure quins actes té
+      }
+      catch (error) {
+          console.error(error);
+      }
+  }
+
+  async getInfoActesFuturs() {
+      try {
+          const response = await fetch(API + '/actes');
+
+          const json = await response.json();
+          this.state.actesNous = json;
+
+          this.setState({
+            actesFutursLoaded: true
+          });
+          //console.log(this.state.actes); //Per veure quins actes té
+      }
+      catch (error) {
+          console.error(error);
+      }
+  }
+
+  changeOption(option) {
+    if(option == "informacion"){
+      this.state.option = 1;
+    }
+    else if (option == "old"){
+      this.state.option = 2;
+    }
+    else {
+      this.state.option = 3;
+    }
+    this.state.changeInfo = !this.state.changeInfo;
+    this.forceUpdate();
+  }
+
   async getInfoUser() {
       try {
           const response = await fetch(API_USER + this.state.textMail);
@@ -135,17 +218,122 @@ export default class Perfil extends React.Component {
           }
           else this.onChangeState("comptarIRepartir", "NO");
 
-          Alert.alert("Alert", "Button pressed " + asyncStorageLoggedUserEmailKey);
+          //Alert.alert("Alert", "Button pressed " + asyncStorageLoggedUserEmailKey);
       }
       catch (error) {
           console.error(error);
       }
   }
 
+  renderActesAntics(){
+    let actesAntic = [];
+
+
+    for (let i = 0; i < this.state.actesAntics.length; ++i) {
+     actesAntic.push(<ActesPerPerfil where={this.state.actesAntics[i].lloc}
+       when={this.state.actesAntics[i].hora1}
+       activitat={this.state.actesAntics[i].tipus}
+       cobla={this.state.actesAntics[i].cobla1}
+       dia={this.state.actesNous[i].dia}
+       nomActivitat={this.state.actesAntics[i].nomActivitat} navigation={this.props.navigation}
+       identificador={this.state.actesAntics[i].id}/>)
+    }
+
+    //console.log(actesAntic);
+
+    return(
+      <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
+        {actesAntic}
+      </ScrollView>
+    )
+  }
+
+
+  renderActesNous(){
+    let actesNou = [];
+    for (let i = 0; i < this.state.actesNous.length; ++i) {
+     actesNou.push(<ActesPerPerfil where={this.state.actesNous[i].lloc}
+       when={this.state.actesNous[i].hora1}
+       activitat={this.state.actesNous[i].tipus}
+       dia={this.state.actesNous[i].dia}
+       cobla={this.state.actesNous[i].cobla1}
+       nomActivitat={this.state.actesNous[i].nomActivitat} navigation={this.props.navigation}
+       identificador={this.state.actesNous[i].id}/>)
+    }
+    return(
+      <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
+        {actesNou}
+      </ScrollView>
+    )
+  }
+
+  renderPerfil() {
+    let info;
+    if(this.state.option == 1 ){
+      info = <View style={styles.extraInfo}>
+          <Text style={styles.titleApartats}>SOBRE MI</Text>
+          <Text style={styles.information}>{this.state.textSobreMi}</Text>
+          <Text style={styles.titleApartats}>LOCALITAT</Text>
+          <View style={styles.imageTelephone}>
+              <Icon name={'md-home'} size={30} color={'#0000FF'}  />
+              <Text style={styles.textMail}>{this.state.comarca}</Text>
+          </View>
+          <Text style={styles.titleApartats}>NAIXEMENT</Text>
+          <View style={styles.imageMail}>
+            <Icon name={'md-gift'} size={30} color={'red'}  />
+            <Text style={styles.textMail}>{this.state.birthday}</Text>
+          </View>
+          <Text style={styles.titleApartats}>CONTACTE</Text>
+          <View style={styles.imageTelephone}>
+            <Icon name={'md-call'} size={30} color={'green'}  />
+            <Text style={styles.numberTelephone}>{this.state.textNumber}</Text>
+          </View>
+          <View style={styles.imageMail}>
+            <Icon name={'md-mail'} size={30} color={'orange'}  />
+            <Text style={styles.textMail}>{this.state.textMail}</Text>
+          </View>
+          <Text style={styles.titleApartats}>VEHICLE</Text>
+          <Text style={styles.information}>{this.state.textVehicle}</Text>
+          <Text style={styles.titleApartats}>HABILITATS</Text>
+          <Text style={styles.information}>{this.state.comptarIRepartir}</Text>
+          <Text style={styles.titleApartats}>SARDANES DE COMPETICIÓ</Text>
+          <Text style={styles.information}>{this.state.sardanistaCompeticio}</Text>
+          <Text style={styles.titleApartats}>COBLA DE COMPETICIÓ</Text>
+          <Text style={styles.information}>{this.state.coblaCompeticio}</Text>
+          <Text style={styles.titleApartats}>ACTES</Text>
+
+          <View>
+            <View>{this.renderActes()}</View>
+          </View>
+          <TouchableOpacity style={[styles.editButtonContainer, styles.modifyButton]}
+                        onPress={() => this.props.navigation.navigate(globalHelper.ModifyPerfilID, {email:this.state.textMail})}>
+            <Text style={styles.modifyText}>EDITAR</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.passwordButtonContainer, styles.modifyButton]}
+                              onPress={() => this.props.navigation.navigate(globalHelper.ModifyPasswordID, {email:this.state.textMail})}>
+            <Text style={styles.modifyText}>MODIFICAR CONTRASENYA</Text>
+          </TouchableOpacity>
+          <View style={styles.end}/>
+        </View>
+      }
+    else if(this.state.option == 2 ){
+      info = <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
+        {this.renderActesNous()}
+      </ScrollView>
+    }
+    else {
+      info = <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
+        {this.renderActesAntics()}
+      </ScrollView>
+    }
+    return (<View>{info}</View>);
+  }
+
 
 
   render() {
     //var {navigate} = this.props.navigation;
+
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
@@ -163,54 +351,27 @@ export default class Perfil extends React.Component {
               <Icon name={'md-add'} size={35} backgroundColor={'#41444B'} color={'#DFD8C8'}  />
             </View>
           </View>
-
           <View style={styles.infoContainer}>
             <Text style={[styles.text, {fontWeight: '200', fontSize:30, color: '#AEB5BC'}]}>{this.state.textName}</Text>
           </View>
-          <View style={styles.extraInfo}>
-            <Text style={styles.titleApartats}>SOBRE MI</Text>
-            <Text style={styles.information}>{this.state.textSobreMi}</Text>
-            <Text style={styles.titleApartats}>LOCALITAT</Text>
-            <View style={styles.imageTelephone}>
-                <Icon name={'md-home'} size={30} color={'#0000FF'}  />
-                <Text style={styles.textMail}>{this.state.comarca}</Text>
+
+          <View style={styles.iconContainer} >
+            <View style={styles.icon} >
+              <Icon name={'md-person'} size={35} backgroundColor={'#41444B'}
+              color={'#0e4381'}   onPress={() => this.changeOption("informacion")}/>
             </View>
-            <Text style={styles.titleApartats}>NAIXEMENT</Text>
-            <View style={styles.imageMail}>
-              <Icon name={'md-gift'} size={30} color={'red'}  />
-              <Text style={styles.textMail}>{this.state.birthday}</Text>
+            <View style={styles.icon}>
+              <Icon name={'md-bookmark'} size={35} backgroundColor={'#41444B'}
+              color={'#714170'} onPress={() => this.changeOption("old")} />
             </View>
-            <Text style={styles.titleApartats}>CONTACTE</Text>
-            <View style={styles.imageTelephone}>
-              <Icon name={'md-call'} size={30} color={'green'}  />
-              <Text style={styles.numberTelephone}>{this.state.textNumber}</Text>
-            </View>
-            <View style={styles.imageMail}>
-              <Icon name={'md-mail'} size={30} color={'orange'}  />
-              <Text style={styles.textMail}>{this.state.textMail}</Text>
-            </View>
-            <Text style={styles.titleApartats}>VEHICLE</Text>
-            <Text style={styles.information}>{this.state.textVehicle}</Text>
-            <Text style={styles.titleApartats}>HABILITATS</Text>
-            <Text style={styles.information}>{this.state.comptarIRepartir}</Text>
-            <Text style={styles.titleApartats}>SARDANES DE COMPETICIÓ</Text>
-            <Text style={styles.information}>{this.state.sardanistaCompeticio}</Text>
-            <Text style={styles.titleApartats}>COBLA DE COMPETICIÓ</Text>
-            <Text style={styles.information}>{this.state.coblaCompeticio}</Text>
-            <Text style={styles.titleApartats}>ACTES</Text>
-            <View>
-              <View>{this.renderActes()}</View>
-            </View>
+            <Icon name={'md-flame'} size={35} backgroundColor={'#41444B'}
+            color={'#e84f30'}  onPress={() => this.changeOption("future")}/>
           </View>
-          <TouchableOpacity style={[styles.editButtonContainer, styles.modifyButton]}
-                        onPress={() => this.props.navigation.navigate(globalHelper.ModifyPerfilID, {email:this.state.textMail})}>
-            <Text style={styles.modifyText}>EDITAR</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.passwordButtonContainer, styles.modifyButton]}
-                              onPress={() => this.props.navigation.navigate(globalHelper.ModifyPasswordID, {email:this.state.textMail})}>
-            <Text style={styles.modifyText}>MODIFICAR CONTRASENYA</Text>
-          </TouchableOpacity>
-          <View style={styles.end}/>
+
+          <View>
+            {this.renderPerfil()}
+          </View>
+
         </ScrollView>
       </View>
     );
@@ -335,7 +496,7 @@ const styles = StyleSheet.create({
     borderRadius:30,
     marginTop:20,
     width:'80%',
-    marginLeft:'10%',
+    marginLeft:'5%',
     marginRight:'10%',
   },
   passwordButtonContainer: {
@@ -345,7 +506,7 @@ const styles = StyleSheet.create({
     marginBottom:20,
     borderRadius:30,
     width:'80%',
-    marginLeft:'10%',
+    marginLeft:'5%',
     marginRight:'10%',
   },
   modifyButton: {
@@ -353,5 +514,15 @@ const styles = StyleSheet.create({
   },
   modifyText: {
     color: 'white',
+  },
+  iconContainer:{
+    alignSelf:'center',
+    alignItems:'center',
+    marginTop:16,
+    flexDirection:'row',
+    marginBottom:10,
+  },
+  icon:{
+    marginRight:60,
   }
 });
