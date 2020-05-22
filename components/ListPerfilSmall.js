@@ -16,15 +16,20 @@ const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailK
 export default class ListPerfilSmall extends React.Component {
 
   componentDidMount() {
-   this.getInfoPersones();
+   if(!this.state.personesLoaded) this.getInfoPersones();
+
   }
 
   constructor(props) {
         super(props);
         this.state = {
-          persones: [],
-           personesLoaded: false
-        }
+            persones: [],
+            personesLoaded: false,
+        };
+
+        if(props.route.params) this.state.personesLoaded = true;
+        //if(this.props.route.params) this.state.personesLoaded = true;
+
   }
 
 
@@ -57,9 +62,10 @@ export default class ListPerfilSmall extends React.Component {
   }
 
   render() {
-
+      console.log("this.state.personesLoaded: " + this.state.personesLoaded);
       if (this.state.personesLoaded) {
-          if(this.props.route.params)  this.state.persones = this.props.route.params.users;
+          if(this.props.route.params)  this.state.persones = this.props.route.params.data;
+
           let profiles = [];
           for (let i = 0; i < this.state.persones.length; ++i) {
               profiles.push(<PerfilSmall nomCognom={this.state.persones[i].name}

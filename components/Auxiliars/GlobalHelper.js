@@ -21,7 +21,8 @@ export var PerfilScreenID = "Perfil";
 export var ModifyPasswordID = "ModifyPassword";
 export var ModifyPerfilID = "ModifyPerfil";
 
-export var ListPerfilScreenID = "Sardanistes";
+export var ListPerfilStackScreenID = "Sardanistes";
+export var ListPerfilScreenID = "Sardanistes2";
 export var FilterListPerfilScreenID = "FilterListPerfil";
 export var PerfilSmallScreenID = "PerfilSmall";
 export var PerfilExternScreenID = "PerfilExtern";
@@ -54,6 +55,8 @@ export var sardapp='https://sardapp.herokuapp.com/api'; // Per veure si va: SI
 export var API = sardapp;
 export var API_USER = API + '/users/';
 export var API_ACTES = API + '/actes/';
+
+
 
 /*
  * KEYS

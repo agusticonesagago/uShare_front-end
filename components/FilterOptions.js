@@ -14,15 +14,6 @@ import * as globalHelperData from "./Auxiliars/GlobalHelperData";
 import * as globalHelperAPI_ACTES from "./Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes";
 import * as globalHelper from "./Auxiliars/GlobalHelper";
 
-const DataIndrets = [
-  {code: 'Barcelona', name: 'Barcelona'},
-  {code: 'Girona', name: 'Girona'},
-];
-
-const DataCobles = [
-  {code: 'Amoga', name: 'Amoga'},
-  {code: 'Amsterdam', name: 'Amsterdam'},
-];
 
 export default class FilterOptions extends React.Component {
 
@@ -32,11 +23,16 @@ export default class FilterOptions extends React.Component {
       aplecs:   true,
       ballades: true,
       concerts: true,
-      concursos: true,
+      concursos: true, // todo: afegir al registrar-se
       cursets: true,
       altres: true,
-      dateEnd:"",
-      dateStart:"",
+
+
+    diaMinim:"",
+      diaMaxim:"",
+      comarca:null,
+
+      first:true,
     }
   }
 
@@ -95,6 +91,23 @@ export default class FilterOptions extends React.Component {
                   onDateChange={(dateEnd) => {this.setState({dateEnd: dateEnd})}}
                 />
               </View>
+
+              <View style={{marginTop: 20, marginRight:20}}>
+                <Autocomplete
+                    data={globalHelperData.DataComarques}
+                    displayKey="name"
+                    placeholder={<Text style={styles.titleOrder}>Comarca</Text>}
+                    placeholderColor={'black'}
+                    dropDownIconColor	={'#714170'}
+                    onSelect={val => {
+                      let name = val.name;
+                      console.log("name: " + name);
+                      this.onChangeState('comarca', name);
+                    }}
+                    maxHeight={500}
+                />
+              </View>
+
                 <View style={styles.checkBox}>
                   <CheckBox
                     title='Aplecs'
@@ -143,27 +156,6 @@ export default class FilterOptions extends React.Component {
                     onValueChange={val => this.onChangeState('altres', val)}
                   />
                   <Text style={styles.text}>Altres</Text>
-                </View>
-                <View style={{marginTop: 20, marginRight:20}}>
-                  <Autocomplete
-                    data={DataIndrets}
-                    displayKey="name"
-                    placeholder={'Indret'}
-                    placeholderColor={'black'}
-                    dropDownIconColor	={'#714170'}
-                    onSelect={value => console.log('value', value)}
-                    maxHeight={200}
-                  />
-                  <View style={{marginTop: 3}}></View>
-                  <Autocomplete
-                    data={DataCobles}
-                    displayKey="name"
-                    placeholder={'Cobla'}
-                    placeholderColor={'black'}
-                    dropDownIconColor	={'#714170'}
-                    onSelect={value => console.log('value', value)}
-                    maxHeight={200}
-                  />
                 </View>
 
                 <TouchableHighlight style={styles.buttonContainer}

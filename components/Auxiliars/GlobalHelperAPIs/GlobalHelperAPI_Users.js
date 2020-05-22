@@ -40,7 +40,7 @@ function addParameterHabilitats(state, url) {
 }
 
 function buildURL(state) {
-    let API_USER_FILTER = globalHelper.API_USER + "filter";
+    let API_USER_FILTER = globalHelper.API_USER + "filters";
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"comarca",state.comarca);
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"edatMax",state.edatMax);
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"edatMin",state.edatMin);
@@ -63,15 +63,15 @@ export async function filterUsers(state) {
         console.log('\n\nfetch URL = ' + API_USER_FILTER+'\n\n');
         const response = await fetch(API_USER_FILTER);
         console.log('\n\nAfter Fetch \n\n');
-        const json = await response.json();
         console.log("\n\n");
         console.log(response);
         console.log("\n\n");
+        const json = await response.json();
+
         //console.log(json);
         console.log("\n\n");
         console.log('\n\nfilterUsers after fetch and response.json()  \n\n');
 
-        state.Users = json;
 
         //console.log(state.Users);
         //this.props.navigation.navigate(globalHelper.ListPerfilScreenID);

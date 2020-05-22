@@ -60,7 +60,7 @@ export default class FilterOptions extends React.Component {
     filterUsers() {
         globalHelperAPI.filterUsers(this.state)
             .then( (jsonData) => {
-                    this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {users:jsonData})
+                    this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {data:jsonData})
                 }
             )
 
@@ -68,11 +68,14 @@ export default class FilterOptions extends React.Component {
         //this.props.navigation.navigate(globalHelper.ListPerfilScreenID, jsonData);
     }
 
-  render() {/*
-    const text = (this.state.disabled) ? 'Enable' : 'Disable';
-    console.log(this.state);
-    console.log("\n\n\n\n");
-    console.log(this.props.dummy);*/
+  render() {
+      console.log(this.state);
+
+      /*
+  const text = (this.state.disabled) ? 'Enable' : 'Disable';
+  console.log(this.state);
+  console.log("\n\n\n\n");
+  console.log(this.props.dummy);*/
       console.log("\n\n");
       console.log("\n\n");
       console.log("\n\n");
@@ -89,7 +92,11 @@ export default class FilterOptions extends React.Component {
                             placeholder={<Text style={styles.titleOrder}>Ordenar per</Text>}
                             placeholderColor={'black'}
                             dropDownIconColor	={'#714170'}
-                            onSelect={val => this.onChangeState('ordenar', val)}
+                            onSelect={val => {
+                                let name = val.name;
+                                console.log("name: " + name);
+                                this.onChangeState('comarca', name);
+                            }}
                             maxHeight={500}
                           />
                         </View>

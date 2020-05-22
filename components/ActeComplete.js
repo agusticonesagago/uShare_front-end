@@ -8,13 +8,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import Drawer from './Drawer.js';
 
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
+import * as globalHelperAPI_Actes from './Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes'
 
 var API = globalHelper.API;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
 
 export default class ActeComplete extends React.Component {
   componentDidMount() {
-   this.getInfoActe();
+      this.getInfoActe();
   }
   constructor(props) {
         super(props)
@@ -40,8 +41,8 @@ export default class ActeComplete extends React.Component {
   async getInfoActe() {
       try {
           this.state.idActe = this.props.route.params.id;
+          console.log("idActe: " + this.state.idActe);
           const response = await fetch(API + '/actes/' + this.state.idActe);
-
           const json = await response.json();
 
           if(json.hora2 === '') this.onChangeState("when", json.dia + ' a les ' + json.hora1 + 'h' );
@@ -102,6 +103,14 @@ export default class ActeComplete extends React.Component {
     }
   }
 
+    assistents() {
+        globalHelperAPI_Actes.getAssistantsOfActe(this.state.idActe).then((users)=>{
+                this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {data:users});
+            }
+        );
+
+    }
+
   render() {
     if(this.state.acteLoaded){
       let Image_Http_URL = {uri: this.state.imatge};
@@ -113,7 +122,7 @@ export default class ActeComplete extends React.Component {
               {this.bottomApuntarse()}
               <View style={styles.containerButtonQuiVa}>
                 <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
-                                      onPress={() => this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {id:this.props.identificador})}>
+                                      onPress={() => this.assistents()}>
                   <Text style={styles.apuntarseText}>QUI VA?</Text>
                 </TouchableOpacity>
               </View>
@@ -154,6 +163,8 @@ export default class ActeComplete extends React.Component {
      return null;
     }
   }
+
+
 }
 
 ActeComplete.navigationOptions = {
