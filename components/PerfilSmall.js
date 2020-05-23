@@ -40,6 +40,7 @@ export default class PerfilSmall extends React.Component {
             <View style={styles.containerInfoPerfil}>
               <Text style={styles.nameProfile}>{this.props.nomCognom}</Text>
               <Text style={styles.descriptionProfile}>{this.props.description}</Text>
+              {this.props.vehicle && (<Icon name={'md-car'} size={30} color={'blue'}  />) }
             </View>
             <View style={styles.containerMesInfoPerfil}>
               <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}

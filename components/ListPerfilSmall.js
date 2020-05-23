@@ -73,6 +73,7 @@ export default class ListPerfilSmall extends React.Component {
                                          photo={this.state.persones[i].image}
                                          navigation={this.props.navigation}
                                          email={this.state.persones[i].email}
+                                         vehicle={this.state.persones[i].vehicle}
               />)
           }
 
