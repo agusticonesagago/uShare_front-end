@@ -9,10 +9,13 @@ import Drawer from './Drawer.js';
 import CheckBox from '@react-native-community/checkbox';
 import DatePicker from 'react-native-datepicker';
 
+import MyDatePicker from "./DatePicker/MyDatePicker";
+
 import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
 import * as globalHelperData from "./Auxiliars/GlobalHelperData";
 import * as globalHelperAPI_ACTES from "./Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes";
 import * as globalHelper from "./Auxiliars/GlobalHelper";
+import {bind} from "lodash";
 
 
 export default class FilterOptions extends React.Component {
@@ -34,13 +37,21 @@ export default class FilterOptions extends React.Component {
 
       first:true,
     }
+
+    bind(this.onChangeState)
   }
 
   onChangeState = (key, val) => {
     this.setState({ [key]: val })
   };
 
-
+  filterActes() {
+    globalHelperAPI_ACTES.filterActes(this.state)
+        .then( (jsonData) => {
+              this.props.navigation.navigate(globalHelper.ListActesScreenID, {data:jsonData})
+            }
+        )
+  }
 
   render() {
     const text = (this.state.disabled) ? 'Enable' : 'Disable';
@@ -50,47 +61,16 @@ export default class FilterOptions extends React.Component {
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
             <View style={styles.Filter}>
               <Text style={styles.titleFilter}>Filtres</Text>
-              <View style={styles.containerAgenda}>
-                <Text style={styles.titleBetweenAgenda}>Entre el</Text>
-                <DatePicker
-                  style={{
-                    width: 190,
-                  }}
-                  date={this.state.dateStart}
-                  mode="date"
-                  placeholder="Escollir data inici"
-                  format="YYYY-MM-DD"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  customStyles={{
-                    dateInput: {
-                      marginLeft: 5,
-                    }
-                  }}
-                  onDateChange={(dateStart) => {this.setState({dateStart: dateStart})}}
-                />
-              </View>
-              <View style={styles.containerAgenda}>
-                <Text style={styles.titleBetweenAgenda}>i el</Text>
-                <DatePicker
-                  style={{
-                    width: 190,
-                    marginLeft:38,
-                  }}
-                  date={this.state.dateEnd}
-                  mode="date"
-                  placeholder="Escollir data final"
-                  format="YYYY-MM-DD"
-                  confirmBtnText="Confirm"
-                  cancelBtnText="Cancel"
-                  customStyles={{
-                    dateInput: {
-                      marginLeft:5,
-                    }
-                  }}
-                  onDateChange={(dateEnd) => {this.setState({dateEnd: dateEnd})}}
-                />
-              </View>
+              <MyDatePicker text = "Entre el"
+                            dateKey = "diaMinim"
+                            placeholder = "Escollir data inici"
+                            onChangeState = {this.onChangeState}>
+              </MyDatePicker>
+              <MyDatePicker text = "i el        "
+                            dateKey = "diaMaxim"
+                            placeholder = "Escollir data final"
+                            onChangeState = {this.onChangeState}>
+              </MyDatePicker>
 
               <View style={{marginTop: 20, marginRight:20}}>
                 <Autocomplete
@@ -169,13 +149,7 @@ export default class FilterOptions extends React.Component {
     );
   }
 
-  filterActes() {
-    globalHelperAPI_ACTES.filterActes(this.state)
-        .then( (jsonData) => {
-              this.props.navigation.navigate(globalHelper.ListActesScreenID, {data:jsonData})
-            }
-        )
-  }
+
 }
 
 const styles = StyleSheet.create({

@@ -113,7 +113,7 @@ function ListActesStackScreen() {
           <AuthStack.Screen name={globalHelper.ListActesScreenID} component={ListActesSmall} options={{ title: '', headerTransparent: true }} />
           <AuthStack.Screen name={globalHelper.ActeCompleteID} component={ActeComplete} options={{ title: '', headerTransparent: true }}/>
           <AuthStack.Screen name={globalHelper.ActesScreenID} component={Actes} options={{ title: '', headerTransparent: true }}/>
-          <AuthStack.Screen name={globalHelper.FilterListActesScreenID} component={FilterOptions} options={{ title: '', headerTransparent: true }} />
+          <AuthStack.Screen name={globalHelper.FilterListActesScreenID} component={FilterOptions} options={{ title: "Filtre d'actes", headerTransparent: false }} />
 
           <AuthStack.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall}
                             options={{

@@ -35,7 +35,7 @@ function addParameterEvents(state, API_USER_FILTER) {
 function buildFilterURL(state) {
     let API_USER_FILTER = globalHelper.API_ACTES + "filter";
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"comarca", state.comarca);
-    API_USER_FILTER = addParameter(state, API_USER_FILTER,"diaMaxim", state.diaMinim);
+    API_USER_FILTER = addParameter(state, API_USER_FILTER,"diaMaxim", state.diaMaxim);
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"diaMinim", state.diaMinim);
 
     API_USER_FILTER = addParameterEvents(state, API_USER_FILTER);
