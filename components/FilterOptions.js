@@ -16,6 +16,7 @@ import * as globalHelperData from "./Auxiliars/GlobalHelperData";
 import * as globalHelperAPI_ACTES from "./Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes";
 import * as globalHelper from "./Auxiliars/GlobalHelper";
 import {bind} from "lodash";
+import MyCheckBox from "./CheckBox/MyCheckBox";
 
 
 export default class FilterOptions extends React.Component {
@@ -72,6 +73,36 @@ export default class FilterOptions extends React.Component {
                             onChangeState = {this.onChangeState}>
               </MyDatePicker>
 
+              <MyCheckBox title = "Aplecs"
+                          checkBoxKey="aplecs"
+                          onChangeState = {this.onChangeState}>
+              </MyCheckBox>
+
+              <MyCheckBox title = "Ballades"
+                          checkBoxKey="ballades"
+                          onChangeState = {this.onChangeState}>
+              </MyCheckBox>
+
+              <MyCheckBox title = "Concerts"
+                          checkBoxKey="concerts"
+                          onChangeState = {this.onChangeState}>
+              </MyCheckBox>
+
+              <MyCheckBox title = "Concursos"
+                          checkBoxKey="concursos"
+                          onChangeState = {this.onChangeState}>
+              </MyCheckBox>
+
+              <MyCheckBox title = "Cursets"
+                          checkBoxKey="cursets"
+                          onChangeState = {this.onChangeState}>
+              </MyCheckBox>
+
+              <MyCheckBox title = "Altres"
+                          checkBoxKey="altres"
+                          onChangeState = {this.onChangeState}>
+              </MyCheckBox>
+
               <View style={{marginTop: 20, marginRight:20}}>
                 <Autocomplete
                     data={globalHelperData.DataComarques}
@@ -87,56 +118,6 @@ export default class FilterOptions extends React.Component {
                     maxHeight={500}
                 />
               </View>
-
-                <View style={styles.checkBox}>
-                  <CheckBox
-                    title='Aplecs'
-                    value={this.state.aplecs}
-                    onValueChange={val => this.onChangeState('aplecs', val)}
-                  />
-                  <Text style={styles.text}>Aplecs</Text>
-                </View>
-                <View style={styles.checkBox}>
-                  <CheckBox
-                    title='Ballades'
-                    value={this.state.ballades}
-                    onValueChange={val => this.onChangeState('ballades', val)}
-                  />
-                  <Text style={styles.text}>Ballades</Text>
-                </View>
-
-                <View style={styles.checkBox}>
-                  <CheckBox
-                    title='Concerts'
-                    value={this.state.concerts}
-                    onValueChange={val => this.onChangeState('concerts', val)}
-                  />
-                  <Text style={styles.text}>Concerts</Text>
-                </View>
-                <View style={styles.checkBox}>
-                  <CheckBox
-                    title='Concursos'
-                    value={this.state.concursos}
-                    onValueChange={val => this.onChangeState('concursos', val)}
-                  />
-                  <Text style={styles.text}>Concursos</Text>
-                </View>
-                <View style={styles.checkBox}>
-                  <CheckBox
-                    title='Cursets'
-                    value={this.state.cursets}
-                    onValueChange={val => this.onChangeState('cursets', val)}
-                  />
-                  <Text style={styles.text}>Cursets</Text>
-                </View>
-                <View style={styles.checkBox}>
-                  <CheckBox
-                    title='Altres'
-                    value={this.state.altres}
-                    onValueChange={val => this.onChangeState('altres', val)}
-                  />
-                  <Text style={styles.text}>Altres</Text>
-                </View>
 
                 <TouchableHighlight style={styles.buttonContainer}
                                     onPress={() => { this.filterActes()
