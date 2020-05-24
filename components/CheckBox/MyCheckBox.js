@@ -22,7 +22,7 @@ export default class MyCheckBox extends React.Component {
   render() {
     let key = this.props.checkBoxKey;
     return (
-      <View style={styles.container}>
+      <View>
           <View style={styles.checkBox}>
             <CheckBox
                 title={this.props.title}
@@ -42,21 +42,15 @@ export default class MyCheckBox extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    //marginLeft: 20,
-    //marginTop: 20,
-  },
   checkBox:{
     flexDirection: 'row',
     marginTop:25,
+    marginHorizontal:10
+
   },
   text:{
-    fontSize:22,
-    marginLeft:15,
+    fontSize:20,
+    //marginLeft:0,
   },
 
 });

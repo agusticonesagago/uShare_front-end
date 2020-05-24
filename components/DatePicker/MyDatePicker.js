@@ -33,7 +33,8 @@ export default class MyDatePicker extends React.Component {
                 <Text style={styles.titleBetweenAgenda}>{this.props.text}</Text>
                 <DatePicker
                   style={{
-                    width: 190,
+                    //width: 190,
+                    width: "70%",
                   }}
                   date={this.state.date}
                   mode="date"

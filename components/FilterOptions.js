@@ -1,5 +1,6 @@
 import React , {Component, Fragment} from 'react';
-import {StyleSheet, Text, View, Picker, ScrollView, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, View, Picker, ScrollView,
+  TouchableHighlight, SafeAreaView, Button, TouchableOpacity} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -17,6 +18,7 @@ import * as globalHelperAPI_ACTES from "./Auxiliars/GlobalHelperAPIs/GlobalHelpe
 import * as globalHelper from "./Auxiliars/GlobalHelper";
 import {bind} from "lodash";
 import MyCheckBox from "./CheckBox/MyCheckBox";
+import MyAutoComplete from "./MyAutoComplete/MyAutoComplete";
 
 
 export default class FilterOptions extends React.Component {
@@ -57,77 +59,78 @@ export default class FilterOptions extends React.Component {
   render() {
     const text = (this.state.disabled) ? 'Enable' : 'Disable';
     console.log(this.state);
-    return (
-      <View style={styles.container}>
-        <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
-            <View style={styles.Filter}>
-              <Text style={styles.titleFilter}>Filtres</Text>
-              <MyDatePicker text = "Entre el"
-                            dateKey = "diaMinim"
-                            placeholder = "Escollir data inici"
-                            onChangeState = {this.onChangeState}>
-              </MyDatePicker>
-              <MyDatePicker text = "i el        "
-                            dateKey = "diaMaxim"
-                            placeholder = "Escollir data final"
-                            onChangeState = {this.onChangeState}>
-              </MyDatePicker>
+    return <View style={styles.container}>
+      <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange}
+                  showVerticalScrollIndicator={false}>
+        <View style={styles.Filter}>
 
-              <MyCheckBox title = "Aplecs"
+          <MyDatePicker text="Entre el"
+                        dateKey="diaMinim"
+                        placeholder="Escollir data inici"
+                        onChangeState={this.onChangeState}>
+          </MyDatePicker>
+          <MyDatePicker text="i el        "
+                        dateKey="diaMaxim"
+                        placeholder="Escollir data final"
+                        onChangeState={this.onChangeState}>
+          </MyDatePicker>
+
+          <View style={styles.rowCheckBox}>
+            <View style={styles.columnCheckBox}>
+              <MyCheckBox title="Aplecs"
                           checkBoxKey="aplecs"
-                          onChangeState = {this.onChangeState}>
+                          onChangeState={this.onChangeState}>
               </MyCheckBox>
 
-              <MyCheckBox title = "Ballades"
-                          checkBoxKey="ballades"
-                          onChangeState = {this.onChangeState}>
-              </MyCheckBox>
-
-              <MyCheckBox title = "Concerts"
-                          checkBoxKey="concerts"
-                          onChangeState = {this.onChangeState}>
-              </MyCheckBox>
-
-              <MyCheckBox title = "Concursos"
+              <MyCheckBox title="Concursos"
                           checkBoxKey="concursos"
-                          onChangeState = {this.onChangeState}>
+                          onChangeState={this.onChangeState}>
               </MyCheckBox>
-
-              <MyCheckBox title = "Cursets"
-                          checkBoxKey="cursets"
-                          onChangeState = {this.onChangeState}>
-              </MyCheckBox>
-
-              <MyCheckBox title = "Altres"
-                          checkBoxKey="altres"
-                          onChangeState = {this.onChangeState}>
-              </MyCheckBox>
-
-              <View style={{marginTop: 20, marginRight:20}}>
-                <Autocomplete
-                    data={globalHelperData.DataComarques}
-                    displayKey="name"
-                    placeholder={<Text style={styles.titleOrder}>Comarca</Text>}
-                    placeholderColor={'black'}
-                    dropDownIconColor	={'#714170'}
-                    onSelect={val => {
-                      let name = val.name;
-                      console.log("name: " + name);
-                      this.onChangeState('comarca', name);
-                    }}
-                    maxHeight={500}
-                />
-              </View>
-
-                <TouchableHighlight style={styles.buttonContainer}
-                                    onPress={() => { this.filterActes()
-                                    } }>
-                  <Text>Filtra</Text>
-                </TouchableHighlight>
             </View>
-          </ScrollView>
-      </View>
-    );
+
+            <View style={styles.columnCheckBox}>
+              <MyCheckBox title="Ballades"
+                          checkBoxKey="ballades"
+                          onChangeState={this.onChangeState}>
+              </MyCheckBox>
+
+              <MyCheckBox title="Cursets"
+                          checkBoxKey="cursets"
+                          onChangeState={this.onChangeState}>
+              </MyCheckBox>
+            </View>
+
+            <View style={styles.columnCheckBox}>
+              <MyCheckBox title="Concerts"
+                          checkBoxKey="concerts"
+                          onChangeState={this.onChangeState}>
+              </MyCheckBox>
+
+              <MyCheckBox title="Altres"
+                          checkBoxKey="altres"
+                          onChangeState={this.onChangeState}>
+              </MyCheckBox>
+            </View>
+          </View>
+
+          <SafeAreaView style={{marginTop: 40, marginRight: 20}}>
+            <MyAutoComplete title="Comarca"
+                            placeholder=""
+                            autoCompleteKey="comarca"
+                            data={globalHelperData.DataComarques}
+                            onChangeState={this.onChangeState}>>
+            </MyAutoComplete>
+          </SafeAreaView>
+
+          <TouchableOpacity style={styles.buttonContainer}
+                              onPress={() => {
+                                this.filterActes()
+                              }}>
+            <Text style={styles.buttonText}>{"Filtra"}</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>;
   }
 
 
@@ -139,51 +142,43 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    //marginLeft: 20,
-    //marginTop: 20,
   },
   scrollView:{
     width:'100%',
   },
   Filter:{
     alignItems: 'center',
+    flexDirection: 'column',
+    marginTop: 20
   },
   titleFilter:{
     fontSize:30,
   },
-  checkBox:{
+  rowCheckBox:{
     flexDirection: 'row',
-    marginTop:25,
   },
-  text:{
-    fontSize:22,
-    marginLeft:15,
+  columnCheckBox:{
+    flexDirection: 'column',
   },
   titleOrder:{
     fontSize:30,
-  },
-  containerAgenda:{
-    flex:1,
-    flexDirection:'row',
-    marginTop:10,
-  },
-  titleBetweenAgenda:{
-    fontSize:18,
-    paddingTop:7,
-  },
-  picker:{
-    flex: 1,
-    width:'80%',
   },
   buttonContainer: {
     height:45,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop:20,
-    borderRadius:30,
-    width:'80%',
+    marginTop:50,
+    borderRadius:10,
+    width:'30%',
     marginLeft:'10%',
     marginRight:'10%',
+    backgroundColor: '#714170',
   },
+
+  buttonText:{
+    color:"white",
+    fontSize: 28,
+    fontStyle:"normal"
+  }
 
 });
