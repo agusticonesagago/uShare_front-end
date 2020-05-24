@@ -13,6 +13,9 @@ export default class MyCheckBox extends React.Component {
     this.state = {
       checked:true
     };
+
+    this.state.checked = props.initialValue;
+
   }
 
   onChangeState = (key, val) => {

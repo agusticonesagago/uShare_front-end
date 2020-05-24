@@ -17,11 +17,12 @@ function addParameter(state, url, key, val) {
 
 function addParameterEvents(state, API_USER_FILTER) {
     let events = [];
-    if(state.eventsAplecs)     events.push("aplecs");
-    if(state.eventsBallades)   events.push("ballades");
-    if(state.eventsConcerts)   events.push("concerts");
-    if(state.eventsCursets)    events.push("cursets");
-    if(state.eventsAltres)     events.push("altres");
+    if(state.eventsAplecs === true)     events.push("aplecs");
+    if(state.eventsBallades === true)   events.push("ballades");
+    if(state.eventsConcerts === true)   events.push("concerts");
+    if(state.eventsCursets === true)    events.push("cursets");
+    if(state.eventsConcursos === true)  events.push("concursos");
+    if(state.eventsAltres === true)     events.push("altres");
     for(let i = 0; i < events.length; ++i) {
         API_USER_FILTER = addParameter(state, API_USER_FILTER, "events", events[i])
     }
@@ -30,9 +31,9 @@ function addParameterEvents(state, API_USER_FILTER) {
 
 function addParameterHabilitats(state, url) {
     let habilitats = [];
-    if(state.habilitatsComptar)     habilitats.push("comptar");
-    if(state.habilitatsCompetidor)   habilitats.push("competidor");
-    if(state.habilitatsCoblaCompeticio)   habilitats.push("coblaCompeticio");
+    if(state.habilitatsComptar === true)     habilitats.push("comptar");
+    if(state.habilitatsCompetidor === true)   habilitats.push("competidor");
+    if(state.habilitatsCoblaCompeticio === true)   habilitats.push("coblaCompeticio");
     for(let i = 0; i < habilitats.length; ++i) {
         url = addParameter(state, url, "habilitats", habilitats[i])
     }

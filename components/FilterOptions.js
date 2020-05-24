@@ -83,11 +83,13 @@ export default class FilterOptions extends React.Component {
             <View style={styles.columnCheckBox}>
               <MyCheckBox title="Aplecs"
                           checkBoxKey="aplecs"
+                          initialValue={this.state.aplecs}
                           onChangeState={this.onChangeState}>
               </MyCheckBox>
 
               <MyCheckBox title="Concursos"
                           checkBoxKey="concursos"
+                          initialValue={this.state.concursos}
                           onChangeState={this.onChangeState}>
               </MyCheckBox>
             </View>
@@ -95,11 +97,13 @@ export default class FilterOptions extends React.Component {
             <View style={styles.columnCheckBox}>
               <MyCheckBox title="Ballades"
                           checkBoxKey="ballades"
+                          initialValue={this.state.ballades}
                           onChangeState={this.onChangeState}>
               </MyCheckBox>
 
               <MyCheckBox title="Cursets"
                           checkBoxKey="cursets"
+                          initialValue={this.state.cursets}
                           onChangeState={this.onChangeState}>
               </MyCheckBox>
             </View>
@@ -107,11 +111,13 @@ export default class FilterOptions extends React.Component {
             <View style={styles.columnCheckBox}>
               <MyCheckBox title="Concerts"
                           checkBoxKey="concerts"
+                          initialValue={this.state.concerts}
                           onChangeState={this.onChangeState}>
               </MyCheckBox>
 
               <MyCheckBox title="Altres"
                           checkBoxKey="altres"
+                          initialValue={this.state.altres}
                           onChangeState={this.onChangeState}>
               </MyCheckBox>
             </View>

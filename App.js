@@ -140,7 +140,7 @@ function ListPerfilStackScreen() {
                                   headerTransparent: true,
                               }}
             />
-            <AuthStack.Screen name={globalHelper.FilterListPerfilScreenID} component={FilterOptionsPerson} options={{ title: '', headerTransparent: true }} />
+            <AuthStack.Screen name={globalHelper.FilterListPerfilScreenID} component={FilterOptionsPerson} options={{ title: "Filtre d'usuaris", headerTransparent: false }} />
             <AuthStack.Screen name={globalHelper.PerfilExternScreenID} component={PerfilExtern} options={{ title: '', headerTransparent: true }} />
             <AuthStack.Screen name={globalHelper.PerfilSmallScreenID} component={PerfilSmall} options={{ title: '', headerTransparent: true }} />
         </AuthStack.Navigator>
@@ -239,7 +239,7 @@ export default class App extends React.Component {
           <HomeTabScreen/>
         </NavigationContainer>
         */
-
+//*
        <NavigationContainer>
           <AppContainer/>
         </NavigationContainer>

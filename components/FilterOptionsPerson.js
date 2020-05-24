@@ -1,13 +1,18 @@
 import React , {Component, Fragment} from 'react';
-import {StyleSheet, Text, TextInput, View, Picker, ScrollView, TouchableHighlight} from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+    Picker,
+    ScrollView,
+    TouchableHighlight,
+    SafeAreaView,
+    TouchableOpacity, Switch
+} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {NavigationContainer} from '@react-navigation/native';
-
-import Drawer from './Drawer.js';
-import CheckBox from '@react-native-community/checkbox';
-import DatePicker from 'react-native-datepicker';
 
 import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
 
@@ -16,7 +21,8 @@ import * as globalHelper from './Auxiliars/GlobalHelper.js'
 import * as globalHelperData from './Auxiliars/GlobalHelperData.js'
 import * as globalHelperAPI from './Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Users.js'
 
-import ListPerfilSmall from "./ListPerfilSmall";
+import MyCheckBox from "./CheckBox/MyCheckBox";
+import MyAutoComplete from "./MyAutoComplete/MyAutoComplete";
 
 
 
@@ -30,16 +36,17 @@ export default class FilterOptions extends React.Component {
         edatMin: null,
 
         //events: [], // Should be 'aplecs', 'ballades', 'concerts', 'concursos', 'cursets' or 'altres'
-        eventsAplecs: null,
-        eventsBallades: null,
-        eventsConcerts: null,
-        eventsCursets: null,
-        eventsAltres: null,
+        eventsAplecs: false,
+        eventsBallades: false,
+        eventsConcerts: false,
+        eventsCursets: false,
+        eventsConcursos:false,
+        eventsAltres: false,
 
         //habilitats: [], // Should be 'comptar' or 'competidor' or 'coblaCompeticio'
-        habilitatsComptar: null,
-        habilitatsCompetidor: null,
-        habilitatsCoblaCompeticio: null,
+        habilitatsComptar: false,
+        habilitatsCompetidor: false,
+        habilitatsCoblaCompeticio: false,
 
         vehicle: false,
         ordenar: null,
@@ -84,140 +91,126 @@ export default class FilterOptions extends React.Component {
           <View style={styles.container}>
              <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
                  <View style={styles.Filter}>
-                     <Text style={styles.titleFilter}>Filtres</Text>
-                        <View style={{marginTop: 20, marginRight:20}}>
-                          <Autocomplete
-                            data={globalHelperData.DataOrder}
-                            displayKey="name"
-                            placeholder={<Text style={styles.titleOrder}>Ordenar per</Text>}
-                            placeholderColor={'black'}
-                            dropDownIconColor	={'#714170'}
-                            onSelect={val => {
-                                let name = val.name;
-                                console.log("name: " + name);
-                                this.onChangeState('comarca', name);
-                            }}
-                            maxHeight={500}
-                          />
-                        </View>
+                     <View style={{flexDirection: 'row',}}>
+                         <Icon name={"md-gift"} size={40} color={"#EE22EE"}/>
+                         <Text style={styles.titleFilter}> {"Rang d'edats"}</Text>
+                     </View>
 
-                      <View style={{marginTop: 20, marginRight:20}}>
-                          <Autocomplete
-                              data={globalHelperData.DataComarques}
-                              displayKey="name"
-                              placeholder={<Text style={styles.titleOrder}>Comarca</Text>}
-                              placeholderColor={'black'}
-                              dropDownIconColor	={'#714170'}
-                              onSelect={val => this.onChangeState('comarca', val)}
-                              maxHeight={500}
-                          />
-                      </View>
+                     <View style={styles.inputContainer}>
+                         <Icon name={'md-time'} size={28} style={styles.Icon} />
+                         <TextInput
+                             style={styles.text}
+                             placeholder='Edat minima'
+                             keyboardType = 'number-pad'
+                             onChangeText={val => this.onChangeState('edatMin', val)}
+                         />
+                     </View>
 
-                    <View style={styles.text}>
-                      <TextInput
-                          style={styles.text}
-                          keyboardType = 'number-pad'
-                          placeholder='Edat minima'
-                          autoCapitalize="none"
-                          onChangeText={val => this.onChangeState('edatMin', val)}
-                          multiline={true} // More than one line
-                        />
-                    </View>
+                     <View style={styles.inputContainer}>
+                         <Icon name={'md-clock'} size={28} style={styles.Icon} />
+                         <TextInput
+                             style={styles.text}
+                             placeholder='Edat maxima'
+                             keyboardType = 'number-pad'
+                             onChangeText={val => this.onChangeState('edatMax', val)}
+                         />
+                     </View>
 
-                      <View style={styles.text}>
-                          <TextInput
-                              style={styles.text}
-                              keyboardType = 'number-pad'
-                              placeholder='Edat maxima'
-                              autoCapitalize="none"
-                              onChangeText={val => this.onChangeState('edatMax', val)}
-                              multiline={true} // More than one line
-                          />
-                      </View>
 
-                    <View style={styles.checkBox}>
-                      <CheckBox
-                        title='ComptarIRepartir'
-                        value={this.state.comptarIRepartir}
-                        onValueChange={val => this.onChangeState('comptarIRepartir', val)}
-                      />
-                      <Text style={styles.text}>Comptar i repartir</Text>
-                    </View>
+                     <View style={{flexDirection: 'row', marginTop:80}}>
+                         <Icon name={"md-flame"} size={40} color={"#FF0000"}/>
+                         <Text style={styles.titleFilter}> {"Habilitats"}</Text>
+                     </View>
 
-                    <View style={styles.checkBox}>
-                      <CheckBox
-                        title='SardaCompeticio'
-                        value={this.state.sardaCompeticio}
-                        onValueChange={val => this.onChangeState('sardaCompeticio', val)}
-                      />
-                      <Text style={styles.text}>Sardanista competició</Text>
-                    </View>
-                    <View style={styles.checkBox}>
-                      <CheckBox
-                        title='CoblaCompeticio'
-                        value={this.state.coblaCompeticio}
-                        onValueChange={val => this.onChangeState('coblaCompeticio', val)}
-                      />
-                      <Text style={styles.text}>Cobla competició</Text>
-                    </View>
-                    <View style={styles.checkBox}>
-                      <CheckBox
-                        title='eventsAplecs'
-                        value={this.state.eventsAplecs}
-                        onValueChange={val => this.onChangeState('eventsAplecs', val)}
-                      />
-                      <Text style={styles.text}>Aplecs</Text>
-                    </View>
-                      <View style={styles.checkBox}>
-                          <CheckBox
-                              title='eventsBallades'
-                              value={this.state.eventsBallades}
-                              onValueChange={val => this.onChangeState('eventsBallades', val)}
-                          />
-                          <Text style={styles.text}>Ballades</Text>
-                      </View>
+                     <View style={styles.columnCheckBox}>
+                         <MyCheckBox title="Comptar i repartir"
+                                     checkBoxKey="comptarIRepartir"
+                                     onChangeState={this.onChangeState}>
+                         </MyCheckBox>
 
-                      <View style={styles.checkBox}>
-                          <CheckBox
-                              title='eventsConcerts'
-                              value={this.state.eventsConcerts}
-                              onValueChange={val => this.onChangeState('eventsConcerts', val)}
-                          />
-                          <Text style={styles.text}>Concerts</Text>
-                      </View>
+                         <MyCheckBox title="Sardanista competició"
+                                     checkBoxKey="sardaCompeticio"
+                                     onChangeState={this.onChangeState}>
+                         </MyCheckBox>
 
-                      <View style={styles.checkBox}>
-                          <CheckBox
-                              title='eventsCursets'
-                              value={this.state.eventsCursets}
-                              onValueChange={val => this.onChangeState('eventsCursets', val)}
-                          />
-                          <Text style={styles.text}>Cursets</Text>
-                      </View>
+                         <MyCheckBox title="Cobla competició"
+                                     checkBoxKey="coblaCompeticio"
+                                     onChangeState={this.onChangeState}>
+                         </MyCheckBox>
+                     </View>
 
-                      <View style={styles.checkBox}>
-                          <CheckBox
-                              title='eventsAltres'
-                              value={this.state.eventsAltres}
-                              onValueChange={val => this.onChangeState('eventsAltres', val)}
-                          />
-                          <Text style={styles.text}>Altres</Text>
-                      </View>
+                     <View style={{flexDirection: 'row', marginTop:80}}>
+                         <Icon name={"md-gift"} size={40} color={"YELLOW"}/>
+                         <Text style={styles.titleFilter}> {"Actes"}</Text>
+                     </View>
+                     <View style={styles.rowCheckBox}>
+                         <View style={styles.columnCheckBox}>
+                             <MyCheckBox title="Aplecs"
+                                         checkBoxKey="eventsAplecs"
+                                         onChangeState={this.onChangeState}>
+                             </MyCheckBox>
 
-                      <View style={styles.checkBox}>
-                          <CheckBox
-                              title='DisponibilitatVehicle'
-                              value={this.state.vehicle}
-                              onValueChange={val => this.onChangeState('vehicle', val)}
-                          />
-                          <Text style={styles.text}>Vehicle</Text>
-                      </View>
+                             <MyCheckBox title="Concursos"
+                                         checkBoxKey="eventsConcursos"
+                                         onChangeState={this.onChangeState}>
+                             </MyCheckBox>
+                         </View>
 
-                    <TouchableHighlight style={styles.buttonContainer}
-                                                onPress={() => { this.filterUsers()
-                                                } }>
-                        <Text>Filtra</Text>
-                    </TouchableHighlight>
+                         <View style={styles.columnCheckBox}>
+                             <MyCheckBox title="Ballades"
+                                         checkBoxKey="eventsBallades"
+                                         onChangeState={this.onChangeState}>
+                             </MyCheckBox>
+
+                             <MyCheckBox title="Cursets"
+                                         checkBoxKey="eventsCursets"
+                                         onChangeState={this.onChangeState}>
+                             </MyCheckBox>
+                         </View>
+
+                         <View style={styles.columnCheckBox}>
+                             <MyCheckBox title="Concerts"
+                                         checkBoxKey="eventsConcerts"
+                                         onChangeState={this.onChangeState}>
+                             </MyCheckBox>
+
+                             <MyCheckBox title="Altres"
+                                         checkBoxKey="eventsAltres"
+                                         onChangeState={this.onChangeState}>
+                             </MyCheckBox>
+                         </View>
+                     </View>
+
+
+                     <View style={{flexDirection: 'row', marginTop:80}}>
+                         <Icon name={"md-car"} size={40} color={"blue"}/>
+                         <Text style={styles.titleFilter}> {"Vehicle"}</Text>
+                     </View>
+
+                     <View style={styles.vehicleSwitchView}>
+                         <Switch style={styles.vehicleSwitch} onValueChange={val => this.onChangeState('vehicle', val)} value = {this.state.vehicle}/>
+                     </View>
+
+
+
+                     <SafeAreaView style={{marginTop: 40, marginRight: 20}}>
+                         <MyAutoComplete title="Comarca"
+                                         placeholder=""
+                                         autoCompleteKey="comarca"
+                                         data={globalHelperData.DataComarques}
+                                         onChangeState={this.onChangeState}
+                                         iconName = "md-calendar"
+                                         iconSize = {40}
+                                         iconColor = "red">>
+                         </MyAutoComplete>
+                     </SafeAreaView>
+
+                     <TouchableOpacity style={styles.buttonContainer}
+                                       onPress={() => {
+                                           this.filterUsers()
+                                       }}>
+                         <Text style={styles.buttonText}>{"Filtra"}</Text>
+                     </TouchableOpacity>
                  </View>
              </ScrollView>
       </View>
@@ -231,19 +224,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    //marginLeft: 20,
-    //marginTop: 20,
-   //marginRight: 30,
-  },scrollView:{
+  }
+  ,scrollView:{
       width:'100%',
   },
     Filter:{
         alignItems: 'center',
+        flexDirection: 'column',
+        marginTop: 20
     },
-  checkBox:{
-    flexDirection: 'row',
-    marginTop:7,
-  },
+
+    rowCheckBox:{
+        flexDirection: 'row',
+    },
+    columnCheckBox:{
+        flexDirection: 'column',
+    },
   text:{
     fontSize:22,
     marginLeft:15,
@@ -255,18 +251,52 @@ const styles = StyleSheet.create({
   titleFilter:{
     fontSize:30,
   },
-  picker:{
-    flex: 1,
-    width:'80%',
-  },
-  buttonContainer: {
-    height:45,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop:20,
-    borderRadius:30,
-    width:'80%',
-    marginLeft:'10%',
-    marginRight:'10%',
-  },
+    inputContainer: {
+        //borderBottomColor: '#F5FCFF',
+        //borderColor:'#F5FCFF',
+        borderColor:'#FF0000',
+        //backgroundColor: '#EEEEEE',
+        borderRadius:30,
+        borderBottomWidth: 2,
+        //width:250,
+        width:"80%",
+
+        height:45,
+        marginBottom:20,
+        flexDirection: 'row',
+        alignItems:'center',
+        marginTop:5,
+    },
+    Icon:{
+        width:30,
+        height:30,
+        marginLeft:15,
+        justifyContent: 'center'
+    },
+    buttonContainer: {
+        height:45,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:50,
+        marginBottom: 20,
+        borderRadius:10,
+        width:'30%',
+        marginLeft:'10%',
+        marginRight:'10%',
+        backgroundColor: '#714170',
+    },
+    buttonText:{
+        color:"white",
+        fontSize: 28,
+        fontStyle:"normal"
+    },
+    vehicleSwitchView:{
+        flexDirection: 'row',
+    },
+    vehicleSwitch:{
+        transform:[{scaleX:1.5}, {scaleY:1.5}],
+        marginTop:8,
+        marginLeft:8,
+    }
+
 });
