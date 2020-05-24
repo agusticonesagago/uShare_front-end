@@ -64,6 +64,10 @@ export default class FilterOptions extends React.Component {
                   showVerticalScrollIndicator={false}>
         <View style={styles.Filter}>
 
+          <View style={{flexDirection: 'row',}}>
+           <Icon name={"md-time"} size={40} color={"blue"}/>
+            <Text style={styles.titleFilter}> {"Dates"}</Text>
+          </View>
           <MyDatePicker text="Entre el"
                         dateKey="diaMinim"
                         placeholder="Escollir data inici"
@@ -124,7 +128,7 @@ export default class FilterOptions extends React.Component {
                             onChangeState={this.onChangeState}
                             iconName = "md-calendar"
                             iconSize = {40}
-                            iconColor = "black">>
+                            iconColor = "red">>
             </MyAutoComplete>
           </SafeAreaView>
 
