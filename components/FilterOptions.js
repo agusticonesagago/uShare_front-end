@@ -113,12 +113,18 @@ export default class FilterOptions extends React.Component {
             </View>
           </View>
 
+
+
+
           <SafeAreaView style={{marginTop: 40, marginRight: 20}}>
             <MyAutoComplete title="Comarca"
                             placeholder=""
                             autoCompleteKey="comarca"
                             data={globalHelperData.DataComarques}
-                            onChangeState={this.onChangeState}>>
+                            onChangeState={this.onChangeState}
+                            iconName = "md-calendar"
+                            iconSize = {40}
+                            iconColor = "black">>
             </MyAutoComplete>
           </SafeAreaView>
 
