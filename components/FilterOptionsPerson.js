@@ -207,8 +207,8 @@ export default class FilterOptions extends React.Component {
                       <View style={styles.checkBox}>
                           <CheckBox
                               title='DisponibilitatVehicle'
-                              value={this.state.disponibilitatVehicle}
-                              onValueChange={val => this.onChangeState('disponibilitatVehicle', val)}
+                              value={this.state.vehicle}
+                              onValueChange={val => this.onChangeState('vehicle', val)}
                           />
                           <Text style={styles.text}>Vehicle</Text>
                       </View>

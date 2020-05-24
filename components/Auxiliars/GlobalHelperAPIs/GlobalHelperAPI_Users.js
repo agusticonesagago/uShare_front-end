@@ -48,7 +48,7 @@ function buildURL(state) {
     API_USER_FILTER = addParameterEvents(state, API_USER_FILTER);
     API_USER_FILTER = addParameterHabilitats(state, API_USER_FILTER);
 
-    //API_USER_FILTER = addParameter(state, API_USER_FILTER,"vehicle",state.vehicle);
+    API_USER_FILTER = addParameter(state, API_USER_FILTER,"transport",state.vehicle);
     //API_USER_FILTER = addParameter(state, API_USER_FILTER,"ordenar",state.ordenar);
 
 
