@@ -1,5 +1,10 @@
 # Sardapp
 
+
+Eliminar warnings
+https://reactnative.dev/docs/debugging.html#warnings
+--------------------------------------------
+--------------------------------------------
 Que fer quan peta: Si no pilla un modul
 ```bash
 npx react-native run-android --reset-cache
