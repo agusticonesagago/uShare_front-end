@@ -29,7 +29,7 @@ export default class Perfil extends React.Component {
            textSobreMi: '',
            textName:'',
            textNumber:'',
-           textMail:'agusticonesa@gmail.com',
+           textMail:'',
            textVehicle: '',
            aplecs:   true,
            concerts: true,
@@ -112,15 +112,15 @@ export default class Perfil extends React.Component {
 
   async getInfoActesNous() {
       try {
-          const response = await fetch(API + '/actes');
 
+          this.state.textMail = await globalHelper.getLoggedUserEmailAsync();
+          const response = await fetch(API_USER + this.state.textMail + '/acts/next');
           const json = await response.json();
           this.state.actesNous = json;
 
           this.setState({
             actesFutursLoaded: true
           });
-          //console.log(this.state.actes); //Per veure quins actes té
       }
       catch (error) {
           console.error(error);
@@ -129,30 +129,14 @@ export default class Perfil extends React.Component {
 
   async getInfoActesAntics() {
       try {
-          const response = await fetch(API + '/actes');
+          this.state.textMail = await globalHelper.getLoggedUserEmailAsync();
+          const response = await fetch(API_USER + this.state.textMail + '/acts/past');
 
           const json = await response.json();
           this.state.actesAntics = json;
 
           this.setState({
             actesAnticsLoaded: true
-          });
-          //console.log(this.state.actes); //Per veure quins actes té
-      }
-      catch (error) {
-          console.error(error);
-      }
-  }
-
-  async getInfoActesFuturs() {
-      try {
-          const response = await fetch(API + '/actes');
-
-          const json = await response.json();
-          this.state.actesNous = json;
-
-          this.setState({
-            actesFutursLoaded: true
           });
           //console.log(this.state.actes); //Per veure quins actes té
       }
@@ -177,6 +161,7 @@ export default class Perfil extends React.Component {
 
   async getInfoUser() {
       try {
+          this.state.textMail = await globalHelper.getLoggedUserEmailAsync();
           const response = await fetch(API_USER + this.state.textMail);
 
           const json = await response.json();
@@ -201,7 +186,10 @@ export default class Perfil extends React.Component {
           this.onChangeState("altres", json.altres);
           this.onChangeState("edat", json.edat);
           this.onChangeState("comarca", json.comarca);
-          this.onChangeState("birthday", json.birthday.slice(0, 10));
+          var dia = json.birthday.slice(8, 10);
+          var mes = json.birthday.slice(5, 7);
+          var any = json.birthday.slice(0, 4);
+          this.onChangeState("birthday", dia+'/'+mes+'/'+any);
 
           if(json.competidor){
             this.onChangeState("sardanistaCompeticio", "SÍ");
@@ -218,7 +206,6 @@ export default class Perfil extends React.Component {
           }
           else this.onChangeState("comptarIRepartir", "NO");
 
-          //Alert.alert("Alert", "Button pressed " + asyncStorageLoggedUserEmailKey);
       }
       catch (error) {
           console.error(error);
@@ -228,19 +215,18 @@ export default class Perfil extends React.Component {
   renderActesAntics(){
     let actesAntic = [];
 
-
     for (let i = 0; i < this.state.actesAntics.length; ++i) {
-     actesAntic.push(<ActesPerPerfil where={this.state.actesAntics[i].lloc}
+      var dia = this.state.dia.slice(8, 10);
+      var mes = this.state.dia.slice(5, 7);
+      var any = this.state.dia.slice(0, 4);
+      actesAntic.push(<ActesPerPerfil where={this.state.actesAntics[i].lloc}
        when={this.state.actesAntics[i].hora1}
        activitat={this.state.actesAntics[i].tipus}
        cobla={this.state.actesAntics[i].cobla1}
-       dia={this.state.actesNous[i].dia.slice(0, 10)}
+       dia={dia+'/'+mes+'/'+any}
        nomActivitat={this.state.actesAntics[i].nomActivitat} navigation={this.props.navigation}
        identificador={this.state.actesAntics[i].id}/>)
     }
-
-    //console.log(actesAntic);
-
     return(
       <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
         {actesAntic}
@@ -252,10 +238,13 @@ export default class Perfil extends React.Component {
   renderActesNous(){
     let actesNou = [];
     for (let i = 0; i < this.state.actesNous.length; ++i) {
-     actesNou.push(<ActesPerPerfil where={this.state.actesNous[i].lloc}
+      var dia = this.state.actesNous[i].dia.slice(8, 10);
+      var mes = this.state.actesNous[i].dia.slice(5, 7);
+      var any = this.state.actesNous[i].dia.slice(0, 4);
+      actesNou.push(<ActesPerPerfil where={this.state.actesNous[i].lloc}
        when={this.state.actesNous[i].hora1}
        activitat={this.state.actesNous[i].tipus}
-       dia={this.state.actesNous[i].dia.slice(0, 10)}
+       dia={dia+'/'+mes+'/'+any}
        cobla={this.state.actesNous[i].cobla1}
        nomActivitat={this.state.actesNous[i].nomActivitat} navigation={this.props.navigation}
        identificador={this.state.actesNous[i].id}/>)
@@ -316,7 +305,7 @@ export default class Perfil extends React.Component {
           <View style={styles.end}/>
         </View>
       }
-    else if(this.state.option == 2 ){
+    else if(this.state.option == 3 ){
       info = <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
         {this.renderActesNous()}
       </ScrollView>

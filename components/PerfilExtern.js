@@ -121,7 +121,10 @@ export default class PerfilExtern extends React.Component {
           this.onChangeState("altres", json.altres);
           this.onChangeState("edat", json.edat);
           this.onChangeState("comarca", json.comarca);
-          this.onChangeState("birthday", json.birthday.slice(0, 10));
+          var dia = json.birthday.slice(8, 10);
+          var mes = json.birthday.slice(5, 7);
+          var any = json.birthday.slice(0, 4);
+          this.onChangeState("birthday", dia+'/'+mes+'/'+any);
 
           if(json.competidor){
             this.onChangeState("sardanistaCompeticio", "SÍ");

@@ -21,7 +21,7 @@ export default class ActeComplete extends React.Component {
   constructor(props) {
         super(props)
         this.state = {
-           idActe: '179878',
+           idActe: '',
            when: '',
            where: '',
            activitat: '',
@@ -46,9 +46,11 @@ export default class ActeComplete extends React.Component {
           console.log("idActe: " + this.state.idActe);
           const response = await fetch(API + '/actes/' + this.state.idActe);
           const json = await response.json();
-
-          if(json.hora2 === '') this.onChangeState("when", json.dia.slice(0, 10) + ' a les ' + json.hora1 + 'h' );
-          else this.onChangeState("when", json.dia + ' de ' + json.hora1 + 'h' + ' a ' + json.hora2 + 'h');
+          var dia = json.dia.slice(8, 10);
+          var mes = json.dia.slice(5, 7);
+          var any = json.dia.slice(0, 4);
+          if(json.hora2 === '') this.onChangeState("when", dia+'/'+mes+'/'+any + ' a les ' + json.hora1 + 'h' );
+          else this.onChangeState("when", dia+'/'+mes+'/'+any + ' de ' + json.hora1 + 'h' + ' a ' + json.hora2 + 'h');
           this.onChangeState("where", json.poblacioMitjana + ' - ' + json.lloc);
           this.onChangeState("activitat", json.tipus);
 
@@ -74,7 +76,8 @@ export default class ActeComplete extends React.Component {
 
   async estaApuntat(){
     try {
-        const response = await fetch(API + '/actes/'+ this.state.idActe + '/assistants/' + "agusticonesa@gmail.com");
+        var email = await globalHelper.getLoggedUserEmailAsync();
+        const response = await fetch(API + '/actes/'+ this.state.idActe + '/assistants/' + email);
         const json = await response.json();
         this.state.apuntat = json;
     }
@@ -85,9 +88,8 @@ export default class ActeComplete extends React.Component {
 
   async apuntarse(){
     if(this.state.apuntat){
-      var email = globalHelper.asyncStorageLoggedUserEmailKey;
-      var apuntarseURI = API + '/actes/'+ this.state.idActe + '/assistants/'+"agusticonesa@gmail.com";
-      console.log(apuntarseURI);
+      var email = await globalHelper.getLoggedUserEmailAsync();
+      var apuntarseURI = API + '/actes/'+ this.state.idActe + '/assistants/'+ email;
       this.state.apuntat = false;
       try {
           const response = await fetch(apuntarseURI,
@@ -112,9 +114,8 @@ export default class ActeComplete extends React.Component {
         }
     }
     else{
-      var email = globalHelper.asyncStorageLoggedUserEmailKey;
-      //console.log(email);
-      var apuntarseURI = API + '/actes/'+ this.state.idActe + '/assistants?email='+"agusticonesa@gmail.com";
+      var email = await globalHelper.getLoggedUserEmailAsync();
+      var apuntarseURI = API + '/actes/'+ this.state.idActe + '/assistants?email='+ email;
       console.log(apuntarseURI);
       this.state.apuntat = true;
       try {
