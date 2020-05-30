@@ -16,6 +16,7 @@ const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailK
 export default class ActeComplete extends React.Component {
   componentDidMount() {
       this.getInfoActe();
+      this.estaApuntat();
   }
   constructor(props) {
         super(props)
@@ -30,7 +31,7 @@ export default class ActeComplete extends React.Component {
            acteLoaded: false,
            imatge:'',
            nomActivitat:'',
-           apuntat: true,
+           apuntat: false,
         }
   }
 
@@ -45,7 +46,7 @@ export default class ActeComplete extends React.Component {
           const response = await fetch(API + '/actes/' + this.state.idActe);
           const json = await response.json();
 
-          if(json.hora2 === '') this.onChangeState("when", json.dia + ' a les ' + json.hora1 + 'h' );
+          if(json.hora2 === '') this.onChangeState("when", json.dia.slice(0, 10) + ' a les ' + json.hora1 + 'h' );
           else this.onChangeState("when", json.dia + ' de ' + json.hora1 + 'h' + ' a ' + json.hora2 + 'h');
           this.onChangeState("where", json.poblacioMitjana + ' - ' + json.lloc);
           this.onChangeState("activitat", json.tipus);
@@ -59,13 +60,84 @@ export default class ActeComplete extends React.Component {
           this.onChangeState("cobles", json.cobla1);
           this.onChangeState("imatge", json.imatge);
           this.onChangeState("nomActivitat", json.nomActivitat);
-          this.setState({
-            acteLoaded: true
-          });
       }
       catch (error) {
           console.error(error);
       }
+      this.estaApuntat();
+      this.setState({
+        acteLoaded: true
+      });
+  }
+
+  async estaApuntat(){
+    try {
+        const response = await fetch(API + '/actes/'+ this.state.idActe + '/assistants/' + "agusticonesa@gmail.com");
+        const json = await response.json();
+        this.state.apuntat = json;
+    }
+    catch (error) {
+        console.error(error);
+    }
+  }
+
+  async apuntarse(){
+    if(this.state.apuntat){
+      var email = globalHelper.asyncStorageLoggedUserEmailKey;
+      var apuntarseURI = API + '/actes/'+ this.state.idActe + '/assistants/'+"agusticonesa@gmail.com";
+      console.log(apuntarseURI);
+      this.state.apuntat = false;
+      try {
+          const response = await fetch(apuntarseURI,
+              {
+                  method: 'DELETE',
+                  headers: {
+                      Accept: 'application/json',
+                      'Content-Type': 'application/json',
+                  },
+              });
+          if(response.status === 204) {
+              console.log("Desapuntat");
+          }
+          else {
+              console.log('\n');
+              console.log("Status: ", response.status);
+          }
+        }
+        catch (error) {
+            console.error(error);
+            alert("Delete Exception failed!");
+        }
+    }
+    else{
+      var email = globalHelper.asyncStorageLoggedUserEmailKey;
+      //console.log(email);
+      var apuntarseURI = API + '/actes/'+ this.state.idActe + '/assistants?email='+"agusticonesa@gmail.com";
+      console.log(apuntarseURI);
+      this.state.apuntat = true;
+      try {
+          const response = await fetch(apuntarseURI,
+              {
+                  method: 'POST',
+                  headers: {
+                      Accept: 'application/json',
+                      'Content-Type': 'application/json',
+                  },
+              });
+          if(response.status === 201) {
+              console.log("apuntat");
+          }
+          else {
+              console.log('\n');
+              console.log("Status: ", response.status);
+          }
+      }
+      catch (error) {
+          console.error(error);
+          alert("Upload Exception failed!");
+      }
+    }
+    this.forceUpdate();
   }
 
   mesInformacio() {
@@ -80,13 +152,15 @@ export default class ActeComplete extends React.Component {
     else return null;
   }
 
+
+
   bottomApuntarse() {
     if(this.state.apuntat){
         return(
           <View style={styles.containerButtonActe}>
             <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
-                                  onPress={() => this.props.navigation.navigate(globalHelper.ActeCompleteID, {id:this.props.identificador})}>
-              <Text style={styles.apuntarseText}>APUNTAR-SE</Text>
+                                  onPress={() => this.apuntarse()}>
+              <Text style={styles.apuntarseText}>DESAPUNTAR-SE</Text>
             </TouchableOpacity>
           </View>
         )
@@ -95,8 +169,8 @@ export default class ActeComplete extends React.Component {
       return(
         <View style={styles.containerButtonActe}>
           <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
-                                onPress={() => this.props.navigation.navigate(globalHelper.ActeCompleteID, {id:this.props.identificador})}>
-            <Text style={styles.apuntarseText}>DESAPUNTAR-SE</Text>
+                                onPress={() => this.apuntarse()}>
+            <Text style={styles.apuntarseText}>APUNTAR-SE</Text>
           </TouchableOpacity>
         </View>
       )
