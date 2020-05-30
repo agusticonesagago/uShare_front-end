@@ -234,7 +234,7 @@ export default class Perfil extends React.Component {
        when={this.state.actesAntics[i].hora1}
        activitat={this.state.actesAntics[i].tipus}
        cobla={this.state.actesAntics[i].cobla1}
-       dia={this.state.actesNous[i].dia}
+       dia={this.state.actesNous[i].dia.slice(0, 10)}
        nomActivitat={this.state.actesAntics[i].nomActivitat} navigation={this.props.navigation}
        identificador={this.state.actesAntics[i].id}/>)
     }
@@ -255,7 +255,7 @@ export default class Perfil extends React.Component {
      actesNou.push(<ActesPerPerfil where={this.state.actesNous[i].lloc}
        when={this.state.actesNous[i].hora1}
        activitat={this.state.actesNous[i].tipus}
-       dia={this.state.actesNous[i].dia}
+       dia={this.state.actesNous[i].dia.slice(0, 10)}
        cobla={this.state.actesNous[i].cobla1}
        nomActivitat={this.state.actesNous[i].nomActivitat} navigation={this.props.navigation}
        identificador={this.state.actesNous[i].id}/>)

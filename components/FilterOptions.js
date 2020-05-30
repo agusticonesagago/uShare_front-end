@@ -64,7 +64,7 @@ export default class FilterOptions extends React.Component {
                   showVerticalScrollIndicator={false}>
         <View style={styles.Filter}>
 
-          <View style={{flexDirection: 'row',}}>
+          <View style={{flexDirection: 'row',marginBottom:10}}>
            <Icon name={"md-time"} size={40} color={"blue"}/>
             <Text style={styles.titleFilter}> {"Dates"}</Text>
           </View>
@@ -132,7 +132,7 @@ export default class FilterOptions extends React.Component {
                             autoCompleteKey="comarca"
                             data={globalHelperData.DataComarques}
                             onChangeState={this.onChangeState}
-                            iconName = "md-calendar"
+                            iconName = "md-pin"
                             iconSize = {40}
                             iconColor = "red">>
             </MyAutoComplete>
@@ -142,7 +142,7 @@ export default class FilterOptions extends React.Component {
                               onPress={() => {
                                 this.filterActes()
                               }}>
-            <Text style={styles.buttonText}>{"Filtra"}</Text>
+            <Text style={styles.buttonText}>{"Filtrar"}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

@@ -70,8 +70,6 @@ export default class FilterOptions extends React.Component {
                     this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {data:jsonData})
                 }
             )
-
-
         //this.props.navigation.navigate(globalHelper.ListPerfilScreenID, jsonData);
     }
 
@@ -91,26 +89,26 @@ export default class FilterOptions extends React.Component {
           <View style={styles.container}>
              <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
                  <View style={styles.Filter}>
-                     <View style={{flexDirection: 'row',}}>
-                         <Icon name={"md-gift"} size={40} color={"#EE22EE"}/>
+                     <View style={{flexDirection: 'row', marginBottom:20}}>
+                         <Icon name={"md-people"} size={40} color={"purple"}/>
                          <Text style={styles.titleFilter}> {"Rang d'edats"}</Text>
                      </View>
 
                      <View style={styles.inputContainer}>
-                         <Icon name={'md-time'} size={28} style={styles.Icon} />
+                         <Icon name={'md-arrow-dropdown-circle'} size={28} style={styles.Icon} />
                          <TextInput
                              style={styles.text}
-                             placeholder='Edat minima'
+                             placeholder='       Edat mínima'
                              keyboardType = 'number-pad'
                              onChangeText={val => this.onChangeState('edatMin', val)}
                          />
                      </View>
 
                      <View style={styles.inputContainer}>
-                         <Icon name={'md-clock'} size={28} style={styles.Icon} />
+                         <Icon name={'md-arrow-dropup-circle'} size={28} style={styles.Icon} />
                          <TextInput
                              style={styles.text}
-                             placeholder='Edat maxima'
+                             placeholder='       Edat màxima'
                              keyboardType = 'number-pad'
                              onChangeText={val => this.onChangeState('edatMax', val)}
                          />
@@ -118,11 +116,11 @@ export default class FilterOptions extends React.Component {
 
 
                      <View style={{flexDirection: 'row', marginTop:80}}>
-                         <Icon name={"md-flame"} size={40} color={"#FF0000"}/>
+                         <Icon name={"md-flame"} size={40} color={"#e84f30"}/>
                          <Text style={styles.titleFilter}> {"Habilitats"}</Text>
                      </View>
 
-                     <View style={styles.columnCheckBox}>
+                     <View style={styles.columnCheckBoxHabilitats}>
                          <MyCheckBox title="Comptar i repartir"
                                      checkBoxKey="comptarIRepartir"
                                      onChangeState={this.onChangeState}>
@@ -140,7 +138,7 @@ export default class FilterOptions extends React.Component {
                      </View>
 
                      <View style={{flexDirection: 'row', marginTop:80}}>
-                         <Icon name={"md-gift"} size={40} color={"YELLOW"}/>
+                         <Icon name={"md-eye"} size={40} color={"green"}/>
                          <Text style={styles.titleFilter}> {"Actes"}</Text>
                      </View>
                      <View style={styles.rowCheckBox}>
@@ -199,7 +197,7 @@ export default class FilterOptions extends React.Component {
                                          autoCompleteKey="comarca"
                                          data={globalHelperData.DataComarques}
                                          onChangeState={this.onChangeState}
-                                         iconName = "md-calendar"
+                                         iconName = "md-pin"
                                          iconSize = {40}
                                          iconColor = "red">>
                          </MyAutoComplete>
@@ -209,7 +207,7 @@ export default class FilterOptions extends React.Component {
                                        onPress={() => {
                                            this.filterUsers()
                                        }}>
-                         <Text style={styles.buttonText}>{"Filtra"}</Text>
+                         <Text style={styles.buttonText}>{"Filtrar"}</Text>
                      </TouchableOpacity>
                  </View>
              </ScrollView>
@@ -231,7 +229,7 @@ const styles = StyleSheet.create({
     Filter:{
         alignItems: 'center',
         flexDirection: 'column',
-        marginTop: 20
+        marginTop: 35
     },
 
     rowCheckBox:{
@@ -239,6 +237,10 @@ const styles = StyleSheet.create({
     },
     columnCheckBox:{
         flexDirection: 'column',
+    },
+    columnCheckBoxHabilitats:{
+        flexDirection: 'column',
+        marginLeft:40,
     },
   text:{
     fontSize:22,

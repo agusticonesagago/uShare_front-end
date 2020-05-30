@@ -58,7 +58,7 @@ export default class ListActesSmall extends React.Component {
            activitat={this.state.actes[i].tipus}
            cobla={this.state.actes[i].cobla1}
            nomActivitat={this.state.actes[i].nomActivitat} navigation={this.props.navigation}
-           identificador={this.state.actes[i].id}/>)
+           identificador={this.state.actes[i].id} anulat={this.state.actes[i].anul} />)
         }
 
         return(

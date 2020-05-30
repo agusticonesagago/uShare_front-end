@@ -29,10 +29,23 @@ export default class Actes extends React.Component {
     this.state = {
     }
   }
+
+  anulat() {
+    if(this.props.anulat=="Suspès"){
+        return(
+          <Text style={styles.anulat}>
+            [ANULAT]
+          </Text>
+        )
+    }
+    else return null
+  }
+
   render() {
     return (
       <View style={styles.containerActe}>
           <View style={styles.WhereWhen}>
+            {this.anulat()}
             <Text style={styles.Where}>
               {this.props.nomActivitat}
             </Text>
@@ -105,7 +118,7 @@ const styles = StyleSheet.create({
     color: '#714170',
     fontWeight: 'bold',
     fontSize: 15,
-    width:'75%',
+    width:'55%',
     marginRight:'5%',
   },
   When:{
@@ -113,6 +126,16 @@ const styles = StyleSheet.create({
     fontSize: 15,
     width:'auto',
     maxWidth:'20%',
+  },
+  anulat:{
+    marginRight: 10,
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 14,
+    marginBottom:10,
+    marginTop:2,
+    textAlignVertical: 'center',
+    width:'auto',
   },
   ActivitatCobles:{
     marginLeft: 10,

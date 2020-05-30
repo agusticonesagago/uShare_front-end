@@ -32,6 +32,7 @@ export default class ActeComplete extends React.Component {
            imatge:'',
            nomActivitat:'',
            apuntat: false,
+           anulat:'',
         }
   }
 
@@ -60,6 +61,7 @@ export default class ActeComplete extends React.Component {
           this.onChangeState("cobles", json.cobla1);
           this.onChangeState("imatge", json.imatge);
           this.onChangeState("nomActivitat", json.nomActivitat);
+          this.onChangeState("anulat", json.anul);
       }
       catch (error) {
           console.error(error);
@@ -177,12 +179,22 @@ export default class ActeComplete extends React.Component {
     }
   }
 
+  anulat() {
+    if(this.state.anulat=="Suspès"){
+        return(
+          <Text style={styles.anulat}>
+            [ANULAT]
+          </Text>
+        )
+    }
+    else return null
+  }
+
     assistents() {
         globalHelperAPI_Actes.getAssistantsOfActe(this.state.idActe).then((users)=>{
                 this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {data:users});
             }
         );
-
     }
 
   render() {
@@ -202,9 +214,12 @@ export default class ActeComplete extends React.Component {
               </View>
               <View style={styles.containerInfoActe}>
               <View style={styles.WhereWhen}>
-                <Text style={styles.Which}>
-                  {this.state.nomActivitat}
-                </Text>
+                <View style={styles.containerNomActeAnulat}>
+                  {this.anulat()}
+                  <Text style={styles.Which}>
+                    {this.state.nomActivitat}
+                  </Text>
+                </View>
                 <Text style={styles.Where}>
                   {this.state.where}
                 </Text>
@@ -296,6 +311,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 25,
     marginBottom:10,
+    marginTop:4,
+    width:'70%',
   },
   When:{
     color:'grey',
@@ -364,4 +381,18 @@ const styles = StyleSheet.create({
     width:'90%',
     textAlign:'center',
   },
+  containerNomActeAnulat:{
+    flexDirection:'row',
+  },
+  anulat:{
+    marginRight: 10,
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginTop:5.5,
+    marginBottom:10,
+    borderRadius:30,
+    textAlignVertical: 'center',
+    width:'auto',
+  }
 });
