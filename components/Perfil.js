@@ -41,13 +41,13 @@ export default class Perfil extends React.Component {
            birthday: "",
            photo: null,
            sardanistaCompeticio: '',
-           coblaCompeticio: '',
            comarca:'',
-           comptarIRepartir:'',
+           comptarIRepartir:true,
            option:1,
            changeInfo:false,
            actesAnticsLoaded:false,
            actesFutursLoaded:false,
+           altresHabilitats:'',
            'actesNous': [],
            'actesAntics': [],
         }
@@ -108,6 +108,28 @@ export default class Perfil extends React.Component {
       )
     }
     return actes;
+  }
+
+
+  renderHabilitats () {
+    let habilitats = []
+    if(this.state.comptarIRepartir){
+      habilitats.push(
+        <View style={styles.listActes}>
+           <Icon name={'md-checkmark'} size={30} color={'green'}  />
+           <Text style={styles.actesText}>Sé comptar i repartir</Text>
+        </View>
+      )
+    }
+    if(this.state.sardanistaCompeticio){
+      habilitats.push(
+        <View style={styles.listActes}>
+           <Icon name={'md-checkmark'} size={30} color={'green'}  />
+           <Text style={styles.actesText}>Sóc sardanista de competició</Text>
+        </View>
+      )
+    }
+    return habilitats;
   }
 
   async getInfoActesNous() {
@@ -185,6 +207,7 @@ export default class Perfil extends React.Component {
           this.onChangeState("cursets", json.cursets);
           this.onChangeState("altres", json.altres);
           this.onChangeState("edat", json.edat);
+          this.onChangeState("altresHabilitats", json.altresHabilitats);
           this.onChangeState("comarca", json.comarca);
           var dia = json.birthday.slice(8, 10);
           var mes = json.birthday.slice(5, 7);
@@ -192,19 +215,14 @@ export default class Perfil extends React.Component {
           this.onChangeState("birthday", dia+'/'+mes+'/'+any);
 
           if(json.competidor){
-            this.onChangeState("sardanistaCompeticio", "SÍ");
+            this.onChangeState("sardanistaCompeticio", true);
           }
-          else this.onChangeState("sardanistaCompeticio", "NO");
-
-          if(json.coblaCompetició){
-            this.onChangeState("coblaCompeticio", "SÍ");
-          }
-          else this.onChangeState("coblaCompeticio", "NO");
+          else this.onChangeState("sardanistaCompeticio", false);
 
           if(json.comptarRepartir){
-            this.onChangeState("comptarIRepartir", "SÍ");
+            this.onChangeState("comptarIRepartir", true);
           }
-          else this.onChangeState("comptarIRepartir", "NO");
+          else this.onChangeState("comptarIRepartir", false);
 
       }
       catch (error) {
@@ -284,13 +302,10 @@ export default class Perfil extends React.Component {
           <Text style={styles.titleApartats}>VEHICLE</Text>
           <Text style={styles.information}>{this.state.textVehicle}</Text>
           <Text style={styles.titleApartats}>HABILITATS</Text>
-          <Text style={styles.information}>{this.state.comptarIRepartir}</Text>
-          <Text style={styles.titleApartats}>SARDANES DE COMPETICIÓ</Text>
-          <Text style={styles.information}>{this.state.sardanistaCompeticio}</Text>
-          <Text style={styles.titleApartats}>COBLA DE COMPETICIÓ</Text>
-          <Text style={styles.information}>{this.state.coblaCompeticio}</Text>
-          <Text style={styles.titleApartats}>ACTES</Text>
-
+          <View>{this.renderHabilitats()}</View>
+          <Text style={styles.titleApartats}>També sé ...</Text>
+          <Text style={styles.information}>{this.state.altresHabilitats}</Text>
+          <Text style={styles.titleApartats}>INTERESSAT EN</Text>
           <View>
             <View>{this.renderActes()}</View>
           </View>
@@ -325,6 +340,9 @@ export default class Perfil extends React.Component {
 
     return (
       <View style={styles.container}>
+        <View style={styles.headerBar}>
+              <Text style={styles.titleNavigator}> Perfil </Text>
+        </View>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.containerProfile}>
             <View style={styles.profileImage}>
@@ -513,5 +531,18 @@ const styles = StyleSheet.create({
   },
   icon:{
     marginRight:60,
-  }
+  },
+  headerBar:{
+      width:'100%',
+      height: '13.2%',
+      paddingLeft: '6%',
+      flexDirection:'row',
+      backgroundColor: '#714170',
+  },
+  titleNavigator:{
+    color:'white',
+    fontSize:30,
+    paddingTop:20,
+    width:'50%',
+  },
 });

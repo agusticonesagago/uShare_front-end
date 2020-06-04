@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
+import {StyleSheet, Text, View, Image, ScrollView, Button, Alert} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -17,7 +17,6 @@ export default class ListPerfilSmall extends React.Component {
 
   componentDidMount() {
    if(!this.state.personesLoaded) this.getInfoPersones();
-
   }
 
   constructor(props) {
@@ -35,6 +34,7 @@ export default class ListPerfilSmall extends React.Component {
 
     async getInfoPersones() {
       try {
+
           const response = await fetch(API_USER);
 
           const json = await response.json();
@@ -65,7 +65,7 @@ export default class ListPerfilSmall extends React.Component {
       console.log("this.state.personesLoaded: " + this.state.personesLoaded);
       if (this.state.personesLoaded) {
           if(this.props.route.params)  this.state.persones = this.props.route.params.data;
-
+          Alert.alert("Coneix Nous Sardanistes !!", "Comença a buscar sardanistes com tu!     No perdis el temps!!");
           let profiles = [];
           for (let i = 0; i < this.state.persones.length; ++i) {
               profiles.push(<PerfilSmall nomCognom={this.state.persones[i].name}
@@ -74,6 +74,7 @@ export default class ListPerfilSmall extends React.Component {
                                          navigation={this.props.navigation}
                                          email={this.state.persones[i].email}
                                          vehicle={this.state.persones[i].vehicle}
+                                         id = {this.state.persones[i].id}
               />)
           }
 
@@ -81,8 +82,7 @@ export default class ListPerfilSmall extends React.Component {
               <View style={styles.container}>
                   <View style={styles.headerBar}>
                       <View style={styles.logoImage}>
-                          <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
-                          <Text style={styles.titleNavigator}> Perfils </Text>
+                          <Text style={styles.titleNavigator}> Sardanistes </Text>
                           <Icon name={'md-options'} size={34}
                             color={'white'}
                             style={styles.iconFilter}
@@ -127,7 +127,7 @@ export default class ListPerfilSmall extends React.Component {
             </View>
 
             //return null;
-            )
+        )
     }
   }
 }
@@ -187,7 +187,9 @@ const styles = StyleSheet.create({
     color:'white',
     fontSize:30,
     paddingTop:20,
+    paddingLeft:'5%',
     width:'50%',
+    marginRight:'35%'
   },
   image:{
     borderRadius:100,
@@ -216,7 +218,6 @@ const styles = StyleSheet.create({
     },
     iconFilter:{
       marginBottom:0,
-      marginLeft:50,
       marginTop:23,
     }
 });

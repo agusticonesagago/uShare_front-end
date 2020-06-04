@@ -21,12 +21,34 @@ import Drawer from './Drawer.js';
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 
 var API_USER = globalHelper.API_USER;
+var API = globalHelper.API;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
 
 export default class Actes extends React.Component {
+  componentDidMount() {
+   this.nombreAsistents();
+  }
   constructor(props) {
     super(props);
     this.state = {
+      nombreAsistents:[],
+      nombreAsistentsLoaded: false
+    }
+  }
+
+  async nombreAsistents(){
+    try {
+        var id = this.props.identificador
+        const response = await fetch(API + '/actes/'+ id + '/assistants');
+
+        const json = await response.json();
+        this.state.nombreAsistents = json;
+        this.setState({
+          nombreAsistentsLoaded: true
+        });
+    }
+    catch (error) {
+        console.error(error);
     }
   }
 
@@ -34,51 +56,67 @@ export default class Actes extends React.Component {
     if(this.props.anulat=="Suspès"){
         return(
           <Text style={styles.anulat}>
-            [ANULAT]
+            [ANUL·LAT]
           </Text>
         )
     }
     else return null
   }
 
-  render() {
-    return (
-      <View style={styles.containerActe}>
-          <View style={styles.WhereWhen}>
-            {this.anulat()}
-            <Text style={styles.Where}>
-              {this.props.nomActivitat}
-            </Text>
-            <Text style={styles.When}>
-              {this.props.when} h
-            </Text>
+  assistents() {
+    if(this.props.anulat!="Suspès" ){
+        return(
+          <View style={styles.ActivitatCobles}>
+            <Text style={styles.ActivitatCoblesInterpets}>Nombre d'assistents:</Text>
+            <Text style={styles.InfoActeActivitatCobles}>{this.state.nombreAsistents.length}</Text>
           </View>
-          <View style={styles.containerActeIndiv}>
-            <View style={styles.containerInfoActe}>
-              <View style={styles.ActivitatCobles}>
-                <Text style={styles.ActivitatCoblesInterpets}>Activitat:</Text>
-                <Text style={styles.InfoActeActivitatCobles}>{this.props.activitat}</Text>
-              </View>
-              <View style={styles.ActivitatCobles}>
-                <Text style={styles.ActivitatCoblesInterpets}>Cobles/Intèrprets:</Text>
-                <Text style={styles.InfoActeActivitatCobles}>{this.props.cobla}</Text>
-              </View>
-              <View style={styles.ActivitatCobles}>
-                <Text style={styles.ActivitatCoblesInterpets}>On:</Text>
-                <Text style={styles.InfoActeActivitatCobles}>{this.props.where}</Text>
-              </View>
-              <View style={{marginTop: 3}}></View>
-            </View>
+        )
+    }
+    else return null
+  }
 
-            <View style={styles.containerButtonActe}>
-              <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
-                                    onPress={() => this.props.navigation.navigate(globalHelper.ActeCompleteID, {id:this.props.identificador})}>
-                <Text style={styles.mesInfoText}>Més informació</Text>
-              </TouchableOpacity>
+  render() {
+    if(this.state.nombreAsistentsLoaded){
+      return (
+        <View style={styles.containerActe}>
+            <View style={styles.WhereWhen}>
+              {this.anulat()}
+              <Text style={styles.Where}>
+                {this.props.nomActivitat}
+              </Text>
+              <Text style={styles.When}>
+                {this.props.when} h
+              </Text>
             </View>
-          </View>
-      </View>
-    );
+            <View style={styles.containerActeIndiv}>
+              <View style={styles.containerInfoActe}>
+                <View style={styles.ActivitatCobles}>
+                  <Text style={styles.ActivitatCoblesInterpets}>Activitat:</Text>
+                  <Text style={styles.InfoActeActivitatCobles}>{this.props.activitat}</Text>
+                </View>
+                <View style={styles.ActivitatCobles}>
+                  <Text style={styles.ActivitatCoblesInterpets}>Cobles/Intèrprets:</Text>
+                  <Text style={styles.InfoActeActivitatCobles}>{this.props.cobla}</Text>
+                </View>
+                <View style={styles.ActivitatCobles}>
+                  <Text style={styles.ActivitatCoblesInterpets}>On:</Text>
+                  <Text style={styles.InfoActeActivitatCobles}>{this.props.where}</Text>
+                </View>
+                {this.assistents()}
+                <View style={{marginTop: 3}}></View>
+              </View>
+
+              <View style={styles.containerButtonActe}>
+                <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
+                                      onPress={() => this.props.navigation.navigate(globalHelper.ActeCompleteID, {id:this.props.identificador})}>
+                  <Text style={styles.mesInfoText}>Més informació</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+        </View>
+      )
+      }
+    else return null
   }
 }
 /*

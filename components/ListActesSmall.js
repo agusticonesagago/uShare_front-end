@@ -64,7 +64,6 @@ export default class ListActesSmall extends React.Component {
         return(
           <View style={styles.container}>
             <View style={styles.containerNavigator}>
-              <Image source={require("../img/logorodo.png")} style={styles.image}></Image>
               <Text style={styles.titleNavigator}> Actes </Text>
                 <Icon name={'md-options'} size={34}
                       color={'white'}
@@ -81,7 +80,11 @@ export default class ListActesSmall extends React.Component {
         )
       }
       else {
-       return null;
+        return (
+            <View style={styles.container}>
+                <Text style={styles.WaitingText}> Carregant... </Text>
+            </View>
+        )
       }
   }
 }
@@ -89,7 +92,6 @@ export default class ListActesSmall extends React.Component {
 ListActesSmall.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
-      //name={focused ? 'md-calendar' : 'ios-calendar'}
       name={'md-calendar'}
       size={28}
       color={tintColor}
@@ -113,11 +115,19 @@ const styles = StyleSheet.create({
     width:'100%',
     flexDirection:'row',
   },
+  WaitingText:{
+      color:'black',
+      fontSize:30,
+      paddingTop:20,
+      width:'50%',
+  },
   titleNavigator:{
     color:'white',
     fontSize:30,
     paddingTop:20,
+    paddingLeft:'5%',
     width:'50%',
+    marginRight:'35%'
   },
   image:{
     borderRadius:100,
@@ -130,9 +140,8 @@ const styles = StyleSheet.create({
     marginLeft:20,
     marginRight:20,
   },
-    iconFilter:{
-        marginBottom:0,
-        marginLeft:50,
-        marginTop:23,
-    }
+  iconFilter:{
+    marginBottom:0,
+    marginTop:23,
+  }
 });

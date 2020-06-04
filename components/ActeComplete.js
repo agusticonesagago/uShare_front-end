@@ -158,33 +158,51 @@ export default class ActeComplete extends React.Component {
 
 
   bottomApuntarse() {
-    if(this.state.apuntat){
+    if(this.state.anulat!="Suspès"){
+      if(this.state.apuntat){
+          return(
+            <View style={styles.containerButtonActe}>
+              <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
+                                    onPress={() => this.apuntarse()}>
+                <Text style={styles.apuntarseText}>NO HI ANIRÉ</Text>
+              </TouchableOpacity>
+            </View>
+          )
+      }
+      else{
         return(
           <View style={styles.containerButtonActe}>
             <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
                                   onPress={() => this.apuntarse()}>
-              <Text style={styles.apuntarseText}>DESAPUNTAR-SE</Text>
+              <Text style={styles.apuntarseText}>HI ANIRÉ</Text>
             </TouchableOpacity>
           </View>
         )
+      }
     }
-    else{
+    else return null
+  }
+
+
+  bottomQuiAnira() {
+    if(this.state.anulat!="Suspès"){
       return(
-        <View style={styles.containerButtonActe}>
+        <View style={styles.containerButtonQuiVa}>
           <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
-                                onPress={() => this.apuntarse()}>
-            <Text style={styles.apuntarseText}>APUNTAR-SE</Text>
+                                onPress={() => this.assistents()}>
+            <Text style={styles.apuntarseText}>QUI ANIRÀ?</Text>
           </TouchableOpacity>
         </View>
       )
     }
+    else return null
   }
 
   anulat() {
     if(this.state.anulat=="Suspès"){
         return(
           <Text style={styles.anulat}>
-            [ANULAT]
+            [ANUL·LAT]
           </Text>
         )
     }
@@ -207,12 +225,7 @@ export default class ActeComplete extends React.Component {
             <View style={styles.containerActe}>
               <Image source={Image_Http_URL} style={styles.image} rezideMode="center"></Image>
               {this.bottomApuntarse()}
-              <View style={styles.containerButtonQuiVa}>
-                <TouchableOpacity style={[styles.buttonContainer, styles.InfoButton]}
-                                      onPress={() => this.assistents()}>
-                  <Text style={styles.apuntarseText}>QUI VA?</Text>
-                </TouchableOpacity>
-              </View>
+              {this.bottomQuiAnira()}
               <View style={styles.containerInfoActe}>
               <View style={styles.WhereWhen}>
                 <View style={styles.containerNomActeAnulat}>

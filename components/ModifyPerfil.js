@@ -94,8 +94,8 @@ export default class ModifyPerfil extends React.Component {
           photo: null,
           photoType: null,
           sardanistaCompeticio: true,
-          coblaCompeticio: true,
           publicProfile: true,
+          altresHabilitats:'',
           DataActualdos:  {
             code: '', name:  ''
           },
@@ -106,7 +106,7 @@ export default class ModifyPerfil extends React.Component {
 
   async getInfoUser() {
       try {
-          this.state.textMail = this.props.route.params.email;
+          this.state.textMail = await globalHelper.getLoggedUserEmailAsync();
           const response = await fetch(API_USER + this.state.textMail);
 
           const json = await response.json();
@@ -116,8 +116,10 @@ export default class ModifyPerfil extends React.Component {
           this.onChangeState("textName", json.name);
           this.onChangeState("textNumber", json.phoneNumber);
           this.onChangeState("photo", json.image);
-          this.onChangeState("textMail", json.email);
-          this.onChangeState("birthday", json.birthday.slice(0, 10));
+          var dia = json.birthday.slice(8, 10);
+          var mes = json.birthday.slice(5, 7);
+          var any = json.birthday.slice(0, 4);
+          this.onChangeState("birthday", dia+'/'+mes+'/'+any);
           this.onChangeState("aplecs", json.aplecs);
           this.onChangeState("ballades", json.ballades);
           this.onChangeState("concerts", json.concerts);
@@ -129,6 +131,8 @@ export default class ModifyPerfil extends React.Component {
           this.onChangeState("localitat", json.comarca);
           this.onChangeState("publicProfile", json.publicProfile);
           this.onChangeState("comptarRepartir", json.comptarRepartir);
+          this.onChangeState("sardanistaCompeticio", json.competidor);
+          this.onChangeState("altresHabilitats", json.altresHabilitats);
 
           this.setState({
             DataActualdos: {
@@ -165,17 +169,22 @@ export default class ModifyPerfil extends React.Component {
 
   async sendChanges() {
     try {
+        console.log("comptarRepartir");
+        console.log(this.state.comptarRepartir);
         var photoBase64 =  null;
+        console.log(this.state.aplecs);
         if(this.state.photo) photoBase64 = this.state.photo.data;
         var ModifyProfilelUri = API_USER + this.state.textMail ;
+        var dia = this.state.birthday.slice(0, 2);
+        var mes = this.state.birthday.slice(3, 5);
+        var any = this.state.birthday.slice(6, 10);
+        var birth = any+'-'+mes+'-'+dia+'T00:06:00.000+0000';
         var jsonBody = JSON.stringify({
             altres: this.state.altres,
             aplecs: this.state.aplecs,
             ballades: this.state.ballades,
-            birthday: this.state.birthday,
-            coblaCompeticio: this.state.coblaCompeticio,
+            birthday: birth,
             comarca: this.state.DataActualdos.name,
-            competidor: this.state.sardanistaCompeticio,
             comptarRepartir: this.state.comptarRepartir,
             concerts: this.state.concerts,
             concursos: this.state.concursos,
@@ -187,6 +196,9 @@ export default class ModifyPerfil extends React.Component {
             vehicle: this.state.hasCar,
             image: photoBase64,
             imageType: this.state.imageType,
+            competidor: this.state.sardanistaCompeticio,
+            altresHabilitats : this.state.altresHabilitats
+
         });
 
         const response = await fetch(ModifyProfilelUri,
@@ -248,145 +260,157 @@ export default class ModifyPerfil extends React.Component {
   render() {
     let a = '';
     return (
-      <View style={styles.container}>
+      <View style={styles.containerActeProva}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
-          <View style={styles.containerProfile}>
-            <View style={styles.profileImage}>
+          <View style={styles.containerActe}>
+            <View style={styles.containerProfile}>
+              <View style={styles.profileImage}>
 
-              {this.state.photo && (
-                <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
-              )}
-              {!this.state.photo && (<Image source={require("../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
+                {this.state.photo && (
+                  <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
+                )}
+                {!this.state.photo && (<Image source={require("../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
+              </View>
+              <View style={styles.button}>
+                <Icon name={'md-chatboxes'} size={20} backgroundColor={'#41444B'} color={'#DFD8C8'}  />
+              </View>
+              <View style={styles.add}>
+                <Icon name={'md-camera'} size={35} backgroundColor={'#41444B'} color={'#DFD8C8'} onPress={this.handleChoosePhoto}/>
+              </View>
             </View>
-            <View style={styles.button}>
-              <Icon name={'md-chatboxes'} size={20} backgroundColor={'#41444B'} color={'#DFD8C8'}  />
-            </View>
-            <View style={styles.add}>
-              <Icon name={'md-camera'} size={35} backgroundColor={'#41444B'} color={'#DFD8C8'} onPress={this.handleChoosePhoto}/>
-            </View>
-          </View>
 
-          <View style={styles.infoContainer}>
-            <TextInput style={styles.name} onChangeText={(textName) => this.setState({textName})} editable>{this.state.textName}</TextInput>
-          </View>
-          <View style={styles.extraInfo}>
-            <Text style={styles.titleApartats}>SOBRE MI</Text>
-            <TextInput style={styles.information} multiline
-            onSubmitEditing={this.handleTextSubmit} onChangeText={(textSobreMi) => this.setState({textSobreMi})}
-            editable>{this.state.textSobreMi}</TextInput>
-            <Text style={styles.titleApartats}>LOCALITAT</Text>
-            <View style={styles.imageLocalitat}>
-              <View style={styles.containerIconLocalitat}>
-                <Icon name={'md-home'} size={30} color={'#0000FF'}  />
-              </View>
-              <View style={styles.dropdownLocalitat}>
-                <Autocomplete
-                  data={DataComarques}
-                  displayKey="name"
-                  placeholderColor={'black'}
-                  dropDownIconColor	={'#714170'}
-                  value = {this.state.DataActualdos}
-                  onSelect={value => this.changeComarca('value', value)}
-                />
-              </View>
+            <View style={styles.infoContainer}>
+              <TextInput style={styles.name} onChangeText={(textName) => this.setState({textName})} editable>{this.state.textName}</TextInput>
             </View>
-            <Text style={styles.titleApartats}>NAIXEMENT</Text>
-            <View style={styles.imageMail}>
-              <Icon name={'md-gift'} size={30} color={'red'}  />
-              <TextInput style={styles.numberTelephone} onChangeText={(birthday) => this.setState({birthday})} editable>{this.state.birthday}</TextInput>
-            </View>
-            <Text style={styles.titleApartats}>CONTACTE</Text>
-            <View style={styles.imageTelephone}>
-              <Icon name={'md-call'} size={30} color={'green'}  />
-              <TextInput style={styles.numberTelephone} onChangeText={(textNumber) => this.setState({textNumber})} editable>{this.state.textNumber}</TextInput>
-            </View>
-            <View style={styles.imageMail}>
-              <Icon name={'md-mail'} size={30} color={'orange'}  />
-              <TextInput style={styles.textMail} onChangeText={(textMail) => this.setState({textMail})} editable>{this.state.textMail}</TextInput>
-            </View>
-            <Text style={styles.titleApartats}>VEHICLE</Text>
-            <View style={styles.checkBox}>
-              <CheckBox
-                title='Click Here'
-                value={this.state.vehicle}
-                onValueChange={val => this.onChangeState('vehicle', val)}
-              />
-              <Text style={styles.informationCheckBox}>Vehicle</Text>
-            </View>
-            <Text style={styles.titleApartats}>ACTES</Text>
-            <View style={styles.listActes}>
+            <View style={styles.extraInfo}>
+              <Text style={styles.titleApartats}>SOBRE MI</Text>
+              <TextInput style={styles.information} multiline
+              onSubmitEditing={this.handleTextSubmit} onChangeText={(textSobreMi) => this.setState({textSobreMi})}
+              editable>{this.state.textSobreMi}</TextInput>
+              <Text style={styles.titleApartats}>LOCALITAT</Text>
+              <View style={styles.imageLocalitat}>
+                <View style={styles.containerIconLocalitat}>
+                  <Icon name={'md-home'} size={30} color={'#0000FF'}  />
+                </View>
+                <View style={styles.dropdownLocalitat}>
+                  <Autocomplete
+                    data={DataComarques}
+                    displayKey="name"
+                    placeholderColor={'black'}
+                    dropDownIconColor	={'#714170'}
+                    value = {this.state.DataActualdos}
+                    onSelect={value => this.changeComarca('value', value)}
+                  />
+                </View>
+              </View>
+              <Text style={styles.titleApartats}>NAIXEMENT</Text>
+              <View style={styles.imageMail}>
+                <Icon name={'md-gift'} size={30} color={'red'}  />
+                <TextInput style={styles.numberTelephone} onChangeText={(birthday) => this.setState({birthday})} editable>{this.state.birthday}</TextInput>
+              </View>
+              <Text style={styles.titleApartats}>CONTACTE</Text>
+              <View style={styles.imageTelephone}>
+                <Icon name={'md-call'} size={30} color={'green'}  />
+                <TextInput style={styles.numberTelephone} onChangeText={(textNumber) => this.setState({textNumber})} editable>{this.state.textNumber}</TextInput>
+              </View>
+              <View style={styles.imageMail}>
+                <Icon name={'md-mail'} size={30} color={'orange'}  />
+                <TextInput style={styles.textMail} onChangeText={(textMail) => this.setState({textMail})} editable>{this.state.textMail}</TextInput>
+              </View>
+              <Text style={styles.titleApartats}>VEHICLE</Text>
               <View style={styles.checkBox}>
                 <CheckBox
                   title='Click Here'
-                  value={this.state.aplecs}
-                  onValueChange={val => this.onChangeState('aplecs', val)}
+                  value={this.state.vehicle}
+                  onValueChange={val => this.onChangeState('vehicle', val)}
                 />
-                <Text style={styles.informationCheckBox}>Aplecs</Text>
+                <Text style={styles.informationCheckBox}>Vehicle</Text>
               </View>
-              <View style={styles.checkBox}>
-                <CheckBox
-                  title='Click Here'
-                  value={this.state.ballades}
-                  onValueChange={val => this.onChangeState('ballades', val)}
-                />
-                <Text style={styles.informationCheckBox}>Ballades</Text>
-              </View>
-              <View style={styles.checkBox}>
-                <CheckBox
-                  title='Click Here'
-                  value={this.state.concerts}
-                  onValueChange={val => this.onChangeState('concerts', val)}
-                />
-                <Text style={styles.informationCheckBox}>Concerts</Text>
-              </View>
-              <View style={styles.checkBox}>
-                <CheckBox
-                  title='Click Here'
-                  value={this.state.concursos}
-                  onValueChange={val => this.onChangeState('concursos', val)}
-                />
-                <Text style={styles.informationCheckBox}>Concursos</Text>
-              </View>
-              <View style={styles.checkBox}>
-                <CheckBox
-                  title='Click Here'
-                  value={this.state.cursets}
-                  onValueChange={val => this.onChangeState('cursets', val)}
-                />
-                <Text style={styles.informationCheckBox}>Cursets</Text>
-              </View>
-              <View style={styles.checkBox}>
-                <CheckBox
-                  title='Click Here'
-                  value={this.state.altres}
-                  onValueChange={val => this.onChangeState('altres', val)}
-                />
-                <Text style={styles.informationCheckBox}>Altres</Text>
-              </View>
-
-              <Text style={styles.titleApartats}>HABILITATS</Text>
+              <Text style={styles.titleApartats}>També sé ...</Text>
+              <TextInput style={styles.information} onChangeText={(altresHabilitats) => this.setState({altresHabilitats})} editable>{this.state.altresHabilitats}</TextInput>
+              <Text style={styles.titleApartats}>INTERESSAT EN</Text>
               <View style={styles.listActes}>
                 <View style={styles.checkBox}>
                   <CheckBox
                     title='Click Here'
-                    value={this.state.comptarRepartir}
-                    onValueChange={val => this.onChangeState('comptarRepartir', val)}
+                    value={this.state.aplecs}
+                    onValueChange={val => this.onChangeState('aplecs', val)}
                   />
-                  <Text style={styles.informationCheckBox}>Comptar i Repartir</Text>
+                  <Text style={styles.informationCheckBox}>Aplecs</Text>
+                </View>
+                <View style={styles.checkBox}>
+                  <CheckBox
+                    title='Click Here'
+                    value={this.state.ballades}
+                    onValueChange={val => this.onChangeState('ballades', val)}
+                  />
+                  <Text style={styles.informationCheckBox}>Ballades</Text>
+                </View>
+                <View style={styles.checkBox}>
+                  <CheckBox
+                    title='Click Here'
+                    value={this.state.concerts}
+                    onValueChange={val => this.onChangeState('concerts', val)}
+                  />
+                  <Text style={styles.informationCheckBox}>Concerts</Text>
+                </View>
+                <View style={styles.checkBox}>
+                  <CheckBox
+                    title='Click Here'
+                    value={this.state.concursos}
+                    onValueChange={val => this.onChangeState('concursos', val)}
+                  />
+                  <Text style={styles.informationCheckBox}>Concursos</Text>
+                </View>
+                <View style={styles.checkBox}>
+                  <CheckBox
+                    title='Click Here'
+                    value={this.state.cursets}
+                    onValueChange={val => this.onChangeState('cursets', val)}
+                  />
+                  <Text style={styles.informationCheckBox}>Cursets</Text>
+                </View>
+                <View style={styles.checkBox}>
+                  <CheckBox
+                    title='Click Here'
+                    value={this.state.altres}
+                    onValueChange={val => this.onChangeState('altres', val)}
+                  />
+                  <Text style={styles.informationCheckBox}>Altres</Text>
+                </View>
+
+                <Text style={styles.titleApartats}>HABILITATS</Text>
+                <View style={styles.listActes}>
+                  <View style={styles.checkBox}>
+                    <CheckBox
+                      title='Click Here'
+                      value={this.state.comptarRepartir}
+                      onValueChange={val => this.onChangeState('comptarRepartir', val)}
+                    />
+                    <Text style={styles.informationCheckBox}>Comptar i Repartir</Text>
+                  </View>
+                  <View style={styles.checkBox}>
+                    <CheckBox
+                      title='Click Here'
+                      value={this.state.sardanistaCompeticio}
+                      onValueChange={val => this.onChangeState('sardanistaCompeticio', val)}
+                    />
+                    <Text style={styles.informationCheckBox}>Sardanista de competició</Text>
+                  </View>
+                </View>
+                <Text style={styles.titleApartats}>PÚBLIC</Text>
+                <View style={styles.imageTelephone}>
+                  <Switch onValueChange={val => this.onChangeState('publicProfile', val)} value = {this.state.publicProfile}/>
                 </View>
               </View>
-              <Text style={styles.titleApartats}>PÚBLIC</Text>
-              <View style={styles.imageTelephone}>
-                <Switch onValueChange={val => this.onChangeState('publicProfile', val)} value = {this.state.publicProfile}/>
-              </View>
             </View>
-          </View>
-          <TouchableHighlight style={[styles.buttonContainer, styles.modifyButton]}
-                              onPress={() => this.sendChanges()}>
-            <Text style={styles.modifyText}>GUARDAR CANVIS</Text>
-          </TouchableHighlight>
-          <View style={styles.end}/>
-        </ScrollView>
+            <TouchableHighlight style={[styles.buttonContainer, styles.modifyButton]}
+                                onPress={() => this.sendChanges()}>
+              <Text style={styles.modifyText}>GUARDAR CANVIS</Text>
+            </TouchableHighlight>
+            <View style={styles.end}/>
+            </View>
+          </ScrollView>
       </View>
     );
   }
@@ -550,5 +574,17 @@ const styles = StyleSheet.create({
   containerIconLocalitat: {
     marginTop:28,
     marginRight:20,
-  }
+  },
+  containerActeProva:{
+    flex: 1,
+    backgroundColor: '#714170',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop:'14%',
+  },
+  containerActe: {
+    width:'100%',
+    backgroundColor: "beige",
+    minHeight:552,
+  },
 });

@@ -29,9 +29,9 @@ export default class PerfilExtern extends React.Component {
            birthday: "",
            photo: null,
            sardanistaCompeticio: '',
-           coblaCompeticio: '',
            comarca:'',
            comptarIRepartir:'',
+           altresHabilitats:'',
         }
   }
 
@@ -113,6 +113,7 @@ export default class PerfilExtern extends React.Component {
           }
           else this.onChangeState("textVehicle", "NO");
 
+          this.onChangeState("altresHabilitats", json.altresHabilitats);
           this.onChangeState("aplecs", json.aplecs);
           this.onChangeState("ballades", json.ballades);
           this.onChangeState("concerts", json.concerts);
@@ -127,25 +128,40 @@ export default class PerfilExtern extends React.Component {
           this.onChangeState("birthday", dia+'/'+mes+'/'+any);
 
           if(json.competidor){
-            this.onChangeState("sardanistaCompeticio", "SÍ");
+            this.onChangeState("sardanistaCompeticio", true);
           }
-          else this.onChangeState("sardanistaCompeticio", "NO");
-
-          if(json.coblaCompetició){
-            this.onChangeState("coblaCompeticio", "SÍ");
-          }
-          else this.onChangeState("coblaCompeticio", "NO");
+          else this.onChangeState("sardanistaCompeticio", false);
 
           if(json.comptarRepartir){
-            this.onChangeState("comptarIRepartir", "SÍ");
+            this.onChangeState("comptarIRepartir", "Sé comptar i repartir");
           }
-          else this.onChangeState("comptarIRepartir", "NO");
+          else this.onChangeState("comptarIRepartir", "No sé comptar i repartir");
 
-          //Alert.alert("Alert", "Button pressed " + asyncStorageLoggedUserEmailKey);
       }
       catch (error) {
           console.error(error);
       }
+  }
+
+  renderHabilitats () {
+    let habilitats = []
+    if(this.state.comptarIRepartir){
+      habilitats.push(
+        <View style={styles.listActes}>
+           <Icon name={'md-checkmark'} size={30} color={'green'}  />
+           <Text style={styles.actesText}>Sé comptar i repartir</Text>
+        </View>
+      )
+    }
+    if(this.state.sardanistaCompeticio){
+      habilitats.push(
+        <View style={styles.listActes}>
+           <Icon name={'md-checkmark'} size={30} color={'green'}  />
+           <Text style={styles.actesText}>Sóc sardanista de competició</Text>
+        </View>
+      )
+    }
+    return habilitats;
   }
 
 
@@ -153,8 +169,9 @@ export default class PerfilExtern extends React.Component {
   render() {
     //var {navigate} = this.props.navigation;
     return (
-      <View style={styles.container}>
+      <View style={styles.containerActeProva}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
+          <View style={styles.containerActe}>
           <View style={styles.containerProfile}>
             <View style={styles.profileImage}>
               {this.state.photo && (
@@ -198,17 +215,16 @@ export default class PerfilExtern extends React.Component {
             <Text style={styles.titleApartats}>VEHICLE</Text>
             <Text style={styles.information}>{this.state.textVehicle}</Text>
             <Text style={styles.titleApartats}>HABILITATS</Text>
-            <Text style={styles.information}>{this.state.comptarIRepartir}</Text>
-            <Text style={styles.titleApartats}>SARDANES DE COMPETICIÓ</Text>
-            <Text style={styles.information}>{this.state.sardanistaCompeticio}</Text>
-            <Text style={styles.titleApartats}>COBLA DE COMPETICIÓ</Text>
-            <Text style={styles.information}>{this.state.coblaCompeticio}</Text>
-            <Text style={styles.titleApartats}>ACTES</Text>
+            <View>{this.renderHabilitats()}</View>
+            <Text style={styles.titleApartats}>També sé ...</Text>
+            <Text style={styles.information}>{this.state.altresHabilitats}</Text>
+            <Text style={styles.titleApartats}>INTERESSAT EN</Text>
             <View>
               <View>{this.renderActes()}</View>
             </View>
           </View>
           <View style={styles.end}/>
+         </View>
         </ScrollView>
       </View>
     );
@@ -351,5 +367,17 @@ const styles = StyleSheet.create({
   },
   modifyText: {
     color: 'white',
-  }
+  },
+  containerActeProva:{
+    flex: 1,
+    backgroundColor: '#714170',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop:'14%',
+  },
+  containerActe: {
+    width:'100%',
+    backgroundColor: "beige",
+    minHeight:552,
+  },
 });

@@ -27,6 +27,8 @@ import ListPerfilSmall from "./components/ListPerfilSmall";
 import FilterOptionsPerson from "./components/FilterOptionsPerson";
 import FilterOptions from "./components/FilterOptions";
 
+import {YellowBox} from "react-native"
+
 const Stack = createStackNavigator();
 
 const AuthStack = createStackNavigator();
@@ -54,8 +56,8 @@ function HomeTabScreen() {
         activeTintColor: 'tomato',
         inactiveTintColor: 'gray',
       }}>
-        <Tab.Screen name={globalHelper.ActesStackScreenID} component={ListActesStackScreen} />
         <Tab.Screen name={globalHelper.ListPerfilStackScreenID} component={ListPerfilStackScreen} />
+        <Tab.Screen name={globalHelper.ActesStackScreenID} component={ListActesStackScreen} />
         <Tab.Screen name={globalHelper.PerfilScreenID} component={PerfilStackSreen} />
       </Tab.Navigator>
   );
@@ -206,7 +208,9 @@ export default class App extends React.Component {
   }
 
   render() {
+    console.disableYellowBox=true;
     return (/*
+
       <NavigationContainer>
         <DrawerFiltersPerson/>
       </NavigationContainer>*/
