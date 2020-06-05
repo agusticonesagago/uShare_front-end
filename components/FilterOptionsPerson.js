@@ -20,6 +20,7 @@ import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 import * as globalHelperData from './Auxiliars/GlobalHelperData.js'
 import * as globalHelperAPI from './Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Users.js'
+import * as globalHelperAPI_ACTES from './Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes.js'
 
 import MyCheckBox from "./CheckBox/MyCheckBox";
 import MyAutoComplete from "./MyAutoComplete/MyAutoComplete";
@@ -46,14 +47,21 @@ export default class FilterOptions extends React.Component {
         //habilitats: [], // Should be 'comptar' or 'competidor' or 'coblaCompeticio'
         habilitatsComptar: false,
         habilitatsCompetidor: false,
-        habilitatsCoblaCompeticio: false,
 
         vehicle: false,
         ordenar: null,
 
       first: true,// flag de control
 
+        isActeAssistants:false,
+        acteID:null,
+
       Users:[], // Dades
+    }
+
+    if(props.route.params.isActeAssistants) {
+        this.state.isActeAssistants = true;
+        this.state.acteID = this.props.route.params.acteID;
     }
 
     this.onChangeState.bind(this);
@@ -65,12 +73,22 @@ export default class FilterOptions extends React.Component {
 
 
     filterUsers() {
-        globalHelperAPI.filterUsers(this.state)
-            .then( (jsonData) => {
-                    this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {data:jsonData})
-                }
-            )
-        //this.props.navigation.navigate(globalHelper.ListPerfilScreenID, jsonData);
+        if(!this.state.isActeAssistants) {
+            globalHelperAPI.filterUsers(this.state)
+                .then( (jsonData) => {
+                        this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {data:jsonData, acteID:this.state.acteID})
+                    }
+                )
+            //this.props.navigation.navigate(globalHelper.ListPerfilScreenID, jsonData);
+        }
+        else {
+            globalHelperAPI_ACTES.filterUsersOfActe(this.state)
+                .then( (jsonData) => {
+                        this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {data:jsonData, acteID:this.state.acteID})
+                    }
+                )
+        }
+
     }
 
   render() {
@@ -87,6 +105,9 @@ export default class FilterOptions extends React.Component {
       return (
 
           <View style={styles.container}>
+              <View style={styles.headerBar}>
+                  <Text style={styles.titleNavigator}> Filtrar persones </Text>
+              </View>
              <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
                  <View style={styles.Filter}>
                      <View style={{flexDirection: 'row', marginBottom:20}}>
@@ -131,10 +152,6 @@ export default class FilterOptions extends React.Component {
                                      onChangeState={this.onChangeState}>
                          </MyCheckBox>
 
-                         <MyCheckBox title="Cobla competició"
-                                     checkBoxKey="coblaCompeticio"
-                                     onChangeState={this.onChangeState}>
-                         </MyCheckBox>
                      </View>
 
                      <View style={{flexDirection: 'row', marginTop:80}}>
@@ -222,8 +239,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'center',
-  }
-  ,scrollView:{
+  },
+    headerBar:{
+        width:'100%',
+        //height: '13.2%',
+        height: 56,
+        flexDirection:'row',
+        backgroundColor: '#714170',
+    },
+    titleNavigator:{
+        color:'white',
+        fontSize:30,
+        paddingTop:10,
+        width:'100%',
+        textAlign: 'center'
+    },
+    scrollView:{
       width:'100%',
   },
     Filter:{

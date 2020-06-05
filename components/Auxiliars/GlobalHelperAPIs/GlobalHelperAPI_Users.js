@@ -4,7 +4,7 @@ import * as globalHelper from "../GlobalHelper";
 
 
 
-function addParameter(state, url, key, val) {
+export function addParameter(state, url, key, val) {
     if(val === null) return url;
     else if(state.first===true) {
         state.first = false;
@@ -15,7 +15,7 @@ function addParameter(state, url, key, val) {
 
 }
 
-function addParameterEvents(state, API_USER_FILTER) {
+export function addParameterEvents(state, API_USER_FILTER) {
     let events = [];
     if(state.eventsAplecs === true)     events.push("aplecs");
     if(state.eventsBallades === true)   events.push("ballades");
@@ -29,18 +29,17 @@ function addParameterEvents(state, API_USER_FILTER) {
     return API_USER_FILTER;
 }
 
-function addParameterHabilitats(state, url) {
+export function addParameterHabilitats(state, url) {
     let habilitats = [];
     if(state.habilitatsComptar === true)     habilitats.push("comptar");
     if(state.habilitatsCompetidor === true)   habilitats.push("competidor");
-    if(state.habilitatsCoblaCompeticio === true)   habilitats.push("coblaCompeticio");
     for(let i = 0; i < habilitats.length; ++i) {
         url = addParameter(state, url, "habilitats", habilitats[i])
     }
     return url;
 }
 
-function buildURL(state) {
+export function buildURL(state) {
     let API_USER_FILTER = globalHelper.API_USER + "filters";
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"comarca",state.comarca);
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"edatMax",state.edatMax);

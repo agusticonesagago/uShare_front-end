@@ -1,5 +1,8 @@
 import React from 'react';
 import * as globalHelper from "../GlobalHelper";
+import * as GlobalHelperAPI_Users from "./GlobalHelperAPI_Users"
+
+
 
 
 function addParameter(state, url, key, val) {
@@ -27,6 +30,8 @@ function addParameterEvents(state, API_USER_FILTER) {
     }
     return API_USER_FILTER;
 }
+
+
 
 
 /*
@@ -111,4 +116,56 @@ export async function getAssistantsOfActe(acteID) {
 
 
 
+
+
+/*
+ * Filter assistants of an acte BEGIN
+ */
+
+
+export function buildFilterUsersOfActeURL(state) {
+    let API_ACTE_FILTER = buildAssistantsURL(state.acteID) + "/filters";
+    API_ACTE_FILTER = addParameter(state, API_ACTE_FILTER,"comarca",state.comarca);
+    API_ACTE_FILTER = addParameter(state, API_ACTE_FILTER,"edatMax",state.edatMax);
+    API_ACTE_FILTER = addParameter(state, API_ACTE_FILTER,"edatMin",state.edatMin);
+
+    API_ACTE_FILTER = GlobalHelperAPI_Users.addParameterEvents(state, API_ACTE_FILTER);
+    API_ACTE_FILTER = GlobalHelperAPI_Users.addParameterHabilitats(state, API_ACTE_FILTER);
+
+    API_ACTE_FILTER = addParameter(state, API_ACTE_FILTER,"transport",state.vehicle);
+
+    state.first = true; // reset control flag
+    return API_ACTE_FILTER;
+}
+
+export async function filterUsersOfActe(state) {
+    try {
+        let API_ACTE_FILTER = buildFilterUsersOfActeURL(state);
+        console.log('\n\nfetch URL = ' + API_ACTE_FILTER+'\n\n');
+        const response = await fetch(API_ACTE_FILTER);
+        console.log('\n\nAfter Fetch \n\n');
+        console.log("\n\n");
+        console.log(response);
+        console.log("\n\n");
+        const json = await response.json();
+
+        //console.log(json);
+        console.log("\n\n");
+        console.log('\n\nfilterUsersOfActe after fetch and response.json()  \n\n');
+
+        //TODO Que faig aqui...
+        console.log('\n\nfilterUsersOfActe Final \n\n');
+
+        return json;
+    }
+    catch (error) {
+        console.log('\n\nError:'  + error+ '\n\n');
+        console.error(error);
+    }
+
+}
+
+/*
+ * Filter assistants of an acte END
+ */
 

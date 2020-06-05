@@ -1,8 +1,10 @@
 import React , {Component} from 'react';
-import {StyleSheet, Text, TextInput, View, Image,
-  Button,
-  TouchableHighlight,
-  Alert, ScrollView, ImageBackground, Divider } from 'react-native';
+import {
+    StyleSheet, Text, TextInput, View, Image,
+    Button,
+    TouchableHighlight,
+    Alert, ScrollView, ImageBackground, Divider, SafeAreaView
+} from 'react-native';
 
 import CheckBox from '@react-native-community/checkbox';
 
@@ -12,6 +14,10 @@ import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
 import DatePicker from 'react-native-datepicker'
 import ImagePicker from 'react-native-image-picker'
 import * as globalHelper from "./Auxiliars/GlobalHelper";
+import MyCheckBox from "./CheckBox/MyCheckBox";
+import MyAutoComplete from "./MyAutoComplete/MyAutoComplete";
+import * as globalHelperData from "./Auxiliars/GlobalHelperData";
+import MyDatePicker from "./DatePicker/MyDatePicker";
 
 
 var API_USER = globalHelper.API_USER;
@@ -120,6 +126,8 @@ export default class SignUp extends React.Component {
         comptarRepartir: false,
         experienciaBallades: false,
 
+        altresHabilitats: null,
+
         // Preferences(Actes)
         aplecs:   true, // Checkbox(bool)
         concerts: true,
@@ -170,12 +178,13 @@ export default class SignUp extends React.Component {
 
           var jsonBody = JSON.stringify({
               altres: this.state.altres,
+              altresHabilitats: this.state.altresHabilitats,
               aplecs: this.state.aplecs,
               ballades: this.state.ballades,
               birthday: this.state.birthday,
-              coblaCompeticio: true, // todo
-              comarca: "Comarca", // todo
-              competidor: this.state.competidor, // todo
+              comarca: this.state.comarca,
+
+              competidor: this.state.competidor,
               comptarRepartir: this.state.comptarRepartir,
               concerts: this.state.concerts,
               concursos: this.state.concursos,
@@ -188,9 +197,8 @@ export default class SignUp extends React.Component {
               password: this.state.password,
               phoneNumber: this.state.mobileNumber,
               publicProfile: true, // per defecte
-              surname: this.state.cognom,
+              surname: this.state.cognom, // todo what?
               vehicle: this.state.hasCar,
-              comarca: this.state.DataActualdos.name,
           });
 
           const response = await fetch(API_USER,
@@ -288,12 +296,13 @@ export default class SignUp extends React.Component {
 
 
   render() {
+       console.log(this.state)
     return (
       <View style={styles.container}>
 
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.form} >
-            <Image source={require("../img/logorodo.png")} style={styles.imageLogo}></Image>
+            <Image source={require("../img/uShare-logo.png")} style={styles.imageLogo}></Image>
             <View style={styles.containerHeader}>
               <View style={styles.lineLeft} />
               <Text style={styles.titols}>Registrat</Text>
@@ -364,39 +373,25 @@ export default class SignUp extends React.Component {
                 <DatePicker
                   style={{
                     width: 200,
-                    //backgroundColor: '#ffffff',
-                    //marginBottom: 15,
-                    //marginLeft:5,
                     borderRadius: 14,
                     border:0,
-                    //height:50,
                   }}
                   showIcon={false}
                   date={this.state.birthday}
                   mode="date"
                   placeholder="Data de naixement"
-                  //format="YYYY-MM-DD"
-                  format="DD-MM-YYYY"
+                  format="YYYY-MM-DD"
+                  //format="DD-MM-YYYY"
                   //minDate="1900-01-01"
                   //maxDate="2020-01-01"
-                  minDate="01-01-1900"
-                  maxDate="01-01-2020"
+                  minDate="1900-01-01"
+                  maxDate="2020-01-01"
                   confirmBtnText="Confirm"
                   cancelBtnText="Cancel"
                   customStyles={{
-                    /*dateIcon: {
-                      //position: 'absolute',
-                      //left: 0,
-                      //top: 8,
-                      //marginLeft: 5,
-                      border:0,
-                    },*/
                     dateInput: {
-                      //textAlign:'left',
                       borderWidth: 0,
                       fontSize: 15,
-                      //marginRight: 4.5,
-                      //top:-5,
                     },
                     dateText: {
                       fontSize: 15,
@@ -484,69 +479,77 @@ export default class SignUp extends React.Component {
                 />
               </View>
 
+                <Text style={styles.textTitle}>Altres habilitats</Text>
+
+                <View style={styles.inputContainerAltresHabilitats}>
+                <TextInput
+                    style={styles.inputsHabilitats}
+                    placeholder=''
+                    autoCapitalize="none"
+                    onChangeText={val => this.onChangeText('altresHabilitats', val)}
+                    multiline={true} // More than one line
+                />
+            </View>
+
 
               <Text style={styles.textTitleActes}>En quins actes assisteixes?</Text>
-              <View style={styles.checkBox}>
-                <Text style={styles.textCheckbox}>Aplecs</Text>
-                <CheckBox
-                  title='Click Here '
-                  value={this.state.aplecs}
-                  onValueChange={val => this.onChangeState('aplecs', val)}
-                  style={styles.checkboxCaja}
-                  tintColors={{ true: 'blue' }}
-                />
-              </View>
-              <View style={styles.checkBox}>
-                <Text style={styles.textCheckbox}>Ballades</Text>
-                <CheckBox
-                  title='Click Here '
-                  value={this.state.ballades}
-                  onValueChange={val => this.onChangeState('ballades', val)}
-                  style={styles.checkboxCaja}
-                  tintColors={{ true: 'blue' }}
-                />
-              </View>
-              <View style={styles.checkBox}>
-                <Text style={styles.textCheckbox}>Concerts</Text>
-                <CheckBox
-                  title='Click Here '
-                  value={this.state.concerts}
-                  onValueChange={val => this.onChangeState('concerts', val)}
-                  style={styles.checkboxCaja}
-                  tintColors={{ true: 'blue' }}
-                />
-              </View>
-              <View style={styles.checkBox}>
-                <Text style={styles.textCheckbox}>Concursos</Text>
-                <CheckBox
-                  title='Click Here '
-                  value={this.state.concursos}
-                  onValueChange={val => this.onChangeState('concursos', val)}
-                  style={styles.checkboxCaja}
-                  tintColors={{ true: 'blue' }}
-                />
-              </View>
-              <View style={styles.checkBox}>
-                <Text style={styles.textCheckbox}>Cursets</Text>
-                <CheckBox
-                  title='Click Here '
-                  value={this.state.cursets}
-                  onValueChange={val => this.onChangeState('cursets', val)}
-                  style={styles.checkboxCaja}
-                  tintColors={{ true: 'blue' }}
-                />
-              </View>
-              <View style={styles.checkBox}>
-                <Text style={styles.textCheckbox}>Altres</Text>
-                <CheckBox
-                  title='Click Here '
-                  value={this.state.altres}
-                  onValueChange={val => this.onChangeState('altres', val)}
-                  style={styles.checkboxCaja}
-                  tintColors={{ true: 'blue' }}
-                />
-              </View>
+
+                <View style={styles.rowCheckBox}>
+                    <View style={styles.columnCheckBox}>
+                        <MyCheckBox title="Aplecs"
+                                    checkBoxKey="aplecs"
+                                    initialValue={this.state.aplecs}
+                                    onChangeState={this.onChangeState}>
+                        </MyCheckBox>
+
+                        <MyCheckBox title="Concursos"
+                                    checkBoxKey="concursos"
+                                    initialValue={this.state.concursos}
+                                    onChangeState={this.onChangeState}>
+                        </MyCheckBox>
+                    </View>
+
+                    <View style={styles.columnCheckBox}>
+                        <MyCheckBox title="Ballades"
+                                    checkBoxKey="ballades"
+                                    initialValue={this.state.ballades}
+                                    onChangeState={this.onChangeState}>
+                        </MyCheckBox>
+
+                        <MyCheckBox title="Cursets"
+                                    checkBoxKey="cursets"
+                                    initialValue={this.state.cursets}
+                                    onChangeState={this.onChangeState}>
+                        </MyCheckBox>
+                    </View>
+
+                    <View style={styles.columnCheckBox}>
+                        <MyCheckBox title="Concerts"
+                                    checkBoxKey="concerts"
+                                    initialValue={this.state.concerts}
+                                    onChangeState={this.onChangeState}>
+                        </MyCheckBox>
+
+                        <MyCheckBox title="Altres"
+                                    checkBoxKey="altres"
+                                    initialValue={this.state.altres}
+                                    onChangeState={this.onChangeState}>
+                        </MyCheckBox>
+                    </View>
+                </View>
             </View>
+
+              <SafeAreaView style={{marginTop: 40, marginRight: 20}}>
+                  <MyAutoComplete title="Comarca"
+                                  placeholder=""
+                                  autoCompleteKey="comarca"
+                                  data={globalHelperData.DataComarques}
+                                  onChangeState={this.onChangeState}
+                                  iconName = "md-pin"
+                                  iconSize = {40}
+                                  iconColor = "red">>
+                  </MyAutoComplete>
+              </SafeAreaView>
 
 
 
@@ -653,6 +656,12 @@ const styles = StyleSheet.create({
     textAlign:'left',
     color:'black',
   },
+    rowCheckBox:{
+        flexDirection: 'row',
+    },
+    columnCheckBox:{
+        flexDirection: 'column',
+    },
   textLocalitat:{
     fontSize:18,
     color:'black',
@@ -745,9 +754,11 @@ const styles = StyleSheet.create({
   containerPreguntes:{
     textAlign:'center',
     flexDirection: 'column',
-    width:'70%',
-    paddingLeft:24,
+    width:'100%',
+    //paddingLeft:24,
     marginTop:10,
+      alignItems:'center',
+
   },
   checkboxCaja:{
     top:0,
@@ -777,6 +788,24 @@ const styles = StyleSheet.create({
       alignItems:'center',
       marginTop:5,
   },
+    inputContainerAltresHabilitats: {
+        borderBottomColor: '#F5FCFF',
+        backgroundColor: '#FFFFFF',
+        borderRadius:10,
+        borderBottomWidth: 1,
+        width:'80%',
+        height:150,
+        marginBottom:20,
+        flexDirection: 'row',
+        alignItems:'center',
+        marginTop:5,
+    },
+    inputsHabilitats:{
+        height:100,
+        marginLeft:16,
+        borderBottomColor: '#FFFFFF',
+        flex:1,
+    },
   inputs:{
       height:45,
       marginLeft:16,

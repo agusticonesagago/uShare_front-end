@@ -211,12 +211,13 @@ export default class ActeComplete extends React.Component {
 
     assistents() {
         globalHelperAPI_Actes.getAssistantsOfActe(this.state.idActe).then((users)=>{
-                this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {data:users});
+                this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {data:users, acteID:this.state.idActe});
             }
         );
     }
 
   render() {
+      console.log(this.state);
     if(this.state.acteLoaded){
       let Image_Http_URL = {uri: this.state.imatge};
       return (

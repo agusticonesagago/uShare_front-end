@@ -78,8 +78,21 @@ export default class ListPerfilSmall extends React.Component {
 
   render() {
       console.log("this.state.personesLoaded: " + this.state.personesLoaded);
+      console.log(this.state)
       if (this.state.personesLoaded) {
-          if(this.props.route.params)  this.state.persones = this.props.route.params.data;
+          let isActeAssistants = false;
+          let acteID=null;
+          if(this.props.route.params)  {
+              this.state.persones = this.props.route.params.data;
+              if(this.props.route.params.acteID){
+                  isActeAssistants = true;
+                  acteID=this.props.route.params.acteID;
+              }
+
+          }
+          console.log("isActeAssistants = " + isActeAssistants);
+          console.log("acteID = " + acteID);
+
           let profiles = [];
           for (let i = 0; i < this.state.persones.length; ++i) {
               profiles.push(<PerfilSmall nomCognom={this.state.persones[i].name}
@@ -101,7 +114,7 @@ export default class ListPerfilSmall extends React.Component {
                             color={'white'}
                             style={styles.iconFilter}
                             onPress={() => {
-                                this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID);
+                                this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID,{isActeAssistants:isActeAssistants, acteID:acteID});
                             }}
                           />
                       </View>

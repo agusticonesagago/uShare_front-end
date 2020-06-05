@@ -115,7 +115,7 @@ export default class LoginView extends React.Component {
           <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
             <View style={styles.LogIn}>
                 <View style={styles.logo}>
-                  <Image source={require("../img/logoconfederacio.png")} style={styles.image} rezideMode="center"/>
+                  <Image source={require("../img/uShare-logo.png")} style={styles.image} rezideMode="center"/>
                 </View>
 
                 <View style={styles.inputContainer}>

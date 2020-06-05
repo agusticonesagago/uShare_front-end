@@ -112,20 +112,16 @@ function ListActesStackScreen() {
       </AuthStack.Navigator>*/
 
       <AuthStack.Navigator>
-          <AuthStack.Screen name={globalHelper.ListActesScreenID} component={ListActesSmall} options={{ title: '', headerTransparent: true }} />
-          <AuthStack.Screen name={globalHelper.ActeCompleteID} component={ActeComplete} options={{ title: '', headerTransparent: true }}/>
-          <AuthStack.Screen name={globalHelper.ActesScreenID} component={Actes} options={{ title: '', headerTransparent: true }}/>
-          <AuthStack.Screen name={globalHelper.FilterListActesScreenID} component={FilterOptions} options={{ title: "Filtre d'actes", headerTransparent: false }} />
+          <AuthStack.Screen name={globalHelper.ListActesScreenID} component={ListActesSmall} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
+          <AuthStack.Screen name={globalHelper.ActeCompleteID} component={ActeComplete} options={{ title: '', headerTransparent: true, headerTintColor:'white' }}/>
+          <AuthStack.Screen name={globalHelper.ActesScreenID} component={Actes} options={{ title: '', headerTransparent: true, headerTintColor:'white' }}/>
+          <AuthStack.Screen name={globalHelper.FilterListActesScreenID} component={FilterOptions} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
 
-          <AuthStack.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall}
-                            options={{
-                                title: '',
-                                headerTransparent: true,
-                            }}
+          <AuthStack.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall} options={{title: '', headerTransparent: true}}
           />
-          <AuthStack.Screen name={globalHelper.FilterListPerfilScreenID} component={FilterOptionsPerson} options={{ title: '', headerTransparent: true }} />
-          <AuthStack.Screen name={globalHelper.PerfilExternScreenID} component={PerfilExtern} options={{ title: '', headerTransparent: true }} />
-          <AuthStack.Screen name={globalHelper.PerfilSmallScreenID} component={PerfilSmall} options={{ title: '', headerTransparent: true }} />
+          <AuthStack.Screen name={globalHelper.FilterListPerfilScreenID} component={FilterOptionsPerson} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
+          <AuthStack.Screen name={globalHelper.PerfilExternScreenID} component={PerfilExtern} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
+          <AuthStack.Screen name={globalHelper.PerfilSmallScreenID} component={PerfilSmall} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
 
       </AuthStack.Navigator>
   );
@@ -139,12 +135,12 @@ function ListPerfilStackScreen() {
             <AuthStack.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall}
                               options={{
                                   title: '',
-                                  headerTransparent: true,
+                                  headerTransparent: true, headerTintColor:'white'
                               }}
             />
-            <AuthStack.Screen name={globalHelper.FilterListPerfilScreenID} component={FilterOptionsPerson} options={{ title: "Filtre d'usuaris", headerTransparent: false }} />
-            <AuthStack.Screen name={globalHelper.PerfilExternScreenID} component={PerfilExtern} options={{ title: '', headerTransparent: true }} />
-            <AuthStack.Screen name={globalHelper.PerfilSmallScreenID} component={PerfilSmall} options={{ title: '', headerTransparent: true }} />
+            <AuthStack.Screen name={globalHelper.FilterListPerfilScreenID} component={FilterOptionsPerson} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
+            <AuthStack.Screen name={globalHelper.PerfilExternScreenID} component={PerfilExtern} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
+            <AuthStack.Screen name={globalHelper.PerfilSmallScreenID} component={PerfilSmall} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
         </AuthStack.Navigator>
     );
 }

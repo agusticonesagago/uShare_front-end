@@ -60,6 +60,9 @@ export default class FilterOptions extends React.Component {
     const text = (this.state.disabled) ? 'Enable' : 'Disable';
     console.log(this.state);
     return <View style={styles.container}>
+      <View style={styles.headerBar}>
+        <Text style={styles.titleNavigator}> Filtrar actes </Text>
+      </View>
       <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange}
                   showVerticalScrollIndicator={false}>
         <View style={styles.Filter}>
@@ -158,6 +161,27 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'flex-start',
     justifyContent: 'center',
+  },
+  containerNavigator: {
+    backgroundColor: '#714170',
+    height: '13.2%',
+    width:'100%',
+    flexDirection:'row',
+  },
+  headerBar:{
+    width:'100%',
+    //height: '13.2%',
+    height: 56,
+    flexDirection:'row',
+    backgroundColor: '#714170',
+  },
+  titleNavigator:{
+    color:'white',
+    fontSize:30,
+    paddingTop:10,
+    width:'100%',
+    textAlign: 'center'
+
   },
   scrollView:{
     width:'100%',
