@@ -164,8 +164,6 @@ export default class PerfilExtern extends React.Component {
     return habilitats;
   }
 
-
-
   render() {
     //var {navigate} = this.props.navigation;
     return (

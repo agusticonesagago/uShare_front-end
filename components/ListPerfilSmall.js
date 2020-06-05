@@ -4,6 +4,10 @@ import {StyleSheet, Text, View, Image, ScrollView, Button, Alert} from 'react-na
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {NavigationContainer} from '@react-navigation/native';
+import {
+  SCLAlert,
+  SCLAlertButton
+} from 'react-native-scl-alert'
 
 import Drawer from './Drawer.js';
 import PerfilSmall from './PerfilSmall.js';
@@ -24,12 +28,23 @@ export default class ListPerfilSmall extends React.Component {
         this.state = {
             persones: [],
             personesLoaded: false,
+            show: true
         };
 
         if(props.route.params) this.state.personesLoaded = true;
         //if(this.props.route.params) this.state.personesLoaded = true;
 
   }
+
+    handleOpen = () => {
+      this.setState({ show: true })
+    }
+
+
+
+    handleClose = () => {
+      this.setState({ show: false })
+    }
 
 
     async getInfoPersones() {
@@ -65,7 +80,6 @@ export default class ListPerfilSmall extends React.Component {
       console.log("this.state.personesLoaded: " + this.state.personesLoaded);
       if (this.state.personesLoaded) {
           if(this.props.route.params)  this.state.persones = this.props.route.params.data;
-          Alert.alert("Coneix Nous Sardanistes !!", "Comença a buscar sardanistes com tu!     No perdis el temps!!");
           let profiles = [];
           for (let i = 0; i < this.state.persones.length; ++i) {
               profiles.push(<PerfilSmall nomCognom={this.state.persones[i].name}
@@ -91,6 +105,18 @@ export default class ListPerfilSmall extends React.Component {
                             }}
                           />
                       </View>
+                        <SCLAlert
+                          theme="inverse"
+                          show={this.state.show}
+                          title="Coneix Nous Sardanistes"
+                          subtitle="Comença a buscar sardanistes com tu!"
+                          onRequestClose={this.handleClose}
+                        >
+                        <SCLAlertButton theme="inverse" onPress={this.handleClose}>SOM-HI</SCLAlertButton>
+                      </SCLAlert>
+
+
+
                       {/*<View style={styles.filterButton}>
                          <Button style={styles.buttonContainer}
                               onPress={() => {
@@ -108,13 +134,12 @@ export default class ListPerfilSmall extends React.Component {
                             }}
                           >
                           </Icon>
-
                       </View>*/}
 
                   </View>
 
                   <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange}
-                              showVerticalScrollIndicator={false}>
+                              showVerticalScrollIndicator={false} >
                       {profiles}
                   </ScrollView>
               </View>
