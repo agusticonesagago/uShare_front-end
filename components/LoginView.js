@@ -141,29 +141,10 @@ export default class LoginView extends React.Component {
                   <Text style={styles.loginText}>Entra</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonContainer}
+                <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]}
                                     onPress={() => this.props.navigation.navigate(globalHelper.SignUpScreenID) }>
-                  <Text>Registrat</Text>
+                  <Text style={styles.loginText} >Registrat</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={styles.buttonContainer}
-                                    onPress={async () => {
-                                        let storedUserEmail = await globalHelper.getLoggedUserEmailAsync();
-                                        alert(storedUserEmail);
-
-                                        console.log('\n');
-                                        console.log("storedUserEmail: ", storedUserEmail);
-                                        console.log('\n');
-                                    }
-                                    } >
-
-                                    <Text>Test logged user</Text>
-                </TouchableOpacity>
-
-
-
-
-
 
             </View>
           </ScrollView>
