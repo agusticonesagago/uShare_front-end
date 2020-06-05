@@ -9,7 +9,7 @@ Que fer quan peta: Si no pilla un modul
 ```bash
 npx react-native run-android --reset-cache
 ```
-o 
+o
 ```bash
 npx react-native start --reset-cache
 ```
@@ -51,6 +51,10 @@ npm install @react-navigation/native
 
 ```bash
 npm i react-native-dropdown-autocomplete-textinput --save
+```
+
+```bash
+npm install --save react-native-scl-alert
 ```
 
 # Mohamed
