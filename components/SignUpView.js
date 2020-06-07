@@ -22,80 +22,6 @@ import MyDatePicker from "./DatePicker/MyDatePicker";
 
 var API_USER = globalHelper.API_USER;
 
-
-
-// TODO: Refactor codi de la API
-// TODO: Quan s'hagi decidit el ordre de les pantalles i eso, implementar el canvi de pantalla
-/*
-<Image source={{ uri: 'data:image/jpeg;base64,' + this.state.fileData }}
-        style={styles.images}
-      />
-
-    PER MOSTRA LA IMATGE:
-      <Image source={{ uri: 'data:' + photo.type + ';base64,' + this.state.photo.data }}
-        style={styles.images} //TODO: Demanar en backend un atribut pel tipus?
-                              // TODO: O potser passa a base64 tot i recuperar-ho tot
-                              // TODO: O potser afegir el tipus al enviar-ho(concatenat)
-      />
- */
-
-
- const DataComarques = [
-   {code: 'Alt Camp', name: 'Alt Camp'},
-   {code: 'Alt Empordà', name: 'Alt Empordà'},
-   {code: 'Alt Penedès', name: 'Alt Penedès'},
-   {code: 'Alt Urgell', name: 'Alt Urgell'},
-   {code: 'Alta Cerdanya', name: 'Alta Cerdanya'},
-   {code: 'Alta Ribagorça', name: 'Alta Ribagorça'},
-   {code: 'Andorra', name: 'Andorra'},
-   {code: 'Anoia', name: 'Anoia'},
-   {code: 'Bages', name: 'Bages'},
-   {code: 'Baix Camp', name: 'Baix Camp'},
-   {code: 'Baix Ebre', name: 'Baix Ebre'},
-   {code: 'Baix Empordà', name: 'Baix Empordà'},
-   {code: 'Baix Llobregat', name: 'Baix Llobregat'},
-   {code: 'Baix Penedès', name: 'Baix Penedès'},
-   {code: 'Baixa Cerdanya', name: 'Baixa Cerdanya'},
-   {code: 'Barcelonès', name: 'Barcelonès'},
-   {code: 'Berguedà', name: 'Berguedà'},
-   {code: 'Capcir', name: 'Capcir'},
-   {code: 'Conca de Barberà', name: 'Conca de Barberà'},
-   {code: 'Conflent', name: 'Conflent'},
-   {code: 'Fenolleda', name: 'Fenolleda'},
-   {code: 'Garraf', name: 'Garraf'},
-   {code: 'Garrigues', name: 'Garrigues'},
-   {code: 'Garrotxa', name: 'Garrotxa'},
-   {code: 'Gironès', name: 'Gironès'},
-   {code: 'Illes Balears', name: 'Illes Balears'},
-   {code: 'Maresme', name: 'Maresme'},
-   {code: 'Montsià', name: 'Montsià'},
-   {code: 'Noguera', name: 'Noguera'},
-   {code: 'Osona', name: 'Osona'},
-   {code: 'País Valencià', name: 'País Valencià'},
-   {code: 'Pallars Jussà', name: 'Pallars Jussà'},
-   {code: 'Pallars Sobirà', name: 'Pallars Sobirà'},
-   {code: 'Pla Estany', name: 'Pla Estany'},
-   {code: 'Pla Urgell', name: 'Pla Urgell'},
-   {code: 'Priorat', name: 'Priorat'},
-   {code: 'Resta Estat Espanyol', name: 'Resta Estat Espanyol'},
-   {code: 'Resta Estat Francès', name: 'Resta Estat Francès'},
-   {code: 'Resta Món', name: 'Resta Món'},
-   {code: 'Ribera Ebre', name: 'Ribera Ebre'},
-   {code: 'Ripollès', name: 'Ripollès'},
-   {code: 'Roselló', name: 'Roselló'},
-   {code: 'Segarra', name: 'Segarra'},
-   {code: 'Segrià', name: 'Segrià'},
-   {code: 'Selva', name: 'Selva'},
-   {code: 'Solsonès', name: 'Solsonès'},
-   {code: 'Tarragonès', name: 'Tarragonès'},
-   {code: 'Terra Alta', name: 'Terra Alta'},
-   {code: 'Urgell', name: 'Urgell'},
-   {code: 'Val Aran', name: 'Val Aran'},
-   {code: 'Vallès Occidental', name: 'Vallès Occidental'},
-   {code: 'Vallès Oriental', name: 'Vallès Oriental'},
-   {code: 'Vallespir', name: 'Vallespir'},
- ];
-
 export default class SignUp extends React.Component {
 
 
@@ -141,23 +67,7 @@ export default class SignUp extends React.Component {
         preferenciaProximitat: null, // Bool? Es confos: l'hauria d'escollir en el buscador
         preferenciaQualitatActe: null, // La cobla la escollira en el buscador
 
-        DataActualdos:  {
-          code: '', name:  ''
-        },
-      // More...
     }
-  }
-
-  changeComarca = (inputName, inputValue) => {
-     console.log(inputName);
-     console.log(inputValue);
-     this.setState(state => ({
-      ...state,
-      DataActualdos: {
-        name: inputValue.name,
-        code: inputValue.code,
-      }
-    }))
   }
 
   onChangeState = (key, val) => {
@@ -215,8 +125,6 @@ export default class SignUp extends React.Component {
           if(response.status === globalHelper.API_USER_CREATED_CODE) {
               console.log("TEXT ", text);
               console.log("Upload succes: ", response);
-              //console.log("Sended JSON BODY: ", jsonBody);
-              //alert("Upload success!");
               this.props.navigation.navigate(globalHelper.LogInScreenID);
           }
           else {
@@ -381,9 +289,6 @@ export default class SignUp extends React.Component {
                   mode="date"
                   placeholder="Data de naixement"
                   format="YYYY-MM-DD"
-                  //format="DD-MM-YYYY"
-                  //minDate="1900-01-01"
-                  //maxDate="2020-01-01"
                   minDate="1900-01-01"
                   maxDate="2020-01-01"
                   confirmBtnText="Confirm"
@@ -404,7 +309,6 @@ export default class SignUp extends React.Component {
                       marginRight: 30,
                       top:-5,
                     },
-                    // ... You can check the source to find the other keys.
                   }}
                   onDateChange={(birthday) => {this.setState({birthday: birthday})}}
                 />
@@ -431,20 +335,6 @@ export default class SignUp extends React.Component {
                 multiline={true} // More than one line
               />
             </View>
-
-            {/*<View style={styles.imageLocalitat}>
-              <View style={styles.dropdownLocalitat}>
-                <Autocomplete
-                  data={DataComarques}
-                  displayKey="name"
-                  placeholderColor={'black'}
-                  dropDownIconColor	={'#714170'}
-                  value = {this.state.DataActualdos}
-                  textInputStyle={styles.text}
-                  onSelect={value => this.changeComarca('value', value)}
-                />
-              </View>
-            </View>*/}
 
             <View style={styles.containerPreguntes}>
               <Text style={styles.textTitle}>Habilitats</Text>
@@ -569,7 +459,6 @@ export default class SignUp extends React.Component {
 SignUp.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
-      //name={focused ? 'md-calendar' : 'ios-calendar'}
       name={'md-calendar'}
       size={28}
       color={tintColor}
@@ -681,7 +570,6 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: "#00b5ec",
-    //backgroundColor: "#4040ff",
   },
   loginText: {
     color: 'white',
@@ -755,7 +643,6 @@ const styles = StyleSheet.create({
     textAlign:'center',
     flexDirection: 'column',
     width:'100%',
-    //paddingLeft:24,
     marginTop:10,
       alignItems:'center',
 

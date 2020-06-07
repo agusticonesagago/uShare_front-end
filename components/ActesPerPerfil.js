@@ -16,8 +16,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import Drawer from './Drawer.js';
-
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 
 var API_USER = globalHelper.API_USER;

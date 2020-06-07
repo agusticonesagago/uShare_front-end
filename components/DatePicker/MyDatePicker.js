@@ -14,17 +14,12 @@ export default class MyDatePicker extends React.Component {
     this.state = {
       date:""
     }
-
-    //bind(props.onChangeState)
   }
 
   onChangeState = (key, val) => {
     this.setState({ [key]: val })
   };
 
-// text "Entre el "
-  // key
-  // placeholder
   render() {
     let key = this.props.dateKey;
     return (
@@ -33,7 +28,6 @@ export default class MyDatePicker extends React.Component {
                 <Text style={styles.titleBetweenAgenda}>{this.props.text}</Text>
                 <DatePicker
                   style={{
-                    //width: 190,
                     width: "70%",
                   }}
                   date={this.state.date}

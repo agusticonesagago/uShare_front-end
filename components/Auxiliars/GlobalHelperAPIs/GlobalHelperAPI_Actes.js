@@ -149,11 +149,9 @@ export async function filterUsersOfActe(state) {
         console.log("\n\n");
         const json = await response.json();
 
-        //console.log(json);
         console.log("\n\n");
         console.log('\n\nfilterUsersOfActe after fetch and response.json()  \n\n');
 
-        //TODO Que faig aqui...
         console.log('\n\nfilterUsersOfActe Final \n\n');
 
         return json;
@@ -168,4 +166,3 @@ export async function filterUsersOfActe(state) {
 /*
  * Filter assistants of an acte END
  */
-

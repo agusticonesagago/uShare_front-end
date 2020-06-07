@@ -82,15 +82,11 @@ export var API_SUCESSFUL_LOGIN_CODE = 200;
 
 export async function signInAsync(key, value) {
     await AsyncStorage.setItem(key, value);
-    //this.props.navigation.navigate('App');
 }
 
 export async function signInStoreLoggedUserEmailAsync(value) {
     await AsyncStorage.setItem(asyncStorageLoggedUserEmailKey, value);
-    //this.props.navigation.navigate('App');
 }
-
-
 
 /*
  * Get Value from AsyncStorage
@@ -116,7 +112,7 @@ export async function getLoggedUserEmailAsync() {
 
 
  // TODO: make it an    export async function
-    export async function _signOutAsync() {
-        await AsyncStorage.clear();
-        //this.props.navigation.navigate('Auth');
-    };
+  export async function _signOutAsync() {
+      await AsyncStorage.clear();
+      //this.props.navigation.navigate('Auth');
+  };

@@ -1,12 +1,6 @@
 import React from 'react';
 
 
-
-export const DataOrder = [
-    {code: 'Proximitat', name: 'Proximitat'},
-    {code: 'Edat', name: 'Edat'},
-];
-
 export const DataComarques = [
     {code: 'Alt Camp', name: 'Alt Camp'},
     {code: 'Alt Empordà', name: 'Alt Empordà'},

@@ -5,8 +5,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import Drawer from './Drawer.js';
-
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 import * as globalHelperAPI_Actes from './Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes'
 
@@ -274,7 +272,6 @@ export default class ActeComplete extends React.Component {
 ActeComplete.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
-      //name={focused ? 'md-calendar' : 'ios-calendar'}
       name={'md-calendar'}
       size={28}
       color={tintColor}

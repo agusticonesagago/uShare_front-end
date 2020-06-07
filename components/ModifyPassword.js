@@ -83,8 +83,6 @@ export default class ModifyPassword extends React.Component {
 
               if(response.status === globalHelper.API_SUCESSFUL_LOGIN_CODE) {
                   alert("Modify success!");
-
-                  //this.props.navigation.replace(globalHelper.HomeScreenID);
               }
               else {
                   alert("Contrasenya actual no coincideix");
@@ -138,7 +136,6 @@ export default class ModifyPassword extends React.Component {
 ModifyPassword.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
-      //name={focused ? 'md-calendar' : 'ios-calendar'}
       name={'md-calendar'}
       size={28}
       color={tintColor}

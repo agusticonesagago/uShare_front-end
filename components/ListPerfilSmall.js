@@ -9,7 +9,6 @@ import {
   SCLAlertButton
 } from 'react-native-scl-alert'
 
-import Drawer from './Drawer.js';
 import PerfilSmall from './PerfilSmall.js';
 
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
@@ -34,8 +33,6 @@ export default class ListPerfilSmall extends React.Component {
         };
 
         if(props.route.params) this.state.personesLoaded = true;
-        //if(this.props.route.params) this.state.personesLoaded = true;
-
   }
 
     handleOpen = () => {
@@ -61,12 +58,9 @@ export default class ListPerfilSmall extends React.Component {
           console.log(response);
           console.log("\n\n");
 
-
-
           this.setState({
             personesLoaded: true
           });
-          //console.log(this.state.actpersoneses); //Per veure quines persones hi ha
       }
       catch (error) {
           console.error(error);
@@ -157,29 +151,6 @@ export default class ListPerfilSmall extends React.Component {
                       <View style={styles.logoImage}>
                           {this.capcelera()}
                       </View>
-
-
-
-
-                      {/*<View style={styles.filterButton}>
-                         <Button style={styles.buttonContainer}
-                              onPress={() => {
-                                  alert("This is a button");
-                                  this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID);
-                              }}
-                              title={"Filtra"}
-                              //color={"#FFF"}
-                          />
-                          <Icon name={'md-options'} size={28}
-                            color={'white'}
-                            style={styles.iconFilter}
-                            onPress={() => {
-                                this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID);
-                            }}
-                          >
-                          </Icon>
-                      </View>*/}
-
                   </View>
 
                   <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange}
@@ -195,22 +166,12 @@ export default class ListPerfilSmall extends React.Component {
                 <Text style={styles.WaitingText}> Carregant... </Text>
             </View>
 
-            //return null;
         )
     }
   }
 }
 
-/*ListPerfilSmall.navigationOptions = {
-  tabBarIcon: ({tintColor,focused}) => (
-    <Icon
-      //name={focused ? 'md-calendar' : 'ios-calendar'}
-      name={'md-calendar'}
-      size={28}
-      color={tintColor}
-    />
-  )
-}*/
+
 
 const styles = StyleSheet.create({
   container: {

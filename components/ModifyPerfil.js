@@ -419,7 +419,6 @@ export default class ModifyPerfil extends React.Component {
 ModifyPerfil.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
-      //name={focused ? 'md-calendar' : 'ios-calendar'}
       name={'md-calendar'}
       size={28}
       color={tintColor}

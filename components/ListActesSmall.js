@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 
 import Actes from './Actes.js';
-import Drawer from './Drawer.js';
 import PerfilSmall from './PerfilSmall.js';
 
 
@@ -38,7 +37,6 @@ export default class ListActesSmall extends React.Component {
           this.setState({
             actesLoaded: true
           });
-          //console.log(this.state.actes); //Per veure quins actes té
       }
       catch (error) {
           console.error(error);
@@ -51,7 +49,6 @@ export default class ListActesSmall extends React.Component {
         if(this.props.route.params)  this.state.actes = this.props.route.params.data;
 
         let actes = [];
-        //console.log(this.state.actes.length);
         for (let i = 0; i < this.state.actes.length; ++i) {
          actes.push(<Actes where={this.state.actes[i].lloc}
            when={this.state.actes[i].hora1}

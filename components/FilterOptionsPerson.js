@@ -79,7 +79,6 @@ export default class FilterOptions extends React.Component {
                         this.props.navigation.navigate(globalHelper.ListPerfilScreenID, {data:jsonData, acteID:this.state.acteID})
                     }
                 )
-            //this.props.navigation.navigate(globalHelper.ListPerfilScreenID, jsonData);
         }
         else {
             globalHelperAPI_ACTES.filterUsersOfActe(this.state)
@@ -92,16 +91,6 @@ export default class FilterOptions extends React.Component {
     }
 
   render() {
-      console.log(this.state);
-
-      /*
-  const text = (this.state.disabled) ? 'Enable' : 'Disable';
-  console.log(this.state);
-  console.log("\n\n\n\n");
-  console.log(this.props.dummy);*/
-      console.log("\n\n");
-      console.log("\n\n");
-      console.log("\n\n");
       return (
 
           <View style={styles.container}>
@@ -242,7 +231,6 @@ const styles = StyleSheet.create({
   },
     headerBar:{
         width:'100%',
-        //height: '13.2%',
         height: 56,
         flexDirection:'row',
         backgroundColor: '#714170',
@@ -285,15 +273,10 @@ const styles = StyleSheet.create({
     fontSize:30,
   },
     inputContainer: {
-        //borderBottomColor: '#F5FCFF',
-        //borderColor:'#F5FCFF',
         borderColor:'#FF0000',
-        //backgroundColor: '#EEEEEE',
         borderRadius:30,
         borderBottomWidth: 2,
-        //width:250,
         width:"80%",
-
         height:45,
         marginBottom:20,
         flexDirection: 'row',
@@ -331,5 +314,4 @@ const styles = StyleSheet.create({
         marginTop:8,
         marginLeft:8,
     }
-
 });

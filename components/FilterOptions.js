@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import Drawer from './Drawer.js';
 import CheckBox from '@react-native-community/checkbox';
 import DatePicker from 'react-native-datepicker';
 
@@ -170,7 +169,6 @@ const styles = StyleSheet.create({
   },
   headerBar:{
     width:'100%',
-    //height: '13.2%',
     height: 56,
     flexDirection:'row',
     backgroundColor: '#714170',

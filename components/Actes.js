@@ -16,8 +16,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import Drawer from './Drawer.js';
-
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 
 var API_USER = globalHelper.API_USER;
@@ -130,18 +128,7 @@ export default class Actes extends React.Component {
     else return null
   }
 }
-/*
-Actes.navigationOptions = {
-  tabBarIcon: ({tintColor,focused}) => (
-    <Icon
-      //name={focused ? 'md-calendar' : 'ios-calendar'}
-      name={'md-calendar'}
-      size={28}
-      color={tintColor}
-    />
-  )
-}
-*/
+
 const styles = StyleSheet.create({
   containerActe: {
     width:'100%',

@@ -91,7 +91,6 @@ export default class LoginView extends React.Component {
                 await globalHelper.signInStoreLoggedUserEmailAsync(email);
                 const json = await this.getUser(email);
 
-                //this.props.navigation.navigate(globalHelper.HomeStackScreenID);
                 this.props.navigation.replace(globalHelper.HomeStackScreenID);
             }
             else {
@@ -156,7 +155,6 @@ export default class LoginView extends React.Component {
 LoginView.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
-      //name={focused ? 'md-calendar' : 'ios-calendar'}
       name={'md-calendar'}
       size={28}
       color={tintColor}

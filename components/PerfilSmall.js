@@ -16,7 +16,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import Drawer from './Drawer.js';
 
 import * as globalHelper from './Auxiliars/GlobalHelper.js'
 
@@ -58,7 +57,6 @@ export default class PerfilSmall extends React.Component {
 PerfilSmall.navigationOptions = {
   tabBarIcon: ({tintColor,focused}) => (
     <Icon
-      //name={focused ? 'md-calendar' : 'ios-calendar'}
       name={'md-calendar'}
       size={28}
       color={tintColor}

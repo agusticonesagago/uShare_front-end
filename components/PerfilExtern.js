@@ -17,7 +17,7 @@ export default class PerfilExtern extends React.Component {
            textSobreMi: '',
            textName:'',
            textNumber:'',
-           textMail:'agusticonesa@gmail.com',
+           textMail:'',
            textVehicle: '',
            aplecs:   true,
            concerts: true,
@@ -165,7 +165,6 @@ export default class PerfilExtern extends React.Component {
   }
 
   render() {
-    //var {navigate} = this.props.navigation;
     return (
       <View style={styles.containerActeProva}>
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>

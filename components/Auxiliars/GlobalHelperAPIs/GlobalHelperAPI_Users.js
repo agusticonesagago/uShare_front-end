@@ -49,9 +49,6 @@ export function buildURL(state) {
     API_USER_FILTER = addParameterHabilitats(state, API_USER_FILTER);
 
     API_USER_FILTER = addParameter(state, API_USER_FILTER,"transport",state.vehicle);
-    //API_USER_FILTER = addParameter(state, API_USER_FILTER,"ordenar",state.ordenar);
-
-
     state.first = true; // reset control flag
     return API_USER_FILTER;
 }
@@ -67,18 +64,9 @@ export async function filterUsers(state) {
         console.log(response);
         console.log("\n\n");
         const json = await response.json();
-
-        //console.log(json);
         console.log("\n\n");
         console.log('\n\nfilterUsers after fetch and response.json()  \n\n');
-
-
-        //console.log(state.Users);
-        //this.props.navigation.navigate(globalHelper.ListPerfilScreenID);
-
-        //TODO Que faig aqui...
         console.log('\n\nfilterUsers Final \n\n');
-
         return json;
     }
     catch (error) {

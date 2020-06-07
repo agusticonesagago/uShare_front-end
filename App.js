@@ -14,7 +14,6 @@ import ActeComplete from './components/ActeComplete.js';
 
 import ListActesSmall from './components/ListActesSmall.js';
 
-
 import {NavigationContainer} from '@react-navigation/native';
 
 import Actes from './components/Actes.js';
