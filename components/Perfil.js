@@ -133,20 +133,23 @@ export default class Perfil extends React.Component {
   }
 
   async getInfoActesNous() {
-      try {
+      if(!this.state.actesFutursLoaded){
+        try {
 
-          this.state.textMail = await globalHelper.getLoggedUserEmailAsync();
-          const response = await fetch(API_USER + this.state.textMail + '/acts/next');
-          const json = await response.json();
-          this.state.actesNous = json;
+            this.state.textMail = await globalHelper.getLoggedUserEmailAsync();
+            const response = await fetch(API_USER + this.state.textMail + '/acts/next');
+            const json = await response.json();
+            this.state.actesNous = json;
 
-          this.setState({
-            actesFutursLoaded: true
-          });
+            this.setState({
+              actesFutursLoaded: true
+            });
+        }
+        catch (error) {
+            console.error(error);
+        }
       }
-      catch (error) {
-          console.error(error);
-      }
+
   }
 
   async getInfoActesAntics() {
@@ -176,6 +179,8 @@ export default class Perfil extends React.Component {
     }
     else {
       this.state.option = 3;
+      this.state.actesFutursLoaded = false;
+      this.getInfoActesNous();
     }
     this.state.changeInfo = !this.state.changeInfo;
     this.forceUpdate();

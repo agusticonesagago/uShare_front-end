@@ -55,12 +55,31 @@ export default class Actes extends React.Component {
   anulat() {
     if(this.props.anulat=="Suspès"){
         return(
-          <Text style={styles.anulat}>
-            [ANUL·LAT]
-          </Text>
+          <View style={styles.WhereWhen}>
+            <Text style={styles.anulat}>
+              [ANUL·LAT]
+            </Text>
+            <Text style={styles.Where}>
+              {this.props.nomActivitat}
+            </Text>
+            <Text style={styles.When}>
+              {this.props.when} h
+            </Text>
+          </View>
         )
     }
-    else return null
+    else{
+      return(
+        <View style={styles.WhereWhen}>
+          <Text style={styles.WhereAnulat}>
+            {this.props.nomActivitat}
+          </Text>
+          <Text style={styles.When}>
+            {this.props.when} h
+          </Text>
+        </View>
+      )
+    }
   }
 
   assistents() {
@@ -79,15 +98,7 @@ export default class Actes extends React.Component {
     if(this.state.nombreAsistentsLoaded){
       return (
         <View style={styles.containerActe}>
-            <View style={styles.WhereWhen}>
-              {this.anulat()}
-              <Text style={styles.Where}>
-                {this.props.nomActivitat}
-              </Text>
-              <Text style={styles.When}>
-                {this.props.when} h
-              </Text>
-            </View>
+            {this.anulat()}
             <View style={styles.containerActeIndiv}>
               <View style={styles.containerInfoActe}>
                 <View style={styles.ActivitatCobles}>
@@ -140,7 +151,6 @@ const styles = StyleSheet.create({
   WhereWhen:{
     flexDirection: 'row',
     marginLeft: 10,
-    marginRight: 20,
     marginTop:15,
   },
   containerInfoActe:{
@@ -152,18 +162,23 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   Where:{
-    marginRight: 2,
     color: '#714170',
     fontWeight: 'bold',
     fontSize: 15,
-    width:'55%',
-    marginRight:'5%',
+    width:'56%',
+  },
+  WhereAnulat:{
+    color: '#714170',
+    fontWeight: 'bold',
+    fontSize: 15,
+    width:'76%',
   },
   When:{
     color:'grey',
     fontSize: 15,
     width:'auto',
     maxWidth:'20%',
+    textAlign: 'right',
   },
   anulat:{
     marginRight: 10,

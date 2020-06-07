@@ -28,7 +28,9 @@ export default class ListPerfilSmall extends React.Component {
         this.state = {
             persones: [],
             personesLoaded: false,
-            show: true
+            show: true,
+            isActeAssistants : false,
+            acteID: ''
         };
 
         if(props.route.params) this.state.personesLoaded = true;
@@ -72,27 +74,70 @@ export default class ListPerfilSmall extends React.Component {
   }
 
 
+  capcelera(){
+
+    if(this.state.isActeAssistants){
+      return(
+        <Icon name={'md-options'} size={34}
+          color={'white'}
+          style={styles.iconFilterRight}
+          onPress={() => {
+              this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID,{isActeAssistants:this.state.isActeAssistants, acteID:this.state.acteID});
+          }}
+        />
+      )
+    }
+    else{
+      return(
+        <View style={styles.header}>
+          <Text style={styles.titleNavigator}> Sardanistes </Text>
+          <Icon name={'md-options'} size={34}
+            color={'white'}
+            style={styles.iconFilter}
+            onPress={() => {
+                this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID,{isActeAssistants:this.state.isActeAssistants, acteID:this.state.acteID});
+            }}
+          />
+        </View>
+      )
+    }
+  }
+
+
   setData(data) {
       this.state.persones = data;
+  }
+
+  showAlert(){
+    if(globalHelper.first_alert_show){
+      globalHelper.first_alert_show = false;
+      return(
+        <SCLAlert
+          theme="inverse"
+          show={this.state.show}
+          title="Coneix Nous Sardanistes"
+          subtitle="Comença a buscar sardanistes com tu!"
+          onRequestClose={this.handleClose}
+        >
+          <SCLAlertButton theme="inverse" onPress={this.handleClose}>SOM-HI</SCLAlertButton>
+        </SCLAlert>
+      )
+    }
+    else return null;
   }
 
   render() {
       console.log("this.state.personesLoaded: " + this.state.personesLoaded);
       console.log(this.state)
       if (this.state.personesLoaded) {
-          let isActeAssistants = false;
-          let acteID=null;
           if(this.props.route.params)  {
               this.state.persones = this.props.route.params.data;
               if(this.props.route.params.acteID){
-                  isActeAssistants = true;
-                  acteID=this.props.route.params.acteID;
+                  this.state.isActeAssistants = true;
+                  this.state.acteID=this.props.route.params.acteID;
               }
 
           }
-          console.log("isActeAssistants = " + isActeAssistants);
-          console.log("acteID = " + acteID);
-
           let profiles = [];
           for (let i = 0; i < this.state.persones.length; ++i) {
               profiles.push(<PerfilSmall nomCognom={this.state.persones[i].name}
@@ -107,26 +152,12 @@ export default class ListPerfilSmall extends React.Component {
 
           return (// TODO: Fer la headerBar per a tots els que la necesitin
               <View style={styles.container}>
+                  {this.showAlert()}
                   <View style={styles.headerBar}>
                       <View style={styles.logoImage}>
-                          <Text style={styles.titleNavigator}> Sardanistes </Text>
-                          <Icon name={'md-options'} size={34}
-                            color={'white'}
-                            style={styles.iconFilter}
-                            onPress={() => {
-                                this.props.navigation.navigate(globalHelper.FilterListPerfilScreenID,{isActeAssistants:isActeAssistants, acteID:acteID});
-                            }}
-                          />
+                          {this.capcelera()}
                       </View>
-                        <SCLAlert
-                          theme="inverse"
-                          show={this.state.show}
-                          title="Coneix Nous Sardanistes"
-                          subtitle="Comença a buscar sardanistes com tu!"
-                          onRequestClose={this.handleClose}
-                        >
-                        <SCLAlertButton theme="inverse" onPress={this.handleClose}>SOM-HI</SCLAlertButton>
-                      </SCLAlert>
+
 
 
 
@@ -220,14 +251,13 @@ const styles = StyleSheet.create({
     width:'100%',
     flexDirection:'row',
   },
-
   titleNavigator:{
     color:'white',
     fontSize:30,
     paddingTop:20,
     paddingLeft:'5%',
     width:'50%',
-    marginRight:'35%'
+    marginRight:'38.6%'
   },
   image:{
     borderRadius:100,
@@ -257,5 +287,13 @@ const styles = StyleSheet.create({
     iconFilter:{
       marginBottom:0,
       marginTop:23,
+    },
+    iconFilterRight:{
+      marginBottom:0,
+      marginTop:23,
+      marginLeft:'85%',
+    },
+    header:{
+      flexDirection: 'row',
     }
 });

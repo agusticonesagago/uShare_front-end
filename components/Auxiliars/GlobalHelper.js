@@ -39,7 +39,7 @@ export var ActesScreenID = "ActesScreen";
 /*
  *  Reset Navigation
  */
-
+export var first_alert_show = true;
 
 
 /*

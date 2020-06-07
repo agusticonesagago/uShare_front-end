@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#DCDCDC',
+    paddingTop:'15%',
   },
     inputContainer: {
         borderBottomColor: '#F5FCFF',

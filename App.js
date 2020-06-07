@@ -49,7 +49,6 @@ function HomeTabScreen() {
               } else if (route.name === globalHelper.ListPerfilStackScreenID) {
                 iconName = 'md-people';
               }
-              //return <Ionicons name={iconName} size={size} color={color}     />;
               return <Icon name={iconName} size={size+10} color={color}     />;
             },
           })} tabBarOptions={{
@@ -68,9 +67,9 @@ function PerfilStackSreen() {
       <AuthStack.Navigator>
         <AuthStack.Screen name={globalHelper.PerfilScreenID} component={Perfil}
         options={{ title: '', headerTransparent: true }} />
-        <AuthStack.Screen name={globalHelper.ModifyPasswordID} component={ModifyPassword} options={{ title: '', headerTransparent: true }} />
-        <AuthStack.Screen name={globalHelper.ModifyPerfilID} component={ModifyPerfil} options={{ title: '', headerTransparent: true }} />
-        <AuthStack.Screen name={globalHelper.ActeCompleteID} component={ActeComplete} options={{ title: '', headerTransparent: true }}/>
+        <AuthStack.Screen name={globalHelper.ModifyPasswordID} component={ModifyPassword} options={{ title: '', headerTransparent: true , headerTintColor:'white'}} />
+        <AuthStack.Screen name={globalHelper.ModifyPerfilID} component={ModifyPerfil} options={{ title: '', headerTransparent: true , headerTintColor:'white'}} />
+        <AuthStack.Screen name={globalHelper.ActeCompleteID} component={ActeComplete} options={{ title: '', headerTransparent: true , headerTintColor:'white'}}/>
       </AuthStack.Navigator>
   );
 }
@@ -94,30 +93,21 @@ function AuthStackScreen() {
         <AuthStack.Screen name={globalHelper.LogInScreenID} component={LogIn} options={{ title: '', headerTransparent: true }}/>
         <AuthStack.Screen name={globalHelper.SignUpScreenID} component={SignUp} options={{ title: '', headerTransparent: true }} />
         <AuthStack.Screen name={globalHelper.HomeStackScreenID} component={HomeStackScreen} options={{ title: '', headerTransparent: true }} />
-        <AuthStack.Screen name={globalHelper.ModifyPasswordID} component={ModifyPassword} options={{ title: '', headerTransparent: true }} />
-        <AuthStack.Screen name={globalHelper.ModifyPerfilID} component={ModifyPerfil} options={{ title: '', headerTransparent: true }} />
+        <AuthStack.Screen name={globalHelper.ModifyPasswordID} component={ModifyPassword} options={{ title: '', headerTransparent: true , headerTintColor:'white' }} />
+        <AuthStack.Screen name={globalHelper.ModifyPerfilID} component={ModifyPerfil} options={{ title: '', headerTransparent: true , headerTintColor:'white' }} />
       </AuthStack.Navigator>
   );
 }
 
 function ListActesStackScreen() {
   return (
-      /*
-      <AuthStack.Navigator>
-        <AuthStack.Screen name={globalHelper.ListActesScreenID} component={ListActesSmall} options={{ title: '', headerTransparent: true }} />
-        <AuthStack.Screen name={globalHelper.ActeCompleteID} component={ActeComplete} options={{ title: '', headerTransparent: true }}/>
-        <AuthStack.Screen name={globalHelper.ActesScreenID} component={Actes} options={{ title: '', headerTransparent: true }}/>
-        <AuthStack.Screen name={globalHelper.FilterListActesScreenID} component={FilterOptions} options={{ title: '', headerTransparent: true }} />
-        <AuthStack.Screen name={globalHelper.ListPerfilStackScreenID} component={ListPerfilStackScreen} options={{ title: '', headerTransparent: true }}/>
-      </AuthStack.Navigator>*/
-
       <AuthStack.Navigator>
           <AuthStack.Screen name={globalHelper.ListActesScreenID} component={ListActesSmall} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
           <AuthStack.Screen name={globalHelper.ActeCompleteID} component={ActeComplete} options={{ title: '', headerTransparent: true, headerTintColor:'white' }}/>
           <AuthStack.Screen name={globalHelper.ActesScreenID} component={Actes} options={{ title: '', headerTransparent: true, headerTintColor:'white' }}/>
           <AuthStack.Screen name={globalHelper.FilterListActesScreenID} component={FilterOptions} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
 
-          <AuthStack.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall} options={{title: '', headerTransparent: true}}
+          <AuthStack.Screen name={globalHelper.ListPerfilScreenID} component={ListPerfilSmall} options={{title: '', headerTransparent: true, headerTintColor:'white'}}
           />
           <AuthStack.Screen name={globalHelper.FilterListPerfilScreenID} component={FilterOptionsPerson} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
           <AuthStack.Screen name={globalHelper.PerfilExternScreenID} component={PerfilExtern} options={{ title: '', headerTransparent: true, headerTintColor:'white' }} />
@@ -147,38 +137,7 @@ function ListPerfilStackScreen() {
 
 
 function myCreateNavigatorFunction() {
-
-  //let storedUserEmail = await globalHelper.getLoggedUserEmailAsync();
-  //globalHelper._signOutAsync();
-  /*
-  let email = async () => {
-    let x= await globalHelper.getLoggedUserEmailAsync();
-    console.log("email: "+x);
-    return  x;
-  };
-
-  console.log("email: "+email);
-  let home = email === undefined;
-*/
-/*
-  let email;
-  this.state.email =
-  globalHelper.getLoggedUserEmailAsync().then((token)=>{
-    console.log("token: " + token)
-    this.state.emai = token;
-    return token;
-    //check if user is logged in
-  })
-
-  console.log("email: "+email);
-*/
-  let home=false;
-  //globalHelper._signOutAsync();
-  //let email = globalHelper.getLoggedUserEmailAsync();
-  //console.log("App.js email: ");
-  //console.log(email);
-  //home = email !== null;
-
+    let home=false;
     const rootSwitch = createSwitchNavigator(
       {
         [globalHelper.HomeStackScreenID]: HomeStackScreen,
@@ -205,54 +164,10 @@ export default class App extends React.Component {
 
   render() {
     console.disableYellowBox=true;
-    return (/*
-
-      <NavigationContainer>
-        <DrawerFiltersPerson/>
-      </NavigationContainer>*/
-      //<ModifyPerfil/>
-      //<Perfil/>
-      //<LogIn/>
-      //<SignUp/>
-
-/*
-      <NavigationContainer>
-          <Stack.Navigator initialRouteName={this.state.email === null ? globalHelper.AuthScreenID : globalHelper.HomeScreenID}>
-            <Stack.Screen name={globalHelper.AuthScreenID}  component={AuthStackScreen}/>
-            <Stack.Screen name={globalHelper.HomeScreenID}  component={HomeTabScreen}/>
-          </Stack.Navigator>
-      </NavigationContainer>
-*/
-/*
+    return (
        <NavigationContainer>
           <AppContainer/>
         </NavigationContainer>
-*/
-        //<ActeComplete/>
-
-       /*<NavigationContainer>
-          <ListPerfilStackScreen/>
-        </NavigationContainer>*/
-
-      /*
-        <NavigationContainer>
-          <HomeTabScreen/>
-        </NavigationContainer>
-        */
-//*
-       <NavigationContainer>
-          <AppContainer/>
-        </NavigationContainer>
-
-        //<DrawerFilters/>
-
-        /*
-        <NavigationContainer>
-          <HomeStackScreen/>
-        </NavigationContainer>
-        */
-
-
     )
   }
 }
