@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 
 
-import * as globalHelper from './Auxiliars/GlobalHelper.js'
+import * as globalHelper from '../Auxiliars/GlobalHelper.js'
 
 var API_USER = globalHelper.API_USER;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
@@ -34,7 +34,7 @@ export default class PerfilSmall extends React.Component {
           {this.props.photo && (
             <Image source={{uri: `data:image/gif;base64,${this.props.photo}`}} style={styles.imageProfile}></Image>
           )}
-          {!this.props.photo && (<Image source={require("../img/interface.png")} style={styles.imageProfile} rezideMode="center"></Image>)}
+          {!this.props.photo && (<Image source={require("../../img/interface.png")} style={styles.imageProfile} rezideMode="center"></Image>)}
           <View style={styles.containerInfoProfile}>
             <View style={styles.containerInfoPerfil}>
               <Text style={styles.nameProfile}>{this.props.nomCognom}</Text>

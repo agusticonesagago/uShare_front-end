@@ -6,10 +6,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {NavigationContainer} from '@react-navigation/native';
 
 import Actes from './Actes.js';
-import PerfilSmall from './PerfilSmall.js';
+import PerfilSmall from '../Profile/PerfilSmall.js';
 
-
-import * as globalHelper from './Auxiliars/GlobalHelper.js'
+import * as globalHelper from '../Auxiliars/GlobalHelper.js'
 
 var API = globalHelper.API;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;

@@ -7,7 +7,7 @@ import CheckBox from '@react-native-community/checkbox';
 import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
 import ImagePicker from 'react-native-image-picker'
 
-import * as globalHelper from './Auxiliars/GlobalHelper.js'
+import * as globalHelper from '../Auxiliars/GlobalHelper.js'
 
 var API_USER = globalHelper.API_USER;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;

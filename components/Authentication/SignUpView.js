@@ -13,11 +13,11 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
 import DatePicker from 'react-native-datepicker'
 import ImagePicker from 'react-native-image-picker'
-import * as globalHelper from "./Auxiliars/GlobalHelper";
-import MyCheckBox from "./CheckBox/MyCheckBox";
-import MyAutoComplete from "./MyAutoComplete/MyAutoComplete";
-import * as globalHelperData from "./Auxiliars/GlobalHelperData";
-import MyDatePicker from "./DatePicker/MyDatePicker";
+import * as globalHelper from "../Auxiliars/GlobalHelper";
+import MyCheckBox from "../CheckBox/MyCheckBox";
+import MyAutoComplete from "../MyAutoComplete/MyAutoComplete";
+import * as globalHelperData from "../Auxiliars/GlobalHelperData";
+import MyDatePicker from "../DatePicker/MyDatePicker";
 
 
 var API_USER = globalHelper.API_USER;
@@ -210,7 +210,7 @@ export default class SignUp extends React.Component {
 
         <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
           <View style={styles.form} >
-            <Image source={require("../img/uShare-logo.png")} style={styles.imageLogo}></Image>
+            <Image source={require("../../img/uShare-logo.png")} style={styles.imageLogo}></Image>
             <View style={styles.containerHeader}>
               <View style={styles.lineLeft} />
               <Text style={styles.titols}>Registrat</Text>

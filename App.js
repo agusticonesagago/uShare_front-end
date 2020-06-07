@@ -2,29 +2,29 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Perfil from './components/Perfil.js';
-import PerfilExtern from './components/PerfilExtern.js';
-import PerfilSmall from './components/PerfilSmall.js';
+import Perfil from './components/Profile/Perfil.js';
+import PerfilExtern from './components/Profile/PerfilExtern.js';
+import PerfilSmall from './components/Profile/PerfilSmall.js';
 
-import SignUp from './components/SignUpView.js';
-import LogIn from './components/LoginView.js';
-import ModifyPassword from './components/ModifyPassword.js';
-import ModifyPerfil from './components/ModifyPerfil.js';
-import ActeComplete from './components/ActeComplete.js';
+import SignUp from './components/Authentication/SignUpView.js';
+import LogIn from './components/Authentication/LoginView.js';
+import ModifyPassword from './components/Profile/ModifyPassword.js';
+import ModifyPerfil from './components/Profile/ModifyPerfil.js';
+import ActeComplete from './components/Event/ActeComplete.js';
 
-import ListActesSmall from './components/ListActesSmall.js';
+import ListActesSmall from './components/Event/ListActesSmall.js';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import Actes from './components/Actes.js';
+import Actes from './components/Event/Actes.js';
 
 import * as globalHelper from './components/Auxiliars/GlobalHelper.js'
 
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import ListPerfilSmall from "./components/ListPerfilSmall";
-import FilterOptionsPerson from "./components/FilterOptionsPerson";
-import FilterOptions from "./components/FilterOptions";
+import ListPerfilSmall from "./components/Profile/ListPerfilSmall";
+import FilterOptionsPerson from "./components/Profile/FilterOptionsPerson";
+import FilterOptions from "./components/Event/FilterOptions";
 
 import {YellowBox} from "react-native"
 

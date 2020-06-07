@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, Alert, TouchableOpacity} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import * as globalHelper from './Auxiliars/GlobalHelper.js'
+import * as globalHelper from '../Auxiliars/GlobalHelper.js'
 
 import {NavigationContainer} from '@react-navigation/native';
 
@@ -11,7 +11,7 @@ var API = globalHelper.API;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
 
 import ModifyPerfil from './ModifyPerfil.js';
-import ActesPerPerfil from './ActesPerPerfil.js';
+import ActesPerPerfil from '../Event/ActesPerPerfil.js';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -354,7 +354,7 @@ export default class Perfil extends React.Component {
               {this.state.photo && (
                 <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
               )}
-              {!this.state.photo && (<Image source={require("../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
+              {!this.state.photo && (<Image source={require("../../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
             </View>
             <View style={styles.button}>
               <Icon name={'md-chatboxes'} size={20} backgroundColor={'#41444B'} color={'#DFD8C8'}  />

@@ -17,15 +17,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
 
 
-import * as globalHelper from './Auxiliars/GlobalHelper.js'
-import * as globalHelperData from './Auxiliars/GlobalHelperData.js'
-import * as globalHelperAPI from './Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Users.js'
-import * as globalHelperAPI_ACTES from './Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes.js'
+import * as globalHelper from '../Auxiliars/GlobalHelper.js'
+import * as globalHelperData from '../Auxiliars/GlobalHelperData.js'
+import * as globalHelperAPI from '../Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Users.js'
+import * as globalHelperAPI_ACTES from '../Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes.js'
 
-import MyCheckBox from "./CheckBox/MyCheckBox";
-import MyAutoComplete from "./MyAutoComplete/MyAutoComplete";
-
-
+import MyCheckBox from "../CheckBox/MyCheckBox";
+import MyAutoComplete from "../MyAutoComplete/MyAutoComplete";
 
 export default class FilterOptions extends React.Component {
 

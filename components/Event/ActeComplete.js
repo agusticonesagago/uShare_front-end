@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import * as globalHelper from './Auxiliars/GlobalHelper.js'
-import * as globalHelperAPI_Actes from './Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes'
+import * as globalHelper from '../Auxiliars/GlobalHelper.js'
+import * as globalHelperAPI_Actes from '../Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes'
 
 var API = globalHelper.API;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;

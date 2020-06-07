@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import {StyleSheet, Text, View, ScrollView, Image, TouchableHighlight, Alert, TouchableOpacity} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import * as globalHelper from './Auxiliars/GlobalHelper.js'
+import * as globalHelper from '../Auxiliars/GlobalHelper.js'
 
 var API_USER = globalHelper.API_USER;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
@@ -174,7 +174,7 @@ export default class PerfilExtern extends React.Component {
               {this.state.photo && (
                 <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
               )}
-              {!this.state.photo && (<Image source={require("../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
+              {!this.state.photo && (<Image source={require("../../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
             </View>
             <View style={styles.button}>
               <Icon name={'md-chatboxes'} size={20} backgroundColor={'#41444B'} color={'#DFD8C8'}  />

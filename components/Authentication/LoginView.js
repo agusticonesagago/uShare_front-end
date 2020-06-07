@@ -14,7 +14,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import * as globalHelper from './Auxiliars/GlobalHelper.js'
+import * as globalHelper from '../Auxiliars/GlobalHelper.js'
 
 var API_USER = globalHelper.API_USER;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
@@ -114,7 +114,7 @@ export default class LoginView extends React.Component {
           <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
             <View style={styles.LogIn}>
                 <View style={styles.logo}>
-                  <Image source={require("../img/uShare-logo.png")} style={styles.image} rezideMode="center"/>
+                  <Image source={require("../../img/uShare-logo.png")} style={styles.image} rezideMode="center"/>
                 </View>
 
                 <View style={styles.inputContainer}>

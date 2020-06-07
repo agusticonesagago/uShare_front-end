@@ -9,15 +9,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import CheckBox from '@react-native-community/checkbox';
 import DatePicker from 'react-native-datepicker';
 
-import MyDatePicker from "./DatePicker/MyDatePicker";
+import MyDatePicker from "../DatePicker/MyDatePicker";
 
 import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
-import * as globalHelperData from "./Auxiliars/GlobalHelperData";
-import * as globalHelperAPI_ACTES from "./Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes";
-import * as globalHelper from "./Auxiliars/GlobalHelper";
+import * as globalHelperData from "../Auxiliars/GlobalHelperData";
+import * as globalHelperAPI_ACTES from "../Auxiliars/GlobalHelperAPIs/GlobalHelperAPI_Actes";
+import * as globalHelper from "../Auxiliars/GlobalHelper";
 import {bind} from "lodash";
-import MyCheckBox from "./CheckBox/MyCheckBox";
-import MyAutoComplete from "./MyAutoComplete/MyAutoComplete";
+import MyCheckBox from "../CheckBox/MyCheckBox";
+import MyAutoComplete from "../MyAutoComplete/MyAutoComplete";
 
 
 export default class FilterOptions extends React.Component {

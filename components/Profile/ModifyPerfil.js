@@ -7,7 +7,7 @@ import CheckBox from '@react-native-community/checkbox';
 import Autocomplete from 'react-native-dropdown-autocomplete-textinput';
 import ImagePicker from 'react-native-image-picker'
 
-import * as globalHelper from './Auxiliars/GlobalHelper.js'
+import * as globalHelper from '../Auxiliars/GlobalHelper.js'
 
 var API_USER = globalHelper.API_USER;
 const asyncStorageLoggedUserEmailKey = globalHelper.asyncStorageLoggedUserEmailKey;
@@ -269,7 +269,7 @@ export default class ModifyPerfil extends React.Component {
                 {this.state.photo && (
                   <Image source={{uri: `data:image/gif;base64,${this.state.photo}`}} style={styles.image} rezideMode="center"></Image>
                 )}
-                {!this.state.photo && (<Image source={require("../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
+                {!this.state.photo && (<Image source={require("../../img/interface.png")} style={styles.image} rezideMode="center"></Image>)}
               </View>
               <View style={styles.button}>
                 <Icon name={'md-chatboxes'} size={20} backgroundColor={'#41444B'} color={'#DFD8C8'}  />
