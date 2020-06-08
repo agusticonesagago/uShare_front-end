@@ -109,10 +109,10 @@ export default class Actes extends React.Component {
                 </View>
                 <View style={styles.ActivitatCobles}>
                   <Text style={styles.ActivitatCoblesInterpets}>On:</Text>
-                  <Text style={styles.InfoActeActivitatCobles}>{this.props.where}</Text>
+                  <Text style={styles.InfoActeActivitatCoblesOn}>{this.props.where}</Text>
                 </View>
                 {this.assistents()}
-                <View style={{marginTop: 3}}></View>
+                <View style={{marginTop: 15}}></View>
               </View>
 
               <View style={styles.containerButtonActe}>
@@ -132,7 +132,6 @@ export default class Actes extends React.Component {
 const styles = StyleSheet.create({
   containerActe: {
     width:'100%',
-    backgroundColor: "beige",
     borderWidth: 0.5,
   },
   WhereWhen:{
@@ -194,7 +193,13 @@ const styles = StyleSheet.create({
     color:'grey',
     fontSize: 15,
     width:'auto',
-    maxWidth:'50%',
+    maxWidth:'40%',
+  },
+  InfoActeActivitatCoblesOn:{
+    color:'grey',
+    fontSize: 15,
+    width:'auto',
+    maxWidth:'80%',
   },
   ExtraInfoActe:{
     marginLeft: 10,

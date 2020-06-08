@@ -65,63 +65,69 @@ export default class FilterOptions extends React.Component {
       <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange}
                   showVerticalScrollIndicator={false}>
         <View style={styles.Filter}>
-
-          <View style={{flexDirection: 'row',marginBottom:10}}>
+          <View style={{flexDirection: 'row',marginBottom:10, marginTop:'6%'}}>
            <Icon name={"md-time"} size={40} color={"blue"}/>
             <Text style={styles.titleFilter}> {"Dates"}</Text>
           </View>
-          <MyDatePicker text="Entre el"
-                        dateKey="diaMinim"
-                        placeholder="Escollir data inici"
-                        onChangeState={this.onChangeState}>
-          </MyDatePicker>
-          <MyDatePicker text="i el        "
-                        dateKey="diaMaxim"
-                        placeholder="Escollir data final"
-                        onChangeState={this.onChangeState}>
-          </MyDatePicker>
-
-          <View style={styles.rowCheckBox}>
-            <View style={styles.columnCheckBox}>
-              <MyCheckBox title="Aplecs"
-                          checkBoxKey="aplecs"
-                          initialValue={this.state.aplecs}
+            <MyDatePicker text="Entre el"
+                          dateKey="diaMinim"
+                          placeholder="Escollir data inici"
                           onChangeState={this.onChangeState}>
-              </MyCheckBox>
-
-              <MyCheckBox title="Concursos"
-                          checkBoxKey="concursos"
-                          initialValue={this.state.concursos}
+            </MyDatePicker>
+            <MyDatePicker text="i el        "
+                          dateKey="diaMaxim"
+                          placeholder="Escollir data final"
                           onChangeState={this.onChangeState}>
-              </MyCheckBox>
+            </MyDatePicker>
+
+          <View>
+            <View style={styles.rowCheckBox}>
+              <View style={styles.columnCheckBox}>
+                  <MyCheckBox title="Aplecs"
+                              checkBoxKey="aplecs"
+                              initialValue={this.state.aplecs}
+                              onChangeState={this.onChangeState}>
+                  </MyCheckBox>
+              </View>
+              <View style={styles.columnCheckBox}>
+                  <MyCheckBox title="Ballades"
+                              checkBoxKey="ballades"
+                              initialValue={this.state.ballades}
+                              onChangeState={this.onChangeState}>
+                  </MyCheckBox>
+              </View>
             </View>
-
-            <View style={styles.columnCheckBox}>
-              <MyCheckBox title="Ballades"
-                          checkBoxKey="ballades"
-                          initialValue={this.state.ballades}
-                          onChangeState={this.onChangeState}>
-              </MyCheckBox>
-
-              <MyCheckBox title="Cursets"
-                          checkBoxKey="cursets"
-                          initialValue={this.state.cursets}
-                          onChangeState={this.onChangeState}>
-              </MyCheckBox>
+            <View style={styles.rowCheckBox}>
+              <View style={styles.columnCheckBox}>
+                <MyCheckBox title="Concerts"
+                            checkBoxKey="concerts"
+                            initialValue={this.state.concerts}
+                            onChangeState={this.onChangeState}>
+                </MyCheckBox>
+              </View>
+              <View style={styles.columnCheckBox}>
+                <MyCheckBox title="Concursos"
+                            checkBoxKey="concursos"
+                            initialValue={this.state.concursos}
+                            onChangeState={this.onChangeState}>
+                </MyCheckBox>
+              </View>
             </View>
-
-            <View style={styles.columnCheckBox}>
-              <MyCheckBox title="Concerts"
-                          checkBoxKey="concerts"
-                          initialValue={this.state.concerts}
-                          onChangeState={this.onChangeState}>
-              </MyCheckBox>
-
-              <MyCheckBox title="Altres"
-                          checkBoxKey="altres"
-                          initialValue={this.state.altres}
-                          onChangeState={this.onChangeState}>
-              </MyCheckBox>
+            <View style={styles.rowCheckBox}>
+              <View style={styles.columnCheckBox}>
+                <MyCheckBox title="Cursets"
+                            checkBoxKey="cursets"
+                            initialValue={this.state.cursets}
+                            onChangeState={this.onChangeState}>
+                </MyCheckBox>
+              </View>
+              <View style={styles.columnCheckBox}>
+                <MyCheckBox title="Altres"
+                            checkBoxKey="altres"
+                            initialValue={this.state.altres}
+                            onChangeState={this.onChangeState}>
+                </MyCheckBox>
+              </View>
             </View>
           </View>
 
@@ -169,7 +175,7 @@ const styles = StyleSheet.create({
   },
   headerBar:{
     width:'100%',
-    height: 56,
+    height: '8.5%',
     flexDirection:'row',
     backgroundColor: '#714170',
   },
@@ -194,9 +200,14 @@ const styles = StyleSheet.create({
   },
   rowCheckBox:{
     flexDirection: 'row',
+    marginLeft:'4%',
+    width:'80%',
+    textAlignVertical:'center',
   },
   columnCheckBox:{
     flexDirection: 'column',
+    width:'50%',
+    justifyContent: 'center',
   },
   titleOrder:{
     fontSize:30,
@@ -218,5 +229,4 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontStyle:"normal"
   }
-
 });

@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
   containerNavigator: {
     backgroundColor: '#714170',
     height: '13.2%',
+    maxHeight: 75,
     width:'100%',
     flexDirection:'row',
   },

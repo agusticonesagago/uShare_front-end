@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
         width:'100%',
         height: '13.2%',
         flexDirection:'row',
+        maxHeight: 75,
         backgroundColor: '#714170',
     },
 
@@ -209,8 +210,11 @@ const styles = StyleSheet.create({
 
 
     containerNavigator: {
-    width:'100%',
-    flexDirection:'row',
+      backgroundColor: '#714170',
+      height: '13.2%',
+      maxHeight: 75,
+      width:'100%',
+      flexDirection:'row',
   },
   titleNavigator:{
     color:'white',

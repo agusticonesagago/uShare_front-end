@@ -101,32 +101,30 @@ export default class ModifyPassword extends React.Component {
   render() {
     return (
       <View style={styles.containerActeProva}>
-        <View style={styles.containerFlecha}>
+          <View style={styles.containerFlecha}/>
           <View style={styles.container}>
-
-          <Text style={styles.titleApartats}>CANVIAR CONTRASENYA</Text>
-          <View style={styles.imagePassword}>
-            <Icon name={'md-lock'} size={40} color={'blue'}  />
-            <TextInput  secureTextEntry={true} placeholder="Introdueix la contrasenya actual" style={styles.numberPassword}
-            onChangeText={(passwordAntic) => this.setState({passwordAntic})}>{this.state.passwordAntic}
-            </TextInput>
+            <Text style={styles.titleApartats}>CANVIAR CONTRASENYA</Text>
+            <View style={styles.imagePassword}>
+              <Icon name={'md-lock'} size={40} color={'blue'}  />
+              <TextInput  secureTextEntry={true} placeholder="Introdueix la contrasenya actual" style={styles.numberPassword}
+              onChangeText={(passwordAntic) => this.setState({passwordAntic})}>{this.state.passwordAntic}
+              </TextInput>
+            </View>
+            <View style={styles.imagePassword}>
+              <Icon name={'md-lock'} size={40} color={'purple'}  />
+              <TextInput  secureTextEntry={true} placeholder="Introdueix la nova contrasenya" style={styles.numberPassword}
+              onChangeText={(passwordPrimer) => this.setState({passwordPrimer})}>{this.state.passwordPrimer}</TextInput>
+            </View>
+            <View style={styles.imagePassword}>
+              <Icon name={'md-lock'} size={40} color={'purple'}  />
+              <TextInput secureTextEntry={true} placeholder="Nova contrasenya (verificació)" style={styles.numberPassword}
+              onChangeText={(passwordSegon) => this.setState({passwordSegon})}>{this.state.passwordSegon}</TextInput>
+            </View>
+            <TouchableHighlight style={[styles.passwordButtonContainer, styles.modifyButton]}
+                                onPress={() => this.sendChanges()}>
+              <Text style={styles.modifyText}>GUARDAR CANVIS</Text>
+            </TouchableHighlight>
           </View>
-          <View style={styles.imagePassword}>
-            <Icon name={'md-lock'} size={40} color={'purple'}  />
-            <TextInput  secureTextEntry={true} placeholder="Introdueix la nova contrasenya" style={styles.numberPassword}
-            onChangeText={(passwordPrimer) => this.setState({passwordPrimer})}>{this.state.passwordPrimer}</TextInput>
-          </View>
-          <View style={styles.imagePassword}>
-            <Icon name={'md-lock'} size={40} color={'purple'}  />
-            <TextInput secureTextEntry={true} placeholder="Nova contrasenya (verificació)" style={styles.numberPassword}
-            onChangeText={(passwordSegon) => this.setState({passwordSegon})}>{this.state.passwordSegon}</TextInput>
-          </View>
-          <TouchableHighlight style={[styles.passwordButtonContainer, styles.modifyButton]}
-                              onPress={() => this.sendChanges()}>
-            <Text style={styles.modifyText}>GUARDAR CANVIS</Text>
-          </TouchableHighlight>
-        </View>
-      </View>
     </View>
 
     );
@@ -144,12 +142,6 @@ ModifyPassword.navigationOptions = {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   imagePassword:{
     marginTop:10,
     flexDirection:'row',
@@ -183,16 +175,20 @@ const styles = StyleSheet.create({
   modifyText: {
     color: 'white',
   },
-  containerFlecha: {
-    width:'100%',
-    backgroundColor: "beige",
-    minHeight:552,
-  },
   containerActeProva:{
     flex: 1,
-    backgroundColor: '#714170',
+    width:'100%',
+    height:'100%',
+  },
+  container: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop:'14%',
+    width:'100%',
+    height:'92%',
+  },
+  containerFlecha: {
+    minHeight:'8%',
+    width:'100%',
+    backgroundColor: '#714170',
   },
 });

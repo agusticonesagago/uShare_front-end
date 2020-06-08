@@ -539,6 +539,7 @@ const styles = StyleSheet.create({
   },
   headerBar:{
       width:'100%',
+      maxHeight: 75,
       height: '13.2%',
       paddingLeft: '6%',
       flexDirection:'row',

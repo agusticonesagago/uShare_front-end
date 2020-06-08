@@ -220,6 +220,7 @@ export default class ActeComplete extends React.Component {
       let Image_Http_URL = {uri: this.state.imatge};
       return (
         <View style={styles.containerActeProva}>
+          <View style={styles.containerFlecha}/>
           <ScrollView style={styles.scrollView} onContentSizeChange={this.onContentSizeChange} showVerticalScrollIndicator={false}>
             <View style={styles.containerActe}>
               <Image source={Image_Http_URL} style={styles.image} rezideMode="center"></Image>
@@ -282,20 +283,13 @@ ActeComplete.navigationOptions = {
 const styles = StyleSheet.create({
   containerActe: {
     width:'100%',
-    backgroundColor: "beige",
-    minHeight:552,
-  },
-  containerActeFlecha: {
-    backgroundColor: 'grey',
-    width:'100%',
-    backgroundColor: "#714170",
+    height:'92%',
   },
   containerActeProva:{
     flex: 1,
-    backgroundColor: '#714170',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop:'14%',
+    width:'100%',
+    height:'100%',
+    backgroundColor: "white",
   },
   image:{
     width:'100%',
@@ -304,6 +298,7 @@ const styles = StyleSheet.create({
   containerInfoActe:{
     width:'97%',
     justifyContent: 'center',
+
   },
   WhereWhen:{
     flexDirection: 'column',
@@ -406,5 +401,10 @@ const styles = StyleSheet.create({
     borderRadius:30,
     textAlignVertical: 'center',
     width:'auto',
-  }
+  },
+  containerFlecha: {
+    minHeight:'8%',
+    width:'100%',
+    backgroundColor: '#714170',
+  },
 });

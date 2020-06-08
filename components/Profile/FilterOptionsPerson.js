@@ -105,7 +105,7 @@ export default class FilterOptions extends React.Component {
                      <View style={styles.inputContainer}>
                          <Icon name={'md-arrow-dropdown-circle'} size={28} style={styles.Icon} />
                          <TextInput
-                             style={styles.text}
+                             style={styles.textAge}
                              placeholder='       Edat mínima'
                              keyboardType = 'number-pad'
                              onChangeText={val => this.onChangeState('edatMin', val)}
@@ -115,7 +115,7 @@ export default class FilterOptions extends React.Component {
                      <View style={styles.inputContainer}>
                          <Icon name={'md-arrow-dropup-circle'} size={28} style={styles.Icon} />
                          <TextInput
-                             style={styles.text}
+                             style={styles.textAge}
                              placeholder='       Edat màxima'
                              keyboardType = 'number-pad'
                              onChangeText={val => this.onChangeState('edatMax', val)}
@@ -129,6 +129,7 @@ export default class FilterOptions extends React.Component {
                      </View>
 
                      <View style={styles.columnCheckBoxHabilitats}>
+                        <View style={styles.center}>
                          <MyCheckBox title="Comptar i repartir"
                                      checkBoxKey="comptarIRepartir"
                                      onChangeState={this.onChangeState}>
@@ -138,49 +139,60 @@ export default class FilterOptions extends React.Component {
                                      checkBoxKey="sardaCompeticio"
                                      onChangeState={this.onChangeState}>
                          </MyCheckBox>
-
+                        </View>
                      </View>
 
                      <View style={{flexDirection: 'row', marginTop:80}}>
                          <Icon name={"md-eye"} size={40} color={"green"}/>
                          <Text style={styles.titleFilter}> {"Actes"}</Text>
                      </View>
-                     <View style={styles.rowCheckBox}>
-                         <View style={styles.columnCheckBox}>
+
+                    <View>
+                      <View style={styles.rowCheckBox}>
+                          <View style={styles.columnCheckBox}>
                              <MyCheckBox title="Aplecs"
                                          checkBoxKey="eventsAplecs"
                                          onChangeState={this.onChangeState}>
                              </MyCheckBox>
+                          </View>
 
-                             <MyCheckBox title="Concursos"
-                                         checkBoxKey="eventsConcursos"
-                                         onChangeState={this.onChangeState}>
-                             </MyCheckBox>
-                         </View>
-
-                         <View style={styles.columnCheckBox}>
+                          <View style={styles.columnCheckBox}>
                              <MyCheckBox title="Ballades"
                                          checkBoxKey="eventsBallades"
                                          onChangeState={this.onChangeState}>
                              </MyCheckBox>
+                          </View>
+                      </View>
 
+                      <View style={styles.rowCheckBox}>
+                            <View style={styles.columnCheckBox}>
+                              <MyCheckBox title="Concerts"
+                                          checkBoxKey="eventsConcerts"
+                                          onChangeState={this.onChangeState}>
+                              </MyCheckBox>
+                            </View>
+                            <View style={styles.columnCheckBox}>
+                              <MyCheckBox title="Concursos"
+                                          checkBoxKey="eventsConcursos"
+                                          onChangeState={this.onChangeState}>
+                              </MyCheckBox>
+                            </View>
+                      </View>
+
+                      <View style={styles.rowCheckBox}>
+                          <View style={styles.columnCheckBox}>
                              <MyCheckBox title="Cursets"
                                          checkBoxKey="eventsCursets"
                                          onChangeState={this.onChangeState}>
                              </MyCheckBox>
-                         </View>
-
-                         <View style={styles.columnCheckBox}>
-                             <MyCheckBox title="Concerts"
-                                         checkBoxKey="eventsConcerts"
-                                         onChangeState={this.onChangeState}>
-                             </MyCheckBox>
-
+                          </View>
+                          <View style={styles.columnCheckBox}>
                              <MyCheckBox title="Altres"
                                          checkBoxKey="eventsAltres"
                                          onChangeState={this.onChangeState}>
                              </MyCheckBox>
                          </View>
+                     </View>
                      </View>
 
 
@@ -229,7 +241,7 @@ const styles = StyleSheet.create({
   },
     headerBar:{
         width:'100%',
-        height: 56,
+        height: '8.5%',
         flexDirection:'row',
         backgroundColor: '#714170',
     },
@@ -251,17 +263,27 @@ const styles = StyleSheet.create({
 
     rowCheckBox:{
         flexDirection: 'row',
+        marginLeft:'4%',
+        width:'80%',
+        textAlignVertical:'center',
     },
     columnCheckBox:{
         flexDirection: 'column',
+        width:'50%',
+        justifyContent: 'center',
     },
     columnCheckBoxHabilitats:{
         flexDirection: 'column',
-        marginLeft:40,
     },
   text:{
     fontSize:22,
     marginLeft:15,
+  },
+  textAge:{
+    fontSize:20,
+    marginLeft:18,
+    alignItems:'center',
+    textAlignVertical: 'bottom',
   },
   titleOrder:{
     fontSize:20,
@@ -311,5 +333,9 @@ const styles = StyleSheet.create({
         transform:[{scaleX:1.5}, {scaleY:1.5}],
         marginTop:8,
         marginLeft:8,
+    },
+    center:{
+      justifyContent: 'center',
+      alignItems: 'center',
     }
 });

@@ -55,7 +55,6 @@ export default class ActesPerPerfil extends React.Component {
 const styles = StyleSheet.create({
   containerActe: {
     width:'100%',
-    backgroundColor: "beige",
     borderWidth: 0.5,
     flexDirection: 'row',
   },

@@ -227,18 +227,7 @@ export default class PerfilExtern extends React.Component {
     );
   }
 }
-/*
-Perfil.navigationOptions = {
-  tabBarIcon: ({tintColor,focused}) => (
-    <Icon
-      //name={focused ? 'md-flame' : 'ios-flame'}
-      name={'md-person'}
-      size={28}
-      color={tintColor}
-    />
-  )
-}
-*/
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -300,7 +289,6 @@ const styles = StyleSheet.create({
   },
   extraInfo:{
     flex: 1,
-    //flexDirection: 'row',
     justifyContent: 'flex-start',
     marginLeft:50,
     flexDirection:'column',
@@ -374,7 +362,7 @@ const styles = StyleSheet.create({
   },
   containerActe: {
     width:'100%',
-    backgroundColor: "beige",
+    backgroundColor: "white",
     minHeight:552,
   },
 });

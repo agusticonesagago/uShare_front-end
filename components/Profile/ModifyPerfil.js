@@ -583,7 +583,7 @@ const styles = StyleSheet.create({
   },
   containerActe: {
     width:'100%',
-    backgroundColor: "beige",
+    backgroundColor: "white",
     minHeight:552,
   },
 });

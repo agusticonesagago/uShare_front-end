@@ -66,9 +66,7 @@ PerfilSmall.navigationOptions = {
 
 const styles = StyleSheet.create({
   containerPerfil: {
-    backgroundColor: 'grey',
     width:'100%',
-    backgroundColor: "beige",
     borderWidth: 0.5,
     flexDirection:'row',
   },
