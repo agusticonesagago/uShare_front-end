@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>MySampleApp</string>
+	<string>uShare</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -72,11 +72,5 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
-
-	<!-- Permisos escollir imatges-->
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>For choosing a photo.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>For saving a photo.</string>
 </dict>
 </plist>
