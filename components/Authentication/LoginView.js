@@ -35,7 +35,7 @@ export default class LoginView extends React.Component {
   promiseHandling = async () => {
       try{
           const token = await globalHelper.getLoggedUserEmailAsync();
-          if(token) this.props.navigation.replace(globalHelper.HomeStackScreenID);
+          //if(token) this.props.navigation.replace(globalHelper.HomeStackScreenID);
 
       } catch (error) {
           console.error(error);

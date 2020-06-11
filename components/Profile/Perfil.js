@@ -239,9 +239,9 @@ export default class Perfil extends React.Component {
     let actesAntic = [];
 
     for (let i = 0; i < this.state.actesAntics.length; ++i) {
-      var dia = this.state.dia.slice(8, 10);
-      var mes = this.state.dia.slice(5, 7);
-      var any = this.state.dia.slice(0, 4);
+      var dia = this.state.actesAntics[i].dia.slice(8, 10);
+      var mes = this.state.actesAntics[i].dia.slice(5, 7);
+      var any = this.state.actesAntics[i].dia.slice(0, 4);
       actesAntic.push(<ActesPerPerfil where={this.state.actesAntics[i].lloc}
        when={this.state.actesAntics[i].hora1}
        activitat={this.state.actesAntics[i].tipus}
