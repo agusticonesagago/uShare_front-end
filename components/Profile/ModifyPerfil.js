@@ -99,6 +99,7 @@ export default class ModifyPerfil extends React.Component {
           DataActualdos:  {
             code: '', name:  ''
           },
+          hasCar:false,
           comptarRepartir: false
         }
         this.handleTextSubmit = this.handleTextSubmit.bind(this);
@@ -127,7 +128,7 @@ export default class ModifyPerfil extends React.Component {
           this.onChangeState("cursets", json.cursets);
           this.onChangeState("altres", json.altres);
           this.onChangeState("edat", json.edat);
-          this.onChangeState("vehicle", json.vehicle);
+          this.onChangeState("hasCar", json.vehicle);
           this.onChangeState("localitat", json.comarca);
           this.onChangeState("publicProfile", json.publicProfile);
           this.onChangeState("comptarRepartir", json.comptarRepartir);
@@ -321,8 +322,8 @@ export default class ModifyPerfil extends React.Component {
               <View style={styles.checkBox}>
                 <CheckBox
                   title='Click Here'
-                  value={this.state.vehicle}
-                  onValueChange={val => this.onChangeState('vehicle', val)}
+                  value={this.state.hasCar}
+                  onValueChange={val => this.onChangeState('hasCar', val)}
                 />
                 <Text style={styles.informationCheckBox}>Vehicle</Text>
               </View>

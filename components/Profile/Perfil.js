@@ -163,7 +163,6 @@ export default class Perfil extends React.Component {
           this.setState({
             actesAnticsLoaded: true
           });
-          //console.log(this.state.actes); //Per veure quins actes té
       }
       catch (error) {
           console.error(error);
@@ -173,9 +172,12 @@ export default class Perfil extends React.Component {
   changeOption(option) {
     if(option == "informacion"){
       this.state.option = 1;
+      this.getInfoUser();
     }
     else if (option == "old"){
       this.state.option = 2;
+      this.state.actesAnticsLoaded = false;
+      this.getInfoActesAntics();
     }
     else {
       this.state.option = 3;
