@@ -16,14 +16,14 @@ https://www.fib.upc.edu/ca/estudis/graus/grau-en-enginyeria-informatica/pla-dest
 ### Front-end
 - Mohamed Benali
 - Agustí Conesa
-LINK: https://github.com/agusticonesagago/uShare_front-end
+- LINK: https://github.com/agusticonesagago/uShare_front-end
 
 
 ### Back-end
 - Ariadna de Arriba
 - Enric Segura
-LINK GITHUB: https://github.com/aridearriba/uShare_back-end
-LINK SERVER: http://sardapp.herokuapp.com/swagger-ui.html
+- LINK GITHUB: https://github.com/aridearriba/uShare_back-end
+- LINK SERVER: http://sardapp.herokuapp.com/swagger-ui.html
 
 --------------------------------------------------------------------
 
